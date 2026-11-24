@@ -130,7 +130,7 @@ const CREDITS_TXT=`<b>지옥철 서바이버 v1</b><br><br>기획·개발: 사�
 assets/sprites/, assets/tiles/ 폴더에 같은 이름의 PNG(예: passenger.png)를 넣으면 자동으로 교체됩니다.<br>
 추천 무료 에셋: Kenney.nl (CC0), OpenGameArt.org (CC0/CC-BY), itch.io 무료 픽셀 팩<br>
 사용한 에셋은 assets/CREDITS.md에 출처·제작자·라이선스를 적어주세요.<br><br>
-<b>폰트</b>: Black Han Sans, Noto Sans KR (Google Fonts, SIL OFL 1.1)<br><b>배경</b>: 승강장·스크린도어·열차·역명판은 코드로 직접 그림<br><br><b>사운드</b>: Web Audio API로 실시간 합성 (외부 파일 없음)<br><br>
+<b>폰트</b>: Black Han Sans, Bungee, Noto Sans KR (Google Fonts, SIL OFL 1.1)<br><b>배경</b>: 승강장·스크린도어·열차·역명판은 코드로 직접 그림<br><br><b>사운드</b>: Web Audio API로 실시간 합성 (외부 파일 없음)<br><br>
 ※ 등장 인물·장소는 모두 가상의 개그 설정이며 실제 노선·기관과 무관합니다.`;
 function loadAssets(done){
   const list=[];for(const ch in TWEMOJI)list.push(['__em__'+ch,'data:image/png;base64,'+TWEMOJI[ch]]);ASSETS.sprites.forEach(n=>list.push(['sp_'+n,'assets/sprites/'+n+'.png']));ASSETS.tiles.forEach(n=>list.push(['tl_'+n,'assets/tiles/'+n+'.png']));
