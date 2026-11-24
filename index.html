@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v15</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v16</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -137,7 +137,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v15</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v16</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" onclick="UI.charSel()">🚇 출근하기</button>
@@ -506,7 +506,7 @@ const BOSSES=[
 ];
 const STAGES=[
  {nm:'신도림역',tile:'sindorim',c1:'#2b3a2f',c2:'#33463a',mix:{passenger:10,phone:3,backpacker:1}},
- {nm:'사당역',tile:'sadang',c1:'#3a2f2b',c2:'#463833',mix:{passenger:8,phone:3,backpacker:3,manspread:2,hiker:2},dens:1.5},
+ {nm:'사당역',tile:'sadang',c1:'#3a2f2b',c2:'#463833',mix:{passenger:8,phone:3,backpacker:3,manspread:2,hiker:2},dens:1.3},
  {nm:'강남역',tile:'gangnam',c1:'#2b2f3f',c2:'#33394d',mix:{passenger:6,cutter:5,backpacker:3,manspread:2,hiker:2,phone:2}},
  {nm:'잠실역',tile:'jamsil',c1:'#3a2b3f',c2:'#46334d',mix:{passenger:5,cutter:4,flyer:4,backpacker:3,manspread:2,hiker:3,kickboard:3,cart:2}},
  {nm:'회사 로비',tile:'lobby',c1:'#3d3d3d',c2:'#4a4a4a',mix:{passenger:3,cutter:3,flyer:3,backpacker:3,manspread:2,hiker:2,phone:2,kickboard:3,cart:2,docguy:4,guard:3}}
@@ -514,7 +514,7 @@ const STAGES=[
 const ELITES=['influencer','door','traitor','holder'];
 const TIPS=['☕ 카페인 4 + 📱 디지털 4 = 무한 연사 빌드','🎒 짐꾼 4 + 🫸 밀치기 장인 = 지옥철 불도저','💰 월급 4 + 💸 연봉 협상 = 돈으로 때리는 부장님 빌드','🍙 편의점 4 + 💘 사내 연애 = 회복할수록 적이 내 편','📝 퇴사 각오 + 👻 무단 결근 = 한 방 맞으면 끝, 대신 3배 딜'];
 
-const DIFFS={easy:{nm:'쉬움',ic:'🌱',ds:'적 체력 -30%, 공격력 -40%, 수 -25%',hp:.7,dmg:.6,spawn:.75,spd:.95,sal:.6},normal:{nm:'보통',ic:'🚇',ds:'기본 난이도',hp:1,dmg:1,spawn:1,spd:1,sal:1},hell:{nm:'지옥철',ic:'🔥',ds:'적 체력·공격력 +40%, 수 +35%, 연봉 1.6배',hp:1.4,dmg:1.4,spawn:1.35,spd:1.1,sal:1.6}};
+const DIFFS={easy:{nm:'쉬움',ic:'🌱',ds:'적 체력 -30%, 공격력 -40%, 수 -25%',hp:.7,dmg:.6,spawn:.75,spd:.95,sal:.6,late:0},normal:{nm:'보통',ic:'🚇',ds:'기본 난이도 (후반 조금 더 강해짐)',hp:1,dmg:1,spawn:1,spd:1,sal:1,late:.35},hell:{nm:'지옥철',ic:'🔥',ds:'적 체력·공격력 +40%, 수 +35%, 후반 급격히 강해짐, 연봉 1.6배',hp:1.4,dmg:1.4,spawn:1.35,spd:1.1,sal:1.6,late:1.45}};
 // 경험치 보너스 소프트캡: +100%까지는 그대로, 초과분은 50% 효율
 function xpCap(m){const b=m-1;return b>1?2+(b-1)*.5:m;}
 // ================= 메타 저장 =================
@@ -876,7 +876,7 @@ const G={state:'menu',
  },
  spawn(dt){
   const st=STAGES[this.stage];const prog=this.clock/3600;
-  let rate=(0.9+prog*6+prog*prog*10)*(1+.05*this.stage*this.stage)*(st.dens||1)*P.s.spawnMult*DIFFS[this.diff||'normal'].spawn;if(this.event&&this.event.type==='delay')rate*=2;
+  let rate=(0.9+prog*6+prog*prog*10)*(1+.05*this.stage*this.stage)*(st.dens||1)*P.s.spawnMult*DIFFS[this.diff||'normal'].spawn*(1+DIFFS[this.diff||'normal'].late*.5*Math.pow(Math.min(1,this.clock/3600),2))*(this.boss&&this.stage<=1?.7:1);if(this.event&&this.event.type==='delay')rate*=2;
   if(P.flags.endless&&this.clock>3600)rate*=1+this.endlessMin*.1;
   this.spawnAcc+=rate*dt;
   while(this.spawnAcc>=1){this.spawnAcc--;if(E.length>=400)break;const t=wpick(st.mix);
@@ -887,10 +887,10 @@ const G={state:'menu',
  spawnAtEdge(t){const a=(Math.random()<.5?0:Math.PI)+rnd(-1,1),R=Math.max(VW,VH)*.6+40;let x=P.x+Math.cos(a)*R,y=P.y+Math.sin(a)*R;if(t==='holder'){x=P.x+Math.cos(a)*250;y=P.y+Math.sin(a)*250;}return this.mkEnemy(t,x,y);},
  hpScale(){const pr=this.clock/3600;let k=1+pr*3+pr*pr*10;if(P.flags.endless&&this.clock>3600)k*=1+this.endlessMin*.25;return k;},
  mkEnemy(t,x,y){y=clamp(y,WY0,WY1);const d=ENEMY[t];const sc=this.hpScale();const e={t,d,x,y,ic:d.ic,sp:t,r:d.r,hp:d.hp*sc*(d.elite?1.5+.12*this.stage+.06*this.stage*this.stage:1),mhp:0,spd:d.spd,dmg:d.dmg*(1+this.clock/3600*2.6)*(1+.04*this.stage+.06*this.stage*this.stage),kbx:0,kby:0,slow:0,poison:0,poisonD:0,stun:0,charm:0,hitT:0,dead:false,elite:!!d.elite,boss:false,ai:0,aiT:rnd(0,2),wx:0,wy:0,ally:d.traitor?20:0,buffed:0};
-  {const D=DIFFS[G.diff||'normal'];e.hp*=D.hp;e.dmg*=D.dmg;}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);}return e;},
+  {const D=DIFFS[G.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,G.clock/3600),2);e.hp*=D.hp*L;e.dmg*=D.dmg*(1+(L-1)*.6);}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);}return e;},
  spawnBoss(b){const a=rnd(0,Math.PI*2);const R=b.id==='b3'?260:380;const e=this.mkEnemy('passenger',P.x+Math.cos(a)*R,P.y+Math.sin(a)*R);
   Object.assign(e,{t:b.id,bd:b,ic:b.ic,sp:b.sp,r:b.r,hp:b.hp*(1+this.clock/3600*1.2),spd:b.spd,dmg:b.dmg,boss:true,elite:true,phase:1,aiT:2});e.mhp=e.hp;e.d={nm:b.nm,xp:80,kbRes:1};
-  {const D=DIFFS[this.diff||'normal'];e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp;e.dmg=b.dmg*D.dmg;e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect){e.hp*=2;e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
+  {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect){e.hp*=2;e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
 
  // ---- 이벤트
  updEvent(dt){
