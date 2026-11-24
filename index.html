@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v12</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v13</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -131,7 +131,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v12</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v13</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" onclick="UI.charSel()">🚇 출근하기</button>
@@ -493,10 +493,10 @@ const ENEMY={
  holder:{nm:'출입문 앞 버티기 장인',ic:'🗿',hp:400,spd:0,dmg:10,r:22,xp:30,elite:1,holder:1,kbRes:1}
 };
 const BOSSES=[
- {t:600,id:'b1',nm:'환승 통로의 지배자',ic:'🦏',sp:'boss1',hp:900,r:34,spd:55,dmg:18,line:'밀지 마세요!!'},
- {t:1500,id:'b2',nm:'자리 맡는 할아버지',ic:'👴',sp:'boss2',hp:2200,r:34,spd:40,dmg:16,line:'젊은 사람이 서서 가!'},
- {t:2400,id:'b3',nm:'고장 난 에스컬레이터',ic:'🪜',sp:'boss3',hp:3800,r:40,spd:0,dmg:14,line:'(삐걱... 점검 중...)'},
- {t:3300,id:'b4',nm:'팀장님',ic:'👔',sp:'boss4',hp:9000,r:38,spd:48,dmg:20,line:'보고서 다시 써와.'}
+ {t:600,id:'b1',nm:'환승 통로의 지배자',ic:'🦏',sp:'boss1',hp:1150,r:34,spd:57,dmg:18,line:'밀지 마세요!!'},
+ {t:1500,id:'b2',nm:'자리 맡는 할아버지',ic:'👴',sp:'boss2',hp:3800,r:34,spd:46,dmg:18,line:'젊은 사람이 서서 가!'},
+ {t:2400,id:'b3',nm:'고장 난 에스컬레이터',ic:'🪜',sp:'boss3',hp:6200,r:40,spd:0,dmg:16,line:'(삐걱... 점검 중...)'},
+ {t:3300,id:'b4',nm:'팀장님',ic:'👔',sp:'boss4',hp:15000,r:38,spd:54,dmg:22,line:'보고서 다시 써와.'}
 ];
 const STAGES=[
  {nm:'신도림역',tile:'sindorim',c1:'#2b3a2f',c2:'#33463a',mix:{passenger:10,phone:3,backpacker:1}},
@@ -867,7 +867,7 @@ const G={state:'menu',
  },
  spawn(dt){
   const st=STAGES[this.stage];const prog=this.clock/3600;
-  let rate=(0.9+prog*6+prog*prog*10)*(st.dens||1)*P.s.spawnMult*DIFFS[this.diff||'normal'].spawn;if(this.event&&this.event.type==='delay')rate*=2;
+  let rate=(0.9+prog*6+prog*prog*10)*(1+.05*this.stage*this.stage)*(st.dens||1)*P.s.spawnMult*DIFFS[this.diff||'normal'].spawn;if(this.event&&this.event.type==='delay')rate*=2;
   if(P.flags.endless&&this.clock>3600)rate*=1+this.endlessMin*.1;
   this.spawnAcc+=rate*dt;
   while(this.spawnAcc>=1){this.spawnAcc--;if(E.length>=400)break;const t=wpick(st.mix);
@@ -877,7 +877,7 @@ const G={state:'menu',
  },
  spawnAtEdge(t){const a=(Math.random()<.5?0:Math.PI)+rnd(-1,1),R=Math.max(VW,VH)*.6+40;let x=P.x+Math.cos(a)*R,y=P.y+Math.sin(a)*R;if(t==='holder'){x=P.x+Math.cos(a)*250;y=P.y+Math.sin(a)*250;}return this.mkEnemy(t,x,y);},
  hpScale(){const pr=this.clock/3600;let k=1+pr*3+pr*pr*10;if(P.flags.endless&&this.clock>3600)k*=1+this.endlessMin*.25;return k;},
- mkEnemy(t,x,y){y=clamp(y,WY0,WY1);const d=ENEMY[t];const sc=this.hpScale();const e={t,d,x,y,ic:d.ic,sp:t,r:d.r,hp:d.hp*sc*(d.elite?1.3:1),mhp:0,spd:d.spd,dmg:d.dmg*(1+this.clock/3600*2.6),kbx:0,kby:0,slow:0,poison:0,poisonD:0,stun:0,charm:0,hitT:0,dead:false,elite:!!d.elite,boss:false,ai:0,aiT:rnd(0,2),wx:0,wy:0,ally:d.traitor?20:0,buffed:0};
+ mkEnemy(t,x,y){y=clamp(y,WY0,WY1);const d=ENEMY[t];const sc=this.hpScale();const e={t,d,x,y,ic:d.ic,sp:t,r:d.r,hp:d.hp*sc*(d.elite?1.5+.12*this.stage+.06*this.stage*this.stage:1),mhp:0,spd:d.spd,dmg:d.dmg*(1+this.clock/3600*2.6)*(1+.04*this.stage+.06*this.stage*this.stage),kbx:0,kby:0,slow:0,poison:0,poisonD:0,stun:0,charm:0,hitT:0,dead:false,elite:!!d.elite,boss:false,ai:0,aiT:rnd(0,2),wx:0,wy:0,ally:d.traitor?20:0,buffed:0};
   {const D=DIFFS[G.diff||'normal'];e.hp*=D.hp;e.dmg*=D.dmg;}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);}return e;},
  spawnBoss(b){const a=rnd(0,Math.PI*2);const R=b.id==='b3'?260:380;const e=this.mkEnemy('passenger',P.x+Math.cos(a)*R,P.y+Math.sin(a)*R);
   Object.assign(e,{t:b.id,bd:b,ic:b.ic,sp:b.sp,r:b.r,hp:b.hp*(1+this.clock/3600*1.2),spd:b.spd,dmg:b.dmg,boss:true,elite:true,phase:1,aiT:2});e.mhp=e.hp;e.d={nm:b.nm,xp:80,kbRes:1};
@@ -1074,24 +1074,24 @@ break;}
    if(e.burn>0){e.burn-=dt;e.hp-=e.burnD*dt;if(e.hp<=0){this.kill(e);continue;}}
    if(e.frozen>0){e.frozen-=dt;continue;}
    if(e.stun>0){e.stun-=dt;continue;}
-   let spd=e.spd*es*(e.slow>0?.5:1)*(e.buffed>0?1.5:1);if(e.slow>0)e.slow-=dt;if(e.buffed>0)e.buffed-=dt;
+   let spd=e.spd*es*(e.boss?1:(1+.03*this.stage+.035*this.stage*this.stage))*(e.slow>0?.5:1)*(e.buffed>0?1.5:1);if(e.slow>0)e.slow-=dt;if(e.buffed>0)e.buffed-=dt;
    let tx=P.x,ty=P.y;
    // 아군(배신 동료)
    if(e.ally>0){e.ally-=dt;const t=this.nearest(e.x,e.y,300);if(t){tx=t.x;ty=t.y;if((t.x-e.x)**2+(t.y-e.y)**2<(t.r+e.r+6)**2){if(e.aiT<=0){this.hurt(t,15,null,true);e.aiT=.5;}}}else{tx=P.x+40;ty=P.y+40;}
-    e.aiT-=dt;if(e.ally<=0){this.num(e.x,e.y-30,'팀장님한테 너도 늦는다고 말할게~','#f9f');e.spd=150;e.aiT=1;}
+    e.aiT-=dt;if(e.ally<=0){this.num(e.x,e.y-30,'팀장님한테 너도 늦는다고 말할게~','#f9f');e.spd=95;e.d=Object.assign({},e.d,{dasher:1,traitor:0});e.ai=0;e.aiT=.6;}
     const dx=tx-e.x,dy=ty-e.y,l=Math.hypot(dx,dy)||1;e.x+=dx/l*Math.min(l,spd*1.3*dt);e.y+=dy/l*Math.min(l,spd*1.3*dt);continue;}
    // 매혹
    if(e.charm>0){e.charm-=dt;const t=this.nearest(e.x,e.y,200);if(t&&t!==e){tx=t.x;ty=t.y;if((t.x-e.x)**2+(t.y-e.y)**2<(t.r+e.r+4)**2)this.hurt(t,e.dmg*dt*3*(P.flags.charmBoost?2:1),null,true);}else{tx=e.x*2-P.x;ty=e.y*2-P.y;}}
    if(e.boss){this.bossAI(e,dt);}
-   else if(e.d.holder){spd=0;if((e.aiT-=dt)<=0){e.aiT=1;for(const o of GRID.query(e.x,e.y,160,QBUF2))if(o!==e)o.hp=Math.min(o.mhp*1.5,o.hp+o.mhp*.05);}}
+   else if(e.d.holder){spd=0;if((e.aiT-=dt)<=0){e.aiT=1;for(const o of GRID.query(e.x,e.y,160,QBUF2))if(o!==e)o.hp=Math.min(o.mhp*1.5,o.hp+o.mhp*.05);}e.ringT=(e.ringT||3)-dt;if(e.ringT<=0){e.ringT=3.2;HAZ.push({x:e.x,y:e.y,r:0,maxR:200,life:1,max:1,type:'ring',dmg:e.dmg,hit:false});this.num(e.x,e.y-50,'비켜드릴 수 없습니다','#d6d3d1');}}
    else if(e.d.dasher&&e.charm<=0){e.aiT-=dt;if(e.ai===0&&e.aiT<=0&&dist2(e,P)<300*300){e.ai=1;e.aiT=.5;const a=Math.atan2(P.y-e.y,P.x-e.x);e.dv={x:Math.cos(a),y:Math.sin(a)};}
-    if(e.ai===1){spd=0;if(e.aiT<=0){e.ai=2;e.aiT=.5;}}else if(e.ai===2){e.x+=e.dv.x*380*dt;e.y+=e.dv.y*380*dt;spd=0;if(e.aiT<=0){e.ai=0;e.aiT=rnd(2,3);}}}
+    if(e.ai===1){spd=0;if(e.aiT<=0){e.ai=2;e.aiT=.5;}}else if(e.ai===2){e.x+=e.dv.x*(380+30*this.stage)*dt;e.y+=e.dv.y*(380+30*this.stage)*dt;spd=0;if(e.aiT<=0){e.ai=0;e.aiT=rnd(2,3);}}}
    else if(e.d.rush&&e.charm<=0){e.aiT-=dt;if(!e.dv||e.aiT<=0){e.aiT=2.6;const a=Math.atan2(P.y-e.y,P.x-e.x);e.dv={x:Math.cos(a),y:Math.sin(a)};}tx=e.x+e.dv.x*100;ty=e.y+e.dv.y*100;}
    else if(e.d.wander){e.aiT-=dt;if(e.aiT<=0){e.aiT=rnd(.5,1.5);e.wx=rnd(-1,1);e.wy=rnd(-1,1);}tx=P.x+e.wx*200;ty=P.y+e.wy*200;}
    else if(e.d.ranged&&e.charm<=0){const d=Math.sqrt(dist2(e,P));if(d<260){tx=e.x*2-P.x;ty=e.y*2-P.y;}else if(d<380)spd=0;e.aiT-=dt;if(e.aiT<=0&&d<450){e.aiT=2.2;const a=Math.atan2(P.y-e.y,P.x-e.x);EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*220,vy:Math.sin(a)*220,r:9,dmg:e.dmg,life:3,ic:'📄',src:e});}}
    if(e.d.slowField){e.aiT-=dt;if(e.aiT<=0){e.aiT=3;HAZ.push({x:e.x,y:e.y,r:55,life:4,type:'slow'});}}
-   if(e.d.buffer){for(const o of GRID.query(e.x,e.y,150,QBUF2))if(o!==e)o.buffed=.5;}
-   if(e.d.doorer){e.aiT-=dt;if(e.aiT<=0){e.aiT=6;HAZ.push({x:e.x,y:e.y,r:70,life:3,type:'door',src:e});}}
+   if(e.d.buffer){for(const o of GRID.query(e.x,e.y,190,QBUF2))if(o!==e){o.buffed=.5;if(o.hp<o.mhp)o.hp=Math.min(o.mhp,o.hp+o.mhp*.04*dt);}e.flashT=(e.flashT||4)-dt;if(e.flashT<=0){e.flashT=4;HAZ.push({x:e.x,y:e.y,r:0,maxR:180,life:.8,max:.8,type:'ring',dmg:e.dmg*.8,hit:false});this.num(e.x,e.y-50,'📸 플래시!','#f9a8d4');}}
+   if(e.d.doorer){e.aiT-=dt;if(e.aiT<=0){e.aiT=4.5;HAZ.push({x:e.x,y:e.y,r:90,life:3.5,type:'door',src:e});}}
    // 이동
    if(spd>0&&!(e.boss&&e.bmove===false)){const dx=tx-e.x,dy=ty-e.y,l=Math.hypot(dx,dy)||1;e.x+=dx/l*spd*dt;e.y+=dy/l*spd*dt;}
    if(e.kbx||e.kby){e.x+=e.kbx*dt*6;e.y+=e.kby*dt*6;e.kbx*=.8;e.kby*=.8;if(Math.abs(e.kbx)<1)e.kbx=0;if(Math.abs(e.kby)<1)e.kby=0;}
@@ -1113,15 +1113,15 @@ break;}
   const P2=e.phase===2;
   if(b.id==='b1'){if(e.ai===0){if(e.aiT<=0){e.ai=1;e.aiT=P2?.5:.8;const a=Math.atan2(P.y-e.y,P.x-e.x);e.dv={x:Math.cos(a),y:Math.sin(a)};}}
    else if(e.ai===1){e.bmove=false;FX.push({type:'line',x1:e.x,y1:e.y,x2:e.x+e.dv.x*900,y2:e.y+e.dv.y*900,life:.03,max:.03,col:'rgba(255,0,0,.5)',w:e.r*2});if(e.aiT<=0){e.ai=2;e.aiT=1;}}
-   else{e.bmove=false;e.x+=e.dv.x*(P2?1100:950)*dt;e.y+=e.dv.y*(P2?1100:950)*dt;e.y=clamp(e.y,WY0,WY1);if(e.aiT<=0){e.ai=0;if(P2){e.chain=(e.chain||0)+1;for(let i=0;i<3;i++)this.mkEnemy('passenger',e.x+rnd(-40,40),e.y+rnd(-40,40));e.aiT=e.chain%2?0:2.2;}else e.aiT=2.5;}}}
-  else if(b.id==='b2'){if(e.aiT<=0){e.aiT=P2?1.7:2.5;HAZ.push({x:e.x,y:e.y,r:0,maxR:220,life:.9,max:.9,type:'ring',dmg:e.dmg,hit:false});if(P2)HAZ.push({x:e.x,y:e.y,r:0,maxR:330,life:1.4,max:1.4,type:'ring',dmg:e.dmg,hit:false});this.num(e.x,e.y-50,P2?'어흠!!':'에헴!','#fc8');}
-   if(P2){e.callT=(e.callT||0)-dt;if(e.callT<=0){e.callT=6;for(let i=0;i<4;i++)this.mkEnemy('hiker',e.x+rnd(-60,60),e.y+rnd(-60,60));this.num(e.x,e.y-70,'동호회 집합!','#c6e01e');}}}
-  else if(b.id==='b3'){e.bmove=false;e.rot=(e.rot||0)+dt*.8;if(P2)e.rot+=dt*.7;if(e.aiT<=0){e.aiT=P2?.8:1;const nd=P2?12:8;for(let i=0;i<nd;i++){const a=e.rot+i*Math.PI*2/nd;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*200,vy:Math.sin(a)*200,r:11,dmg:e.dmg,life:4,ic:'🟫',src:e});}}
+   else{e.bmove=false;e.x+=e.dv.x*(P2?1100:950)*dt;e.y+=e.dv.y*(P2?1100:950)*dt;e.y=clamp(e.y,WY0,WY1);if(e.aiT<=0){e.ai=0;if(P2){e.chain=(e.chain||0)+1;for(let i=0;i<3;i++)this.mkEnemy('passenger',e.x+rnd(-40,40),e.y+rnd(-40,40));e.aiT=e.chain%2?0:2.1;}else e.aiT=2.4;}}}
+  else if(b.id==='b2'){if(e.aiT<=0){e.aiT=P2?1.4:2.1;HAZ.push({x:e.x,y:e.y,r:0,maxR:220,life:.9,max:.9,type:'ring',dmg:e.dmg,hit:false});if(P2)HAZ.push({x:e.x,y:e.y,r:0,maxR:330,life:1.4,max:1.4,type:'ring',dmg:e.dmg,hit:false});this.num(e.x,e.y-50,P2?'어흠!!':'에헴!','#fc8');}
+   if(P2||true){e.callT=(e.callT||(P2?0:4))-dt;if(e.callT<=0){e.callT=P2?5:9;for(let i=0;i<(P2?5:3);i++)this.mkEnemy('hiker',e.x+rnd(-60,60),e.y+rnd(-60,60));this.num(e.x,e.y-70,'동호회 집합!','#c6e01e');}}}
+  else if(b.id==='b3'){e.bmove=false;e.rot=(e.rot||0)+dt*.8;if(P2)e.rot+=dt*.7;if(e.aiT<=0){e.aiT=P2?.7:.9;const nd=P2?14:10;for(let i=0;i<nd;i++){const a=e.rot+i*Math.PI*2/nd;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*(P2?250:225),vy:Math.sin(a)*(P2?250:225),r:12,dmg:e.dmg,life:4,ic:'🟫',src:e});}}
    if(P2){e.dropT=(e.dropT||0)-dt;if(e.dropT<=0){e.dropT=1.8;for(let i=0;i<5;i++){const a=rnd(0,7),d=i===0?0:rnd(90,190);HAZ.push({x:P.x+Math.cos(a)*d,y:clamp(P.y+Math.sin(a)*d,WY0,WY1),r:85,life:1.45,max:1.45,arm:1.1,armMax:1.1,type:'drop',dmg:e.dmg*1.3});}}}}
   else if(b.id==='b4'){if(e.phase===1&&e.hp<e.mhp*.5){e.phase=2;this.announce={t:3,txt:'👔 팀장님: "회의 좀 할까?"'};this.shake=.5;}
-   if(e.aiT<=0){if(e.phase===1){e.aiT=1.2;const a0=Math.atan2(P.y-e.y,P.x-e.x);for(let i=-2;i<=2;i++){const a=a0+i*.22;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*240,vy:Math.sin(a)*240,r:11,dmg:e.dmg*.7,life:4,ic:'📄',src:e});}}
-    else{e.aiT=.9;e.mt=(e.mt||0)+1;const a0=Math.atan2(P.y-e.y,P.x-e.x);for(let i=-3;i<=3;i++){const a=a0+i*.2;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*300,vy:Math.sin(a)*300,r:11,dmg:e.dmg*.7,life:4,ic:'📄',src:e});}
-     if(e.mt%4===0){HAZ.push({x:P.x,y:P.y,r:90,life:1.6,max:1.6,type:'meeting',arm:.8});}}}}
+   if(e.aiT<=0){if(e.phase===1){e.aiT=1.0;e.mt=(e.mt||0)+1;if(e.mt%5===0)HAZ.push({x:P.x,y:P.y,r:90,life:1.6,max:1.6,type:'meeting',arm:.9});const a0=Math.atan2(P.y-e.y,P.x-e.x);for(let i=-3;i<=3;i++){const a=a0+i*.2;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*265,vy:Math.sin(a)*265,r:11,dmg:e.dmg*.7,life:4,ic:'📄',src:e});}}
+    else{e.aiT=.75;e.mt=(e.mt||0)+1;if(e.mt%6===0){for(let k=0;k<16;k++){const a=k*Math.PI/8;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*230,vy:Math.sin(a)*230,r:11,dmg:e.dmg*.6,life:4,ic:'📑',src:e});}this.num(e.x,e.y-60,'전원 야근!','#f87171');}const a0=Math.atan2(P.y-e.y,P.x-e.x);for(let i=-4;i<=4;i++){const a=a0+i*.17;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*320,vy:Math.sin(a)*320,r:11,dmg:e.dmg*.7,life:4,ic:'📄',src:e});}
+     if(e.mt%3===0){HAZ.push({x:P.x,y:P.y,r:105,life:1.6,max:1.6,type:'meeting',arm:.8});}}}}
  },
  updEProj(dt){for(const p of EPROJ){p.life-=dt;const ef=1-P.s.eprojSlow;p.x+=p.vx*dt*ef;p.y+=p.vy*dt*ef;if((p.x-P.x)**2+(p.y-P.y)**2<(p.r+12)**2){p.life=0;if(P.flags.reflect&&Math.random()<.2){this.proj({x:p.x,y:p.y,vx:-p.vx*2,vy:-p.vy*2,r:9,dmg:p.dmg*3*this.dmgMul(),life:2,pierce:3,ic:p.ic});this.num(P.x,P.y-24,'반사!','#9cf');}else if(P.ghostT<=0)this.hurtPlayer(p.dmg,p.src,true);}}EPROJ=EPROJ.filter(p=>p.life>0);},
  updHaz(dt){for(const h of HAZ){h.life-=dt;const d2=(h.x-P.x)**2+(h.y-P.y)**2;
@@ -1129,7 +1129,7 @@ break;}
    if(h.type==='ring'){h.r=h.maxR*(1-h.life/h.max);if(!h.hit&&Math.abs(Math.sqrt(d2)-h.r)<18){h.hit=true;this.hurtPlayer(h.dmg,null,true);}}
    if(h.type==='meeting'){h.arm-=dt;if(h.arm<=0&&!h.fired){h.fired=1;if(d2<h.r*h.r){P.stunned=1;this.num(P.x,P.y-30,'회의 중...','#f88');}}}
    if(h.type==='drop'){h.arm-=dt;if(h.arm<=0&&!h.fired){h.fired=1;FX.push({type:'ring',x:h.x,y:h.y,r:h.r,life:.3,max:.3,col:'#dc2626'});this.shake=.3;if(d2<h.r*h.r)this.hurtPlayer(h.dmg,null,true);}}
-   if(h.type==='door'){h.st=(h.st||0)-dt;if(h.st<=0){h.st=3;if(h.src&&!h.src.dead)for(let i=0;i<5;i++)this.mkEnemy('passenger',h.x+rnd(-40,40),h.y+rnd(-40,40));}}}
+   if(h.type==='door'){h.st=(h.st||0)-dt;if(h.st<=0){h.st=2.4;if(h.src&&!h.src.dead)for(let i=0;i<6;i++)this.mkEnemy('passenger',h.x+rnd(-40,40),h.y+rnd(-40,40));}}}
   HAZ=HAZ.filter(h=>h.life>0);},
  updGems(dt){const s=P.s;const mg=s.magnet;
   for(const g of GEMS){const d2=(g.x-P.x)**2+(g.y-P.y)**2;if(g.vac||d2<mg*mg||g.k==='chest'&&d2<40*40){const d=Math.sqrt(d2)||1;const v=g.vac?900:500;g.x+=(P.x-g.x)/d*v*dt;g.y+=(P.y-g.y)/d*v*dt;
