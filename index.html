@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v18</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v19</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -146,15 +146,23 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 #menu .signboard{margin-top:6px}#menu .led{margin:8px 0 10px}
 .chars{max-width:1320px}.ch{width:150px;padding:12px 8px 10px}.ch .ic img{height:96px!important}.ch .ic{margin:14px 0 2px}.ch .nm{font-size:16px}.ch .ds{font-size:11.5px}
 #chars h2{margin-bottom:8px}#chars .diffRow{margin:0 0 8px}#chars .diffBtn{padding:6px 12px}
+#hudTip{position:fixed;display:none;z-index:8;max-width:320px;background:rgba(10,13,20,.97);border:1px solid #475569;border-radius:10px;padding:9px 11px;font-size:12px;line-height:1.5;color:#cbd5e1;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+#hudTip .tt-h{display:flex;align-items:center;gap:6px;font-size:14px;color:#fff;margin-bottom:3px}#hudTip .tt-lv{margin-left:auto;font:11px Bungee,sans-serif;color:#93c5fd}
+#hudTip .tt-lv.r-rare{color:#60a5fa}#hudTip .tt-lv.r-legend{color:#fbbf24}#hudTip .tt-lv.r-curse{color:#f87171}#hudTip .tt-lv.r-common{color:#cbd5e1}
+#hudTip .tt-d{color:#e5e7eb;margin-bottom:5px}
+#hudTip .tt-g{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;background:#111827;border-radius:6px;padding:5px 8px;margin:4px 0}#hudTip .tt-g span{color:#94a3b8}#hudTip .tt-g b{color:#fde68a;text-align:right}
+#hudTip .tt-s{margin-top:4px;color:#cbd5e1}#hudTip .ok{color:#4ade80}#hudTip .no{color:#f87171}
+#hudTip .tt-t{margin-top:5px;display:flex;flex-wrap:wrap;gap:4px}#hudTip .ttag{background:#1e293b;border-radius:999px;padding:1px 8px;font-size:11px}
+#hudTip .tt-lvl{color:#64748b;margin:2px 0}#hudTip .tt-lvl.on{color:#86efac}
 </style>
 </head>
 <body>
 <canvas id="cv"></canvas>
-<div id="joy"></div><div id="dashBtn">대시</div>
+<div id="hudTip"></div><div id="joy"></div><div id="dashBtn">대시</div>
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v18</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v19</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -611,7 +619,8 @@ const cv=document.getElementById('cv');const ctx=cv.getContext('2d');
 let VW=800,VH=600;
 function resize(){VW=cv.width=window.innerWidth;VH=cv.height=window.innerHeight;}
 window.addEventListener('resize',resize);resize();
-const KEYS={};
+const KEYS={};const MOUSE={x:0,y:0,on:false};
+cv.addEventListener('mousemove',e=>{MOUSE.x=e.clientX;MOUSE.y=e.clientY;MOUSE.on=true;});cv.addEventListener('mouseleave',()=>{MOUSE.on=false;});
 window.addEventListener('keydown',e=>{KEYS[e.key.toLowerCase()]=1;SFX.init();if(e.key==='Escape'&&G.state==='play')G.pause();else if(e.key==='Escape'&&G.state==='pause')G.resume();if(e.key===' '){G.tryDash();e.preventDefault();}if(e.key.toLowerCase()==='h'&&G.state==='play')G.showHit=!G.showHit;});
 window.addEventListener('keyup',e=>{KEYS[e.key.toLowerCase()]=0;});
 window.addEventListener('pointerdown',()=>SFX.init(),{once:true});
@@ -1583,7 +1592,7 @@ break;}
   ctx.translate((1-kin)*-VW,0);ctx.fillStyle='#b91c1c';ctx.beginPath();ctx.moveTo(0,cy-70);ctx.lineTo(VW,cy-90);ctx.lineTo(VW,cy+60);ctx.lineTo(0,cy+80);ctx.closePath();ctx.fill();ctx.fillStyle='#111';for(let x=-40;x<VW+40;x+=40){ctx.beginPath();ctx.moveTo(x,cy-84);ctx.lineTo(x+20,cy-84);ctx.lineTo(x+10,cy-70);ctx.lineTo(x-10,cy-70);ctx.fill();ctx.beginPath();ctx.moveTo(x,cy+66);ctx.lineTo(x+20,cy+66);ctx.lineTo(x+10,cy+80);ctx.lineTo(x-10,cy+80);ctx.fill();}
   drawSprite(b.sp,b.ic,VW*.22,cy+10,110,false,this.real*1.6);ctx.textAlign='left';ctx.fillStyle='#ffd84a';ctx.font="20px 'Black Han Sans',sans-serif";ctx.fillText('⚠ 보스 등장',VW*.36,cy-28);ctx.fillStyle='#fff';ctx.font="46px 'Black Han Sans',sans-serif";ctx.fillText(b.nm,VW*.36,cy+22);ctx.font="bold 18px 'Noto Sans KR',sans-serif";ctx.fillStyle='#fde68a';ctx.fillText('"'+b.line+'"',VW*.36,cy+52);ctx.restore();}
   if(this.arrive&&!this.cutin){const a=this.arrive,t=a.t,L=LINE[a.st];const kin=clamp((2.4-t)/.45,0,1),ease=1-Math.pow(1-kin,3);ctx.fillStyle='rgba(5,8,14,'+(.55*kin)+')';ctx.fillRect(0,0,VW,VH);const sc=Math.min(1.9,VW/420);ctx.save();ctx.translate(VW/2-160*sc+(1-ease)*VW,VH/2-60*sc);ctx.scale(sc,sc);STN.sign(0,0,L);ctx.restore();ctx.globalAlpha=kin;ctx.textAlign='center';ctx.fillStyle='#fff';ctx.font="bold 20px 'Noto Sans KR',sans-serif";ctx.fillText('🚇 열차가 '+L.nm+'에 도착했습니다',VW/2,VH/2+40*sc);ctx.fillStyle='#9fb3c8';ctx.font="15px 'Noto Sans KR',sans-serif";ctx.fillText('잠시 후 역내 편의점이 열립니다',VW/2,VH/2+40*sc+26);ctx.globalAlpha=1;}},
- drawHUD(){const s=P.s;const L=LINE[this.stage];ctx.textAlign='center';ctx.textBaseline='alphabetic';
+ drawHUD(){const s=P.s;const L=LINE[this.stage];this.hudHits=[];ctx.textAlign='center';ctx.textBaseline='alphabetic';
   // ── 노선도 바
   const bw=Math.min(VW-24,760),bx=VW/2-bw/2;ctx.fillStyle='rgba(12,15,22,.88)';rr(bx,8,bw,44,12);ctx.fill();
   const lx0=bx+50,lx1=bx+bw-50;for(let i=0;i<4;i++){const a=lx0+(lx1-lx0)*i/4,b=lx0+(lx1-lx0)*(i+1)/4;ctx.fillStyle=LINE[i+1].col;ctx.fillRect(a,24,b-a,6);}
@@ -1619,18 +1628,21 @@ break;}
   // ── 왼쪽 슬롯
   ctx.textAlign='center';let y=64;
   const slots=(items,sz)=>{if(!items.length)return;const pad=4,w=items.length*(sz+pad)+pad;ctx.fillStyle='rgba(12,15,22,.8)';rr(8,y,w,sz+pad*2,8);ctx.fill();let x=8+pad;
-   for(const it of items){ctx.fillStyle=it.evo?'rgba(255,196,0,.25)':'rgba(255,255,255,.06)';rr(x,y+pad,sz,sz,6);ctx.fill();if(it.r){ctx.strokeStyle=UI.rcol(it.r);ctx.lineWidth=2;rr(x,y+pad,sz,sz,6);ctx.stroke();}
+   for(const it of items){if(it.ref)this.hudHits.push({x,y:y+pad,w:sz,h:sz,ref:it.ref});ctx.fillStyle=it.evo?'rgba(255,196,0,.25)':'rgba(255,255,255,.06)';rr(x,y+pad,sz,sz,6);ctx.fill();if(it.r){ctx.strokeStyle=UI.rcol(it.r);ctx.lineWidth=2;rr(x,y+pad,sz,sz,6);ctx.stroke();}
     const c=emo(it.ic,Math.round(sz*.72));ctx.drawImage(c,x+sz/2-c.width/2,y+pad+sz/2-c.height/2);
     if(it.lv){ctx.fillStyle=it.evo?'#ffc400':'#111';rr(x+sz-14,y+pad+sz-12,14,12,4);ctx.fill();ctx.fillStyle=it.evo?'#111':'#fff';ctx.font='bold 9px sans-serif';ctx.fillText(it.evo?'★':it.lv,x+sz-7,y+pad+sz-3);}x+=sz+pad;}y+=sz+pad*2+4;};
-  slots(P.weapons.map(w=>({ic:wIcon(w),lv:w.lv,evo:w.evo})),34);
-  slots(P.passives.map(p=>({ic:PASSIVES[p.id].ic,lv:p.lv})),28);
-  for(let i=0;i<P.augs.length;i+=9)slots(P.augs.slice(i,i+9).map(a=>({ic:a.ic,r:a.r})),24);
+  slots(P.weapons.map(w=>({ic:wIcon(w),lv:w.lv,evo:w.evo,ref:{k:'w',o:w}})),34);
+  slots(P.passives.map(p=>({ic:PASSIVES[p.id].ic,lv:p.lv,ref:{k:'p',o:p}})),28);
+  for(let i=0;i<P.augs.length;i+=9)slots(P.augs.slice(i,i+9).map(a=>({ic:a.ic,r:a.r,ref:{k:'a',o:a}})),24);
   // ── 오른쪽: 처치/골드 + 시너지
   ctx.textAlign='left';let ry=64;const cw=150,rx=VW-cw-8;ctx.fillStyle='rgba(12,15,22,.8)';rr(rx,ry,cw,30,15);ctx.fill();ctx.fillStyle='#fff';ctx.font="13px Bungee,sans-serif";ctx.fillText('☠ '+P.kills,rx+12,ry+20);ctx.fillStyle='#ffd84a';ctx.fillText('🪙 '+P.gold,rx+80,ry+20);ry+=38;
-  for(const k in SYN){const c=P.syn[k];if(!c)continue;const th=SYN[k].th,lv=P.synLv[k],need=lv>=1?th[1]:th[0];ctx.fillStyle=lv===2?'rgba(255,196,0,.22)':lv===1?'rgba(59,130,246,.25)':'rgba(12,15,22,.8)';rr(rx,ry,cw,26,13);ctx.fill();
+  for(const k in SYN){const c=P.syn[k];if(!c)continue;const th=SYN[k].th,lv=P.synLv[k],need=lv>=1?th[1]:th[0];this.hudHits.push({x:rx,y:ry,w:cw,h:26,ref:{k:'s',o:k}});ctx.fillStyle=lv===2?'rgba(255,196,0,.22)':lv===1?'rgba(59,130,246,.25)':'rgba(12,15,22,.8)';rr(rx,ry,cw,26,13);ctx.fill();
    ctx.strokeStyle=lv===2?'#ffc400':lv===1?'#60a5fa':'#3a3f4b';ctx.lineWidth=1.5;rr(rx,ry,cw,26,13);ctx.stroke();const ic=emo(SYN[k].ic,16);ctx.drawImage(ic,rx+6,ry+3);
    ctx.fillStyle='#fff';ctx.font='bold 12px sans-serif';ctx.fillText(SYN[k].nm,rx+30,ry+17);ctx.textAlign='right';ctx.fillStyle=lv===2?'#ffc400':'#cbd5e1';ctx.fillText(lv===2?'MAX':c+'/'+need,rx+cw-10,ry+17);ctx.textAlign='left';ry+=30;}
   // ── 토스트
+  // 마우스 호버 툴팁
+  {let hv=null;if(MOUSE.on)for(const h of this.hudHits)if(MOUSE.x>=h.x&&MOUSE.x<=h.x+h.w&&MOUSE.y>=h.y&&MOUSE.y<=h.y+h.h){hv=h;break;}
+   if(hv){ctx.strokeStyle='#fde047';ctx.lineWidth=2;rr(hv.x-2,hv.y-2,hv.w+4,hv.h+4,7);ctx.stroke();}UI.hudTip(hv);}
   ctx.textAlign='center';let ty=VH-118;for(const f of FX)if(f.type==='toast'){ctx.globalAlpha=Math.min(1,f.life);ctx.font='bold 15px sans-serif';const w=ctx.measureText(f.txt).width+36;ctx.fillStyle='rgba(12,15,22,.9)';rr(VW/2-w/2,ty-21,w,30,15);ctx.fill();ctx.strokeStyle=L.col;ctx.lineWidth=2;rr(VW/2-w/2,ty-21,w,30,15);ctx.stroke();ctx.fillStyle='#fff';ctx.fillText(f.txt,VW/2,ty);ty-=36;ctx.globalAlpha=1;}
  },
  drawMenuBg(){const t=performance.now()/1000;this._mx=(this._mx||0)+1.2;STN.update(1/60);const cx=Math.round(this._mx),cy=Math.round(-800-VH*.1);ctx.save();ctx.translate(-cx,-cy);STN.draw(cx,cy,Math.floor(t/8)%5,t);
@@ -1656,6 +1668,34 @@ const UI={
   document.getElementById('setList').innerHTML=items.map(([k,nm,ds])=>`<div class="li setRow" data-k="${k}"><div><b>${nm}</b><br><span style="color:#94a3b8">${ds}</span></div><div class="tgl ${S[k]?'on':''}"><i></i></div></div>`).join('');
   document.querySelectorAll('#setList .setRow').forEach(r=>r.onclick=()=>{const k=r.dataset.k;S[k]=!S[k];saveMeta();this.settings(from);});
   document.getElementById('setBack').onclick=()=>{if(from==='pause'){this.show('pause');}else{this.show('menu');this.refreshMenu();}};this.show('setS');},
+ _tipKey:'',_tipT:0,
+ hudTip(h){const el=document.getElementById('hudTip');if(!h||G.state!=='play'){if(el.style.display!=='none')el.style.display='none';this._tipKey='';return;}
+  const r=h.ref,key=r.k+':'+(r.o.id!==undefined?r.o.id:r.o)+':'+(r.o.lv||0)+':'+(r.o.evo?1:0)+':'+(P.syn&&r.k==='s'?P.syn[r.o]:'');const now=performance.now();
+  if(key!==this._tipKey||now-this._tipT>500){this._tipKey=key;this._tipT=now;el.innerHTML=this.tipHTML(r);}
+  el.style.display='block';const w=el.offsetWidth,hh=el.offsetHeight;let x=MOUSE.x+16,y=MOUSE.y+14;if(x+w>VW-8)x=MOUSE.x-w-16;if(y+hh>VH-8)y=VH-hh-8;el.style.left=x+'px';el.style.top=Math.max(8,y)+'px';},
+ tagsHTML(tags){return tags.map(t=>{const S=SYN[t];const c=(P.syn||{})[t]||0;return `<span class="ttag">${S.ic} ${S.nm} ${c}/${S.th[1]}</span>`;}).join('');},
+ tipHTML(r){const k=r.k,o=r.o;let h='';
+  if(k==='w'){const W=WEAPONS[o.id];const st=G.wStat(o);const tot=Object.values(P.dmgBy||{}).reduce((a,b)=>a+b,0)||1;const dd=(P.dmgBy||{})[o.id]||0;
+   h+=`<div class="tt-h">${icHtml(wIcon(o),22)} <b>${wName(o)}</b> <span class="tt-lv">Lv${o.lv}${o.union?' · 유니온':o.evo?' · 진화':''}</span></div><div class="tt-d">${W.ds}</div>`;
+   h+=`<div class="tt-g"><span>피해</span><b>${Math.round(st.dmg)}</b><span>쿨타임</span><b>${st.cd.toFixed(2)}초</b><span>범위</span><b>×${st.area.toFixed(2)}</b><span>투사체/개수</span><b>${st.amt}</b><span>누적 피해</span><b>${dd>=1e3?(dd/1e3).toFixed(1)+'K':Math.round(dd)} (${Math.round(dd/tot*100)}%)</b></div>`;
+   if(o.union){h+=`<div class="tt-s">🧬 유니온: ${WEAPONS[o.id].ic} ${WEAPONS[o.id].nm} + ${WEAPONS[o.uw.id].ic} ${WEAPONS[o.uw.id].nm} 동시 발동 (피해 ×1.5)</div>`;}
+   else if(!o.evo){const has=P.passives.find(p=>p.id===W.evo.with);h+=`<div class="tt-s">✨ 진화: Lv8 + ${PASSIVES[W.evo.with].ic} ${PASSIVES[W.evo.with].nm} ${has?'<b class="ok">보유 ✓</b>':'<span class="no">미보유</span>'} → ${W.evo.ic} ${W.evo.nm}${o.lv>=8&&has?' <b class="ok">보물상자에서 진화 가능!</b>':''}</div>`;}
+   const un=UNIONS.find(u=>u.a===o.id||u.b===o.id);if(un&&!o.union){const other=un.a===o.id?un.b:un.a;const ow=P.weapons.find(w=>w.id===other);h+=`<div class="tt-s">🧬 유니온 짝: ${WEAPONS[other].ic} ${WEAPONS[other].nm} ${ow?'<b class="ok">보유 ✓</b>':'<span class="no">미보유</span>'} → ${un.ic} ${un.nm}</div>`;}
+   h+=`<div class="tt-t">${this.tagsHTML(W.tag.concat(o.uw?WEAPONS[o.uw.id].tag:[]))}</div>`;}
+  else if(k==='p'){const Pp=PASSIVES[o.id];h+=`<div class="tt-h">${icHtml(Pp.ic,22)} <b>${Pp.nm}</b> <span class="tt-lv">Lv${o.lv}/5</span></div><div class="tt-d">${Pp.ds}</div>`;
+   const per=Pp.ds.match(/([+-]?[\d.]+)(%|초|\/초)?(?=\/Lv)/);if(per){const v=parseFloat(per[1])*o.lv;h+=`<div class="tt-g"><span>현재 효과</span><b>${v>0&&per[1][0]!=='-'?'+':''}${Math.round(v*100)/100}${per[2]||''} (Lv${o.lv})</b></div>`;}
+   const ws=Object.keys(WEAPONS).filter(id=>WEAPONS[id].evo.with===o.id);if(ws.length)h+=`<div class="tt-s">✨ 진화 재료: ${ws.map(id=>{const own=P.weapons.find(w=>w.id===id);return WEAPONS[id].ic+' '+WEAPONS[id].nm+(own?(own.evo?' (진화 완료)':' <b class="ok">보유 Lv'+own.lv+'</b>'):'');}).join(', ')}</div>`;
+   h+=`<div class="tt-t">${this.tagsHTML(Pp.tag)}</div>`;}
+  else if(k==='a'){const rk={common:'일반',rare:'희귀',legend:'전설',curse:'저주'}[o.r];h+=`<div class="tt-h">${icHtml(o.ic,22)} <b>${o.nm}</b> <span class="tt-lv r-${o.r}">${rk} 증강</span></div><div class="tt-d">${o.ds}</div>`;if(o.tag)h+=`<div class="tt-t">${this.tagsHTML([o.tag])}</div>`;}
+  else if(k==='s'){const S=SYN[o],c=(P.syn||{})[o]||0,L=(P.synLv||{})[o]||0;
+   h+=`<div class="tt-h">${S.ic} <b>${S.nm} 시너지</b> <span class="tt-lv">${c}/${S.th[1]}${L===2?' · MAX':''}</span></div>`;
+   h+=`<div class="tt-lvl ${L>=1?'on':''}">${L>=1?'✅':'⬜'} <b>${S.th[0]}개</b> · ${S.ds[0]}</div><div class="tt-lvl ${L>=2?'on':''}">${L>=2?'✅':'⬜'} <b>${S.th[1]}개</b> · ${S.ds[1]}</div>`;
+   const src=[];for(const w of P.weapons){if(WEAPONS[w.id].tag.includes(o))src.push(wIcon(w)+' '+WEAPONS[w.id].nm);if(w.uw&&WEAPONS[w.uw.id].tag.includes(o))src.push(WEAPONS[w.uw.id].ic+' '+WEAPONS[w.uw.id].nm);}
+   for(const p of P.passives)if(PASSIVES[p.id].tag.includes(o))src.push(PASSIVES[p.id].ic+' '+PASSIVES[p.id].nm);for(const a of P.augs)if(a.tag===o)src.push(a.ic+' '+a.nm);
+   if(P.flags.allRounder)src.push('🦸 만능 사원 (+1)');
+   h+=`<div class="tt-s">개수에 포함: ${src.join(', ')||'없음'}</div>`;
+   if(L<2){const need=(L>=1?S.th[1]:S.th[0])-c;h+=`<div class="tt-s">다음 단계까지 <b>${need}개</b> 더 필요해요</div>`;}}
+  return h;},
  setDiff(k){G.diff=k;META.diff=k;saveMeta();this.renderDiff();},
  renderDiff(){const r=document.getElementById('diffRow');r.innerHTML='';for(const k in DIFFS){const D=DIFFS[k];const b=document.createElement('div');b.className='diffBtn'+((G.diff||'normal')===k?' on':'')+(k==='hell'?' hell':'');b.innerHTML=`<b>${D.ic} ${D.nm}</b><span>${D.ds}</span>`;b.onclick=()=>this.setDiff(k);r.appendChild(b);}},
  tutI:0,
