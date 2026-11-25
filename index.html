@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v27</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v28</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -175,7 +175,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v27</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v28</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -637,9 +637,9 @@ const ENEMY={
 };
 const BOSSES=[
  {t:600,id:'b1',nm:'환승 통로의 지배자',ic:'🦏',sp:'boss1',hp:1150,r:34,spd:57,dmg:18,line:'밀지 마세요!!'},
- {t:1500,id:'b2',nm:'자리 맡는 할아버지',ic:'👴',sp:'boss2',hp:3800,r:34,spd:46,dmg:18,line:'젊은 사람이 서서 가!'},
- {t:2400,id:'b3',nm:'고장 난 에스컬레이터',ic:'🪜',sp:'boss3',hp:6200,r:40,spd:0,dmg:16,line:'(삐걱... 점검 중...)'},
- {t:3300,id:'b4',nm:'팀장님',ic:'👔',sp:'boss4',hp:15000,r:38,spd:54,dmg:22,line:'보고서 다시 써와.'}
+ {t:1500,id:'b2',nm:'자리 맡는 할아버지',ic:'👴',sp:'boss2',hp:7600,r:34,spd:46,dmg:18,line:'젊은 사람이 서서 가!'},
+ {t:2400,id:'b3',nm:'고장 난 에스컬레이터',ic:'🪜',sp:'boss3',hp:31000,r:40,spd:0,dmg:16,line:'(삐걱... 점검 중...)'},
+ {t:3300,id:'b4',nm:'팀장님',ic:'👔',sp:'boss4',hp:75000,r:38,spd:54,dmg:22,line:'보고서 다시 써와.'}
 ];
 const STAGES=[
  {nm:'신도림역',tile:'sindorim',c1:'#2b3a2f',c2:'#33463a',mix:{passenger:10,phone:3,backpacker:1}},
@@ -1083,6 +1083,7 @@ const G={state:'menu',
   // 대기 레벨업
   this.gimmick(dt);
   if(P.auditT>0){P.auditT-=dt;P.auditS-=dt;if(P.auditS<=0){P.auditS=6;const el=Object.keys(ENEMY).filter(k=>ENEMY[k].elite&&!ENEMY[k].prop);for(let i=0;i<2;i++){const a=rnd(0,7);this.mkEnemy(pick(el),P.x+Math.cos(a)*480,P.y+Math.sin(a)*480);}}}
+  P.dpsT=(P.dpsT||0)+dt;if(P.dpsT>=1){P.dpsT=0;P.dpsH=P.dpsH||[];P.dpsH.push((P.dmgSum||0)-(P.dmgLast||0));P.dmgLast=P.dmgSum||0;if(P.dpsH.length>30)P.dpsH.shift();}
   P.stageT+=dt;if(P.cloneT>0)P.cloneT-=dt;if(P.busT>0)P.busT-=dt;if(P.dashBuffT>0)P.dashBuffT-=dt;
   P.stillT=P.moved?0:(P.stillT||0)+dt;if(P.flags.thermos&&P.moved)this.heal(dt*.5,true);
   if(P.energyT>0)P.energyT-=dt;
@@ -1109,7 +1110,7 @@ const G={state:'menu',
   {if(G.daily&&G.daily.id==='monday')e.hp*=1.3;}{const D=DIFFS[G.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,G.clock/3600),2);e.hp*=D.hp*L*(1+Math.max(0,G.stage-1)*.2)*(1+.03*(P.rrStage||0));e.dmg*=D.dmg*(1+(L-1)*.6);}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);if(P.extOn&&this.state){P.extOn=0;e.stun=3;}}return e;},
  spawnBoss(b){const a=rnd(0,Math.PI*2);const R=b.id==='b3'?260:380;const e=this.mkEnemy('passenger',P.x+Math.cos(a)*R,P.y+Math.sin(a)*R);
   Object.assign(e,{t:b.id,bd:b,ic:b.ic,sp:b.sp,r:b.r,hp:b.hp*(1+this.clock/3600*1.2),spd:b.spd,dmg:b.dmg,boss:true,elite:true,phase:1,aiT:2});e.mhp=e.hp;e.d={nm:b.nm,xp:80,kbRes:1};
-  {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect){e.hp*=1+(P.pen??1);e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
+  {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect){e.hp*=1+(P.pen??1);e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}{const H=P.dpsH||[];const avg=H.length?H.reduce((a,c)=>a+c,0)/H.length:0;const tgt={b1:20,b2:30,b3:40,b4:60}[b.id]||30;const fl=avg*tgt;if(fl>e.hp){e.hp=fl;e.mhp=fl;}}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
 
  // ---- 이벤트
  updEvent(dt){
@@ -1184,12 +1185,15 @@ const G={state:'menu',
  hurt(e,dmg,w,noProc){if(e.dead)return;const s=P.s;
   if(w&&w.evo&&!noProc&&!e.boss&&!G._bench){const T=WEAPONS[w.id].tag[0];if(T==='heat'||T==='caffeine'){e.burn=Math.max(e.burn||0,2);e.burnD=Math.max(e.burnD||0,dmg*.2);}else if(T==='cold'){if(Math.random()<.2)e.frozen=Math.max(e.frozen||0,.8);}else if(T==='digital'){e.shocked=Math.max(e.shocked||0,2);}else if(T==='office'){if(Math.random()<.12)e.stun=Math.max(e.stun,.6);}else{const dx=e.x-P.x,dy=e.y-P.y,l=Math.hypot(dx,dy)||1;e.kbx+=dx/l*160;e.kby+=dy/l*160;}}
   if(!noProc&&P.stampReady){dmg*=2;P.stampReady=false;this.num(e.x,e.y-30,'도장!','#ff0');}
+  if(e.boss&&e.invT>0)return;
   if(e.boss)dmg*=1+s.bossDmg;else if(e.elite)dmg*=1+s.eliteDmg;
+  if(e.boss&&e.t==='b3'&&(!w||['pool','trail','turret','wall','sign','pillar','molotov','screen'].includes(WEAPONS[w.id].type)))dmg*=.5;
   if(e.frozen>0&&P.flags.iceAge)dmg*=1.5;if(e.frozen>0&&P.flags.iceAme)dmg*=1.25;if(e.burn>0&&P.flags.spicy)dmg*=1.25;if(e.shocked>0)dmg*=1.15;
   if(P.flags.sniper||P.flags.closeWork){const d2=(e.x-P.x)**2+(e.y-P.y)**2;if(P.flags.sniper&&d2>90000)dmg*=1.25;if(P.flags.closeWork&&d2<10000)dmg*=1.25;}
   if(w)this._lastW=w;
   let crit=false;if(!noProc&&Math.random()<s.crit){dmg*=s.critDmg;crit=true;}
-  e.hp-=dmg;e.hitT=(e.boss||e.elite)?.12:.09;if((e.boss||e.elite)&&(crit||dmg>e.mhp*.06)&&!META.set.lowFx)this.hstop=Math.max(this.hstop||0,.03);if(!e.d.prop){const dk=w?w.id:'_etc';P.dmgBy[dk]=(P.dmgBy[dk]||0)+dmg;}if(META.set.dmgNum)this.num(e.x,e.y-e.r*1.8,Math.round(dmg)+(crit?'!':''),crit?'#ffe14a':e.boss?'#ffb347':'#fff',crit);
+  if(e.boss&&e.phase===1&&e.hp-dmg<e.mhp*.5){dmg=Math.max(0,e.hp-e.mhp*.5+1);}
+  e.hp-=dmg;e.hitT=(e.boss||e.elite)?.12:.09;if((e.boss||e.elite)&&(crit||dmg>e.mhp*.06)&&!META.set.lowFx)this.hstop=Math.max(this.hstop||0,.03);if(!e.d.prop){P.dmgSum=(P.dmgSum||0)+dmg;const dk=w?w.id:'_etc';P.dmgBy[dk]=(P.dmgBy[dk]||0)+dmg;}if(META.set.dmgNum)this.num(e.x,e.y-e.r*1.8,Math.round(dmg)+(crit?'!':''),crit?'#ffe14a':e.boss?'#ffb347':'#fff',crit);
   if(s.lifesteal>0&&!noProc&&Math.random()<s.lifesteal)this.procHeal();
   if(!noProc){if(P.flags.poison){e.poison=3;e.poisonD=Math.max(e.poisonD,dmg*.2);}
    const W=w&&WEAPONS[w.id];const bc=s.burnCh+(W&&W.burn?W.burn:0),fc=s.freezeCh+(W&&W.freeze?W.freeze:0);
@@ -1383,8 +1387,8 @@ break;}
   // 증강/시너지 상시
   if(P.flags.homeAura){this._homeT=(this._homeT||0)-dt;if(this._homeT<=0){this._homeT=.5;for(const e of GRID.query(P.x,P.y,95*P.s.area,QBUF))this.hurt(e,8*this.dmgMul(),null,true);}}
  },
- bossAI(e,dt){const b=e.bd;e.aiT-=dt;e.bmove=true;
-  if(b.id!=='b4'&&e.phase===1&&e.hp<e.mhp*.5){e.phase=2;this.shake=.5;SFX.play('boss');this.announce={t:3,txt:{b1:'🦏 환승 통로의 지배자: "다 비켜!!!" (연속 돌진)',b2:'👴 할아버지: "요즘 젊은 것들은!" (이중 충격파 + 등산 동호회 호출)',b3:'🪜 에스컬레이터: "삐— 계단 붕괴 경보" (낙하 장판)'}[b.id]};}
+ bossAI(e,dt){const b=e.bd;e.aiT-=dt;if(e.invT>0)e.invT-=dt;e.bmove=true;
+  if(b.id!=='b4'&&e.phase===1&&e.hp<=e.mhp*.5+1){e.phase=2;e.invT=1;e.aiT=Math.min(e.aiT,.3);this.shake=.5;SFX.play('boss');this.announce={t:3,txt:{b1:'🦏 환승 통로의 지배자: "다 비켜!!!" (연속 돌진)',b2:'👴 할아버지: "요즘 젊은 것들은!" (이중 충격파 + 등산 동호회 호출)',b3:'🪜 에스컬레이터: "삐— 계단 붕괴 경보" (낙하 장판)'}[b.id]};}
   const P2=e.phase===2;
   if(b.id==='b1'){if(e.ai===0){if(e.aiT<=0){e.ai=1;e.aiT=P2?.5:.8;const a=Math.atan2(P.y-e.y,P.x-e.x);e.dv={x:Math.cos(a),y:Math.sin(a)};}}
    else if(e.ai===1){e.bmove=false;FX.push({type:'line',x1:e.x,y1:e.y,x2:e.x+e.dv.x*900,y2:e.y+e.dv.y*900,life:.03,max:.03,col:'rgba(255,0,0,.5)',w:e.r*2});if(e.aiT<=0){e.ai=2;e.aiT=1;}}
@@ -1393,7 +1397,7 @@ break;}
    if(P2||true){e.callT=(e.callT||(P2?0:4))-dt;if(e.callT<=0){e.callT=P2?5:9;for(let i=0;i<(P2?5:3);i++)this.mkEnemy('hiker',e.x+rnd(-60,60),e.y+rnd(-60,60));this.num(e.x,e.y-70,'동호회 집합!','#c6e01e');}}}
   else if(b.id==='b3'){e.bmove=false;e.rot=(e.rot||0)+dt*.8;if(P2)e.rot+=dt*.7;if(e.aiT<=0){e.aiT=P2?.7:.9;const nd=P2?14:10;for(let i=0;i<nd;i++){const a=e.rot+i*Math.PI*2/nd;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*(P2?250:225),vy:Math.sin(a)*(P2?250:225),r:12,dmg:e.dmg,life:4,ic:'🟫',src:e});}}
    if(P2){e.dropT=(e.dropT||0)-dt;if(e.dropT<=0){e.dropT=1.8;for(let i=0;i<5;i++){const a=rnd(0,7),d=i===0?0:rnd(90,190);HAZ.push({x:P.x+Math.cos(a)*d,y:clamp(P.y+Math.sin(a)*d,WY0,WY1),r:85,life:1.45,max:1.45,arm:1.1,armMax:1.1,type:'drop',dmg:e.dmg*1.3});}}}}
-  else if(b.id==='b4'){if(e.phase===1&&e.hp<e.mhp*.5){e.phase=2;this.announce={t:3,txt:'👔 팀장님: "회의 좀 할까?"'};this.shake=.5;}
+  else if(b.id==='b4'){if(e.phase===1&&e.hp<=e.mhp*.5+1){e.phase=2;e.invT=1;this.announce={t:3,txt:'👔 팀장님: "회의 좀 할까?"'};this.shake=.5;}
    if(e.aiT<=0){if(e.phase===1){e.aiT=1.0;e.mt=(e.mt||0)+1;if(e.mt%5===0)HAZ.push({x:P.x,y:P.y,r:90,life:1.6,max:1.6,type:'meeting',arm:.9});const a0=Math.atan2(P.y-e.y,P.x-e.x);for(let i=-3;i<=3;i++){const a=a0+i*.2;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*265,vy:Math.sin(a)*265,r:11,dmg:e.dmg*.7,life:4,ic:'📄',src:e});}}
     else{e.aiT=.75;e.mt=(e.mt||0)+1;if(e.mt%6===0){for(let k=0;k<16;k++){const a=k*Math.PI/8;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*230,vy:Math.sin(a)*230,r:11,dmg:e.dmg*.6,life:4,ic:'📑',src:e});}this.num(e.x,e.y-60,'전원 야근!','#f87171');}const a0=Math.atan2(P.y-e.y,P.x-e.x);for(let i=-4;i<=4;i++){const a=a0+i*.17;EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*320,vy:Math.sin(a)*320,r:11,dmg:e.dmg*.7,life:4,ic:'📄',src:e});}
      if(e.mt%3===0){HAZ.push({x:P.x,y:P.y,r:105,life:1.6,max:1.6,type:'meeting',arm:.8});}}}}
