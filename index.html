@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v28</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v29</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -175,7 +175,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v28</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v29</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -551,7 +551,8 @@ const GIMMICK=[{nm:'출근 인파',ic:'🌊',ds:'50초마다 인파가 몰려와
  {nm:'급행 통과',ic:'🚄',ds:'30초마다 경고 후 급행이 지나가며 모두 밀려나요',cd:30},
  {nm:'정전',ic:'🔦',ds:'40초마다 6초간 시야가 좁아져요',cd:40},{nm:'급행 통과',ic:'🚄',ds:'25초마다 급행이 지나가며 모두 밀려나요',cd:25}];
 function unionOf(a,b){return UNIONS.find(u=>u.a===a&&u.b===b);}
-{const EVOK={"backpack":1.8,"umbrella":1.31,"briefcase":1.16,"coffee":1.25,"airpods":1.28,"badge":0.3,"tumbler":1.8,"messenger":0.47,"charger":0.74,"gimbap":0.68,"battery":0.66,"flash":1.3,"tcard":0.41,"handle":0.59,"broadcast":1.6,"laser":0.71,"plane":0.53,"sdoor":1.23,"turret":0.54,"pigeon":1.27,"delivery":0.62,"aircon":1.04,"heater":0.98,"linemap":0.59,"ncard":0.67,"stampw":0.61,"keyboard":0.85,"coin":0.49,"soju":1.35,"signage":1.32};for(const k in EVOK)if(WEAPONS[k])WEAPONS[k].evoK=EVOK[k];}
+{const EVOK={"backpack":2.15,"umbrella":1.59,"tumbler":2.34,"charger":0.87,"keyboard":1.07,"stampw":0.54,"badge":0.33,"tcard":0.44,"coin":0.54,"briefcase":1.47,"ncard":0.68,"battery":0.65,"sdoor":1.24,"signage":1.36,"turret":0.54,"coffee":1.26,"heater":0.94,"soju":1.42,"laser":0.86,"linemap":0.61,"flash":1.17,"aircon":1.04,"plane":0.51,"pigeon":1.14,"messenger":0.44,"delivery":0.62,"broadcast":1.44,"airpods":1.12,"gimbap":0.61,"handle":0.69};for(const k in EVOK)if(WEAPONS[k])WEAPONS[k].evoK=EVOK[k];}
+{const WK={"backpack":2.93,"umbrella":1.52,"tumbler":2.59,"keyboard":1.96,"badge":3,"tcard":1.13,"coin":1.83,"battery":3,"sdoor":0.36,"signage":0.46,"turret":2.17,"coffee":0.76,"heater":1.39,"soju":0.48,"laser":0.49,"linemap":1.9,"flash":1.49,"aircon":1.7,"plane":0.42,"pigeon":1.35,"messenger":0.33,"delivery":0.25,"broadcast":1.06,"airpods":1.09,"gimbap":0.51,"handle":0.26};for(const k in WK)if(WEAPONS[k])WEAPONS[k].dmg=+(WEAPONS[k].dmg*WK[k]).toFixed(2);for(const k of ["charger", "stampw", "briefcase", "ncard"])if(WEAPONS[k])WEAPONS[k].area*=.6;const XK={"briefcase": 0.37, "ncard": 0.66, "charger": 0.81, "stampw": 0.89};for(const k in XK)WEAPONS[k].dmg=+(WEAPONS[k].dmg*XK[k]).toFixed(2);}
 const EVO_FX={heat:'🔥 진화 효과: 맞은 적에게 화상',caffeine:'🔥 진화 효과: 맞은 적에게 화상',cold:'❄️ 진화 효과: 20% 확률 빙결',digital:'⚡ 진화 효과: 맞은 적 감전(받는 피해 +15%)',office:'💫 진화 효과: 12% 확률 기절'};
 function evoFx(id){return EVO_FX[WEAPONS[id].tag[0]]||'💨 진화 효과: 맞은 적 넉백';}
 function wIcon(w){if(w.sig&&G.char&&SIG[G.char.id])return SIG[G.char.id].ic;if(w.union)return w.union.ic;const W=WEAPONS[w.id];return w.evo?W.evo.ic:W.ic;}
