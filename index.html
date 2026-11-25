@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v33</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v34</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -176,7 +176,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v33</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v34</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -251,7 +251,7 @@ const CHARS=[
  {id:'intern',nm:'인턴',ic:'🧑‍🎓',sp:'player_intern',ds:'체력 낮고 빠름 · 이속 +20%, 행운 +10',w:'coffee',hp:75,spd:1.2,mod:s=>{s.luck+=10}},
  {id:'bujang',nm:'부장님',ic:'👨‍💼',sp:'player_bujang',ds:'느리지만 무기 슬롯 +1 · 방어력 +2',w:'stampw',hp:140,spd:.85,mod:s=>{s.maxW+=1;s.armor+=2},unlock:'clearNormal',unlockTxt:'🏆 업적 "정시 출근" 달성 시 해금'},
  {id:'alba',nm:'편의점 알바',ic:'🧑‍🍳',sp:'player_alba',ds:'골드 2배 · 상점 -20%',w:'gimbap',hp:95,spd:1.05,mod:s=>{s.goldMult+=1;s.shopDisc+=.2},unlock:'kills3000',unlockTxt:'🏆 업적 "인파 정리 전문가" 달성 시 해금'},
- {id:'rider',nm:'배달 라이더',ic:'🛵',sp:'player_rider',ds:'이속 최고 · 체력 최저 · 대시 기본 보유',w:'delivery',hp:70,spd:1.4,mod:s=>{s.dashCd*=.7},startFlags:{dash:1},unlock:'lv50',unlockTxt:'🏆 업적 "고속 승진" 달성 시 해금'},
+ {id:'rider',nm:'배달 라이더',ic:'🛵',sp:'player_rider',ds:'이속 최고 · 체력 최저 · 대시 기본 보유 · 대시 후 2초간 피해 +30%',w:'delivery',hp:70,spd:1.4,mod:s=>{s.dashCd*=.7},startFlags:{dash:1},unlock:'lv50',unlockTxt:'🏆 업적 "고속 승진" 달성 시 해금'},
  {id:'mz',nm:'해외파 MZ',ic:'😎',sp:'player_mz',ds:'증강 선택지 +1장 (인사고과에서 해금)',w:'airpods',hp:95,spd:1.05,mod:s=>{s.extraChoice+=1},lock:true}
 ];
 // type: 동작 / tag / melee
@@ -555,6 +555,8 @@ const GIMMICK=[{nm:'출근 인파',ic:'🌊',ds:'50초마다 인파가 몰려와
 function unionOf(a,b){return UNIONS.find(u=>u.a===a&&u.b===b);}
 {const EVOK={"backpack":2.15,"umbrella":1.59,"tumbler":2.34,"charger":0.87,"keyboard":1.07,"stampw":0.54,"badge":0.33,"tcard":0.44,"coin":0.54,"briefcase":1.47,"ncard":0.68,"battery":0.65,"sdoor":1.24,"signage":1.36,"turret":0.54,"coffee":1.26,"heater":0.94,"soju":1.42,"laser":0.86,"linemap":0.61,"flash":1.17,"aircon":1.04,"plane":0.51,"pigeon":1.14,"messenger":0.44,"delivery":0.62,"broadcast":1.44,"airpods":1.12,"gimbap":0.61,"handle":0.69};for(const k in EVOK)if(WEAPONS[k])WEAPONS[k].evoK=EVOK[k];}
 {const WK={"backpack":2.93,"umbrella":1.52,"tumbler":2.59,"keyboard":1.96,"badge":3,"tcard":1.13,"coin":1.83,"battery":3,"sdoor":0.36,"signage":0.46,"turret":2.17,"coffee":0.76,"heater":1.39,"soju":0.48,"laser":0.49,"linemap":1.9,"flash":1.49,"aircon":1.7,"plane":0.42,"pigeon":1.35,"messenger":0.33,"delivery":0.25,"broadcast":1.06,"airpods":1.09,"gimbap":0.51,"handle":0.26};for(const k in WK)if(WEAPONS[k])WEAPONS[k].dmg=+(WEAPONS[k].dmg*WK[k]).toFixed(2);for(const k of ["charger", "stampw", "briefcase", "ncard"])if(WEAPONS[k])WEAPONS[k].area*=.6;const XK={"briefcase": 0.37, "ncard": 0.66, "charger": 0.81, "stampw": 0.89};for(const k in XK)WEAPONS[k].dmg=+(WEAPONS[k].dmg*XK[k]).toFixed(2);}
+// v34: 시작 무기 초반 보정 (Lv1 화력을 끌어올리고, 레벨이 올라도 떨어지지 않게 유지)
+const START_BONUS={delivery:5,briefcase:4,stampw:2.5,coffee:1.5,gimbap:1.3,backpack:.7};
 const EVO_FX={heat:'🔥 진화 효과: 맞은 적에게 화상',caffeine:'🔥 진화 효과: 맞은 적에게 화상',cold:'❄️ 진화 효과: 20% 확률 빙결',digital:'⚡ 진화 효과: 맞은 적 감전(받는 피해 +15%)',office:'💫 진화 효과: 12% 확률 기절'};
 function evoFx(id){return EVO_FX[WEAPONS[id].tag[0]]||'💨 진화 효과: 맞은 적 넉백';}
 function wIcon(w){if(w.sig&&G.char&&SIG[G.char.id])return SIG[G.char.id].ic;if(w.union)return w.union.ic;const W=WEAPONS[w.id];return w.evo?W.evo.ic:W.ic;}
@@ -1166,7 +1168,7 @@ const G={state:'menu',
   // 재생
   if(s.regen>0)this.heal(s.regen*dt,true);
  },
- tryDash(){if(this.state!=='play'||!P||!(P.flags.dash||P.flags.dashBomb)||P.dashCd>0)return;P.dashCd=P.s.dashCd;P.dashT=P.flags.elevator?.4:.2;if(P.flags.dashPower)P.dashBuffT=1.2;P.dashV={x:P.face.x,y:P.face.y};P.inv=Math.max(P.inv,.3);SFX.tone(600,.1,'sine',.08,1200);},
+ tryDash(){if(this.state!=='play'||!P||!(P.flags.dash||P.flags.dashBomb)||P.dashCd>0)return;P.dashCd=P.s.dashCd;P.dashT=P.flags.elevator?.4:.2;if(P.flags.dashPower)P.dashBuffT=1.2;if(G.char&&G.char.id==='rider')P.dashBuffT=Math.max(P.dashBuffT||0,2);P.dashV={x:P.face.x,y:P.face.y};P.inv=Math.max(P.inv,.3);SFX.tone(600,.1,'sine',.08,1200);},
  heal(v,silent){if(P.s.quit)return;v*=P.s.healMult;if(v<=0)return;P.hp=Math.min(P.s.maxhp,P.hp+v);if(!silent&&P.flags.refill)for(const w of P.weapons)w.cd-=.5;
   if(!silent){this.num(P.x,P.y-20,'+'+Math.round(v),'#5f5');if(P.flags.charmHeal){for(const e of GRID.query(P.x,P.y,200,QBUF2))if(!e.boss)e.charm=P.flags.charmBoost?4:2;}}},
  hurtPlayer(d,src,ranged){if(P.inv>0||P.ghostT>0||P.dashT>0)return;if((P.stillT||0)>3)d*=1.3;if(src&&src.d)P.lastHitBy=(src.bd&&src.bd.nm)||src.d.nm||'';if(META.set.shake&&!this.bot)this.shake=Math.max(this.shake||0,.12);if(P.bandHit){P.bandHit=0;P.inv=.5;this.num(P.x,P.y-40,'🩹 막음!','#fff');return;}const s=P.s;
@@ -1198,6 +1200,7 @@ const G={state:'menu',
   if(w){const W=WEAPONS[w.id];if(W.melee)m*=1+s.meleeDmg;if(W.tag.includes('digital'))m*=1+s.digDmg;}
   return m;},
  wStat(w){const W=WEAPONS[w.id],s=P.s,L=w.lv;let dmg=W.dmg*(1+.25*(L-1)),area=W.area*(1+.08*(L-1))*s.area,amt=W.amt+Math.floor(L/3)+s.amt,cd=W.cd*(1-.035*(L-1))*s.cdMult;
+  if(G.char&&w.id===G.char.w&&START_BONUS[w.id]){const SB=START_BONUS[w.id];dmg*=SB>=1?Math.max(1,SB/(1+.25*(L-1))):(L<=4?SB:1);}
   if(w.evo){dmg*=1.25*(W.evoK||1);area*=1.15;cd*=.9;}if(w.sig){dmg*=1.5;area*=1.2;amt+=1;cd*=.85;}if(W.melee)area*=s.meleeArea||1;if(P.flags.onePlus&&w.id==='gimbap')amt+=1;if((W.tag.includes('caffeine'))&&P.flags.caffAddict)cd*=.8;if(P.decafT>0)cd*=1/1.3;
   if(this._crowd)cd*=1/1.4;if(P.flags.countdown&&this.clock>=3000)cd*=1/1.15;if(w.union)dmg*=1.5;
   return{dmg:dmg*this.dmgMul(w),area,amt,cd:Math.max(.08,cd),spd:s.pspd,dur:s.dur};},
@@ -1751,7 +1754,7 @@ break;}
   const newAch=checkAch({win,diff:this.diff||'normal',kills:P.kills,lv:P.lv,evo:P.weapons.filter(w=>w.evo).length,union:P.weapons.filter(w=>w.union).length,curses:P.augs.filter(a=>a.r==='curse').length,bossNoHit:!!P.b4noHit,codexAug:META.codex.a.length,daily:this.mode==='daily',endless:this.mode==='endless',clock:this.clock,runs:META.runs,salary:META.salary});saveMeta();
   this.lastResult={win,title,sal,newAch};
   {const lg={v:22,date:new Date().toISOString().slice(0,16),char:this.char.nm,diff:this.diff||'normal',mode:this.mode||'normal',win:!!win,clock:Math.round(this.clock),cause:title,lastHit:P.lastHitBy||'',kills:P.kills,lv:P.lv,gold:P.goldEarned,spent:P.goldSpent||0,weapons:P.weapons.map(w=>wName(w)+' Lv'+w.lv),augs:P.augs.map(a=>a.nm),bossT:P.bossT||[],syn:Object.entries(P.synLv||{}).filter(x=>x[1]).map(x=>SYN[x[0]].nm+x[1]),dmg:Object.entries(P.dmgBy).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([k,v])=>(WEAPONS[k]?WEAPONS[k].nm:'기타')+':'+Math.round(v)),tl:P.tl||[]};
-   if(!this.bot){META.logs.unshift(lg);META.logs=META.logs.slice(0,30);if(win){META.builds.unshift({date:lg.date,char:lg.char,diff:lg.diff,clock:lg.clock,weapons:lg.weapons,augs:lg.augs,syn:lg.syn});META.builds=META.builds.slice(0,12);}saveMeta();}this.lastLog=lg;lg.ver='v33';if(!this.bot){const rs=document.getElementById('rankRes');if(rs){rs.textContent=!RANK_URL?'':!META.nick?'🏆 닉네임을 등록하면 랭킹에 올라가요 (메인 → 랭킹)':'🏆 랭킹 등록 중...';rankSubmit(lg).then(r=>{if(rs&&META.nick&&RANK_URL)rs.textContent=r&&r.ok?'🏆 랭킹에 등록됐어요! ('+META.nick+')':r&&r.err==='suspicious'?'⚠️ 비정상 기록으로 판단돼 랭킹에서 제외됐어요':'⚠️ 랭킹 서버에 연결하지 못했어요';});}}}
+   if(!this.bot){META.logs.unshift(lg);META.logs=META.logs.slice(0,30);if(win){META.builds.unshift({date:lg.date,char:lg.char,diff:lg.diff,clock:lg.clock,weapons:lg.weapons,augs:lg.augs,syn:lg.syn});META.builds=META.builds.slice(0,12);}saveMeta();}this.lastLog=lg;lg.ver='v34';if(!this.bot){const rs=document.getElementById('rankRes');if(rs){rs.textContent=!RANK_URL?'':!META.nick?'🏆 닉네임을 등록하면 랭킹에 올라가요 (메인 → 랭킹)':'🏆 랭킹 등록 중...';rankSubmit(lg).then(r=>{if(rs&&META.nick&&RANK_URL)rs.textContent=r&&r.ok?'🏆 랭킹에 등록됐어요! ('+META.nick+')':r&&r.err==='suspicious'?'⚠️ 비정상 기록으로 판단돼 랭킹에서 제외됐어요':'⚠️ 랭킹 서버에 연결하지 못했어요';});}}}
   if(this.bot){this.botResult={win,clock:this.clock,kills:P.kills,lv:P.lv,augs:P.augs.length,title};return;}
   document.getElementById('resTitle').textContent=(win?'🎉 ':'💀 ')+title;
   document.getElementById('resBody').innerHTML=`도착 시각: <b>${fmtClock(this.clock)}</b> · 처치 <b>${P.kills}</b> · 레벨 <b>${P.lv}</b><br>획득 연봉: <b style="color:#ffd84a">+${sal}만원</b> · 난이도 ${DIFFS[this.diff||'normal'].ic} ${DIFFS[this.diff||'normal'].nm}`;
