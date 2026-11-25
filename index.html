@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v29</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v30</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -167,6 +167,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 .cxF{margin:0 0 8px;gap:8px}.cxF input,.cxF select{background:#0f172a;color:#e5e7eb;border:1px solid #334155;border-radius:8px;padding:6px 10px;font:14px 'Noto Sans KR',sans-serif}.cxF input{width:220px}
 .aToast{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);background:#111827;border:2px solid #facc15;color:#fff;padding:10px 18px;border-radius:12px;z-index:999;font:14px 'Noto Sans KR',sans-serif}
 #logList{max-width:900px}
+.rkRow.me{border-color:#facc15;background:#2a2410}.btn.on{outline:2px solid #facc15}
 </style>
 </head>
 <body>
@@ -175,12 +176,12 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v29</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v30</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
   <div class="subBtns"><button class="btn gold" onclick="UI.meta()">📋 인사고과</button>
-  <button class="btn gray" onclick="UI.ach()" id="achBtn">🏆 업적</button><button class="btn gray" onclick="UI.codex()">도감</button><button class="btn gray" onclick="UI.logs('l')">📊 판 기록</button><button class="btn gray" onclick="UI.settings('menu')">⚙️ 설정</button><button class="btn gray" onclick="META.tutDone=false;saveMeta();UI.charSel()">📖 튜토리얼 다시 보기</button>
+  <button class="btn gray" onclick="UI.ach()" id="achBtn">🏆 업적</button><button class="btn gray" onclick="UI.codex()">도감</button><button class="btn gray" onclick="UI.logs('l')">📊 판 기록</button><button class="btn gold" onclick="UI.rank('daily')">🏆 랭킹</button><button class="btn gray" onclick="UI.settings('menu')">⚙️ 설정</button><button class="btn gray" onclick="META.tutDone=false;saveMeta();UI.charSel()">📖 튜토리얼 다시 보기</button>
   <button class="btn gray" onclick="UI.credits()">크레딧</button></div></div>
   <div class="vol">🔊 음량 <input type="range" min="0" max="100" value="40" id="volM" oninput="SFX.setVol(this.value)"></div>
   <div class="small">이동: WASD/방향키 · 대시: Space(해금 시) · 일시정지: ESC · 모바일은 왼쪽 화면 드래그</div>
@@ -190,8 +191,9 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div class="ov" id="chest"><h2>🎁 보물상자!</h2><div class="sub" id="chestSub" style="margin:-6px 0 6px"></div><div id="slot" class="slotm"></div><div id="chestRes" class="list" style="max-width:600px"></div><button class="btn" id="chestOk" onclick="G.closeChest()">확인</button></div>
 <div class="ov" id="shop"><h2><span class="pill">역내</span>편의점</h2><div class="sub" id="shopGold"></div><div class="row" id="shopList"></div><button class="btn" style="margin-top:16px" onclick="G.closeShop()">다음 역으로 ▶</button></div>
 <div class="ov" id="pause"><h2>⏸ 일시정지</h2><div id="pauseInfo" class="list"></div><div class="vol">🔊 음량 <input type="range" min="0" max="100" value="40" id="volP" oninput="SFX.setVol(this.value)"></div><div class="row"><button class="btn" onclick="G.resume()">계속하기</button><button class="btn gray" onclick="UI.settings('pause')">⚙️ 설정</button><button class="btn red" onclick="G.giveUp()">조퇴하기 (포기)</button></div></div>
-<div class="ov" id="result"><h2 id="resTitle"></h2><div id="resBody" class="small" style="font-size:15px;color:#fff"></div><div id="resAug" class="list"></div><div id="resTips" class="small" style="max-width:760px"></div><div class="row"><button class="btn gold" onclick="saveResultCard()">📷 결과 카드 저장</button><button class="btn gray" onclick="UI.copyLog()">📋 이번 판 기록 복사</button><button class="btn" onclick="UI.show('menu');UI.refreshMenu()">메인으로</button></div></div>
+<div class="ov" id="result"><h2 id="resTitle"></h2><div id="resBody" class="small" style="font-size:15px;color:#fff"></div><div id="resAug" class="list"></div><div id="resTips" class="small" style="max-width:760px"></div><div id="rankRes" class="small" style="color:#fde68a;margin-top:6px"></div><div class="row"><button class="btn gold" onclick="saveResultCard()">📷 결과 카드 저장</button><button class="btn gray" onclick="UI.copyLog()">📋 이번 판 기록 복사</button><button class="btn" onclick="UI.show('menu');UI.refreshMenu()">메인으로</button></div></div>
 <div class="ov" id="metaS"><h2>📋 인사고과</h2><div class="sub" id="metaSal"></div><div class="list" id="metaList"></div><button class="btn gray" onclick="UI.show('menu');UI.refreshMenu()">뒤로</button></div>
+<div class="ov" id="rankS"><h2>🏆 랭킹</h2><div class="sub" id="rankNick"></div><div class="row" style="margin-bottom:8px;flex-wrap:wrap"><button class="btn gray rk" onclick="UI.rank('daily')">📅 오늘의 출근길</button><button class="btn gray rk" onclick="UI.rank('normal')">🚇 보통 최단 클리어</button><button class="btn gray rk" onclick="UI.rank('hell')">🔥 지옥철 최단 클리어</button><button class="btn gray rk" onclick="UI.rank('kills')">💥 최다 처치</button><button class="btn gray rk" onclick="UI.rank('lv')">📈 최고 레벨</button><button class="btn gray rk" onclick="UI.rank('endless')">🌙 퇴근 모드 생존</button></div><div class="list" id="rankList" style="max-width:820px"></div><button class="btn gray" onclick="UI.show('menu')">뒤로</button></div>
 <div class="ov" id="logS"><h2>📊 판 기록 · 빌드 기록</h2><div class="row" style="margin-bottom:8px"><button class="btn gray" onclick="UI.logs('l')">최근 판 (30)</button><button class="btn gray" onclick="UI.logs('b')">🏆 클리어 빌드 (12)</button><button class="btn gold" onclick="UI.exportLogs()">💾 전체 내보내기(JSON)</button></div><div class="list" id="logList"></div><button class="btn gray" onclick="UI.show('menu')">뒤로</button></div>
 <div class="ov" id="codexS"><div class="codexHead"><h2>📖 도감</h2><div class="row" style="margin-bottom:10px"><button class="btn gray" onclick="UI.codexTab('w')">무기</button><button class="btn gray" onclick="UI.codexTab('p')">패시브</button><button class="btn gray" onclick="UI.codexTab('a')">증강</button><button class="btn gray" onclick="UI.codexTab('s')">시너지</button></div><div class="row cxF"><input id="cxQ" placeholder="🔍 이름·효과 검색" oninput="UI.codexFilter()"><select id="cxT" onchange="UI.codexFilter()"><option value="">전체 태그</option></select></div></div><div class="list" id="codexList"></div><button class="btn gray" onclick="UI.show('menu')">뒤로</button></div>
 <div class="ov" id="tut"><div class="tutBox"><div class="tutStep" id="tutStep"></div><div class="tutIc" id="tutIc"></div><h2 id="tutT"></h2><div class="tutD" id="tutD"></div><div class="row" style="margin-top:18px"><button class="btn gray" onclick="UI.tutEnd()">건너뛰기</button><button class="btn" id="tutNext" onclick="UI.tutNext()">다음 ▶</button></div><div class="tutDots" id="tutDots"></div></div></div>
@@ -678,6 +680,13 @@ const ACH=[
  {id:'rich',ic:'💰',nm:'연봉 1억',ds:'누적 연봉 10,000만원',c:x=>x.salary>=10000}];
 function checkAch(x){META.ach=META.ach||[];const nw=[];for(const a of ACH)if(!META.ach.includes(a.id)&&a.c(x)){META.ach.push(a.id);nw.push(a);}return nw;}
 function isLocked(c){if(c.lock===true)return !META.mz;if(c.unlock)return !(META.ach||[]).includes(c.unlock);return false;}
+// v30: 랭킹 (구글 시트 + Apps Script) — 아래 주소에 배포한 웹 앱 URL을 넣으면 작동
+const RANK_URL='';
+const BAD_WORDS=['시발','씨발','병신','ㅅㅂ','ㅂㅅ','좆','지랄','개새','fuck','shit'];
+function nickOk(n){n=(n||'').trim();if(n.length<2||n.length>12)return '닉네임은 2~12자로 정해주세요';const l=n.toLowerCase().replace(/\s/g,'');if(BAD_WORDS.some(w=>l.includes(w)))return '사용할 수 없는 단어가 들어 있어요';return '';}
+function rankSubmit(lg){if(!RANK_URL||!META.nick||G.bot)return Promise.resolve(null);const body={nick:META.nick,ver:lg.ver,diff:lg.diff,mode:lg.mode,daily:lg.mode==='daily'?todayKey():'',char:lg.char,win:lg.win,clock:lg.clock,kills:lg.kills,lv:lg.lv,dmg:Math.round(Object.values(P.dmgBy||{}).reduce((a,b)=>a+b,0)),endlessMin:G.endlessMin||0};
+ return fetch(RANK_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).then(r=>r.json()).catch(()=>null);}
+function rankFetch(cat){if(!RANK_URL)return Promise.resolve(null);return fetch(RANK_URL+'?cat='+cat+'&day='+todayKey()).then(r=>r.json()).catch(()=>null);}
 function todayKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function seedRng(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return((h^=h>>>16)>>>0)/4294967296;};}
 const DAILY_MODS=[{id:'rain',nm:'☔ 비 오는 출근길',ds:'우산으로 시작 · 이속 -10% · 우산 피해 +50%'},{id:'monday',nm:'😩 월요일 아침',ds:'적 체력 +30% · 경험치 +30%'},{id:'special',nm:'📢 민폐 대란',ds:'특수 몹 3배'},{id:'elite',nm:'🤩 인플루언서 데이',ds:'엘리트 2배 자주 · 보물상자 확률 2배'},{id:'payday',nm:'💰 월급날',ds:'골드 2배 · 상점 가격 1.5배'}];
@@ -1715,7 +1724,7 @@ break;}
   const newAch=checkAch({win,diff:this.diff||'normal',kills:P.kills,lv:P.lv,evo:P.weapons.filter(w=>w.evo).length,union:P.weapons.filter(w=>w.union).length,curses:P.augs.filter(a=>a.r==='curse').length,bossNoHit:!!P.b4noHit,codexAug:META.codex.a.length,daily:this.mode==='daily',endless:this.mode==='endless',clock:this.clock,runs:META.runs,salary:META.salary});saveMeta();
   this.lastResult={win,title,sal,newAch};
   {const lg={v:22,date:new Date().toISOString().slice(0,16),char:this.char.nm,diff:this.diff||'normal',mode:this.mode||'normal',win:!!win,clock:Math.round(this.clock),cause:title,lastHit:P.lastHitBy||'',kills:P.kills,lv:P.lv,gold:P.goldEarned,spent:P.goldSpent||0,weapons:P.weapons.map(w=>wName(w)+' Lv'+w.lv),augs:P.augs.map(a=>a.nm),syn:Object.entries(P.synLv||{}).filter(x=>x[1]).map(x=>SYN[x[0]].nm+x[1]),dmg:Object.entries(P.dmgBy).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([k,v])=>(WEAPONS[k]?WEAPONS[k].nm:'기타')+':'+Math.round(v)),tl:P.tl||[]};
-   if(!this.bot){META.logs.unshift(lg);META.logs=META.logs.slice(0,30);if(win){META.builds.unshift({date:lg.date,char:lg.char,diff:lg.diff,clock:lg.clock,weapons:lg.weapons,augs:lg.augs,syn:lg.syn});META.builds=META.builds.slice(0,12);}saveMeta();}this.lastLog=lg;}
+   if(!this.bot){META.logs.unshift(lg);META.logs=META.logs.slice(0,30);if(win){META.builds.unshift({date:lg.date,char:lg.char,diff:lg.diff,clock:lg.clock,weapons:lg.weapons,augs:lg.augs,syn:lg.syn});META.builds=META.builds.slice(0,12);}saveMeta();}this.lastLog=lg;lg.ver='v30';if(!this.bot){const rs=document.getElementById('rankRes');if(rs){rs.textContent=!RANK_URL?'':!META.nick?'🏆 닉네임을 등록하면 랭킹에 올라가요 (메인 → 랭킹)':'🏆 랭킹 등록 중...';rankSubmit(lg).then(r=>{if(rs&&META.nick&&RANK_URL)rs.textContent=r&&r.ok?'🏆 랭킹에 등록됐어요! ('+META.nick+')':r&&r.err==='suspicious'?'⚠️ 비정상 기록으로 판단돼 랭킹에서 제외됐어요':'⚠️ 랭킹 서버에 연결하지 못했어요';});}}}
   if(this.bot){this.botResult={win,clock:this.clock,kills:P.kills,lv:P.lv,augs:P.augs.length,title};return;}
   document.getElementById('resTitle').textContent=(win?'🎉 ':'💀 ')+title;
   document.getElementById('resBody').innerHTML=`도착 시각: <b>${fmtClock(this.clock)}</b> · 처치 <b>${P.kills}</b> · 레벨 <b>${P.lv}</b><br>획득 연봉: <b style="color:#ffd84a">+${sal}만원</b> · 난이도 ${DIFFS[this.diff||'normal'].ic} ${DIFFS[this.diff||'normal'].nm}`;
@@ -1887,7 +1896,7 @@ break;}
 
 // ================= UI =================
 const UI={
- ids:['menu','chars','lvl','chest','shop','pause','result','metaS','codexS','creditS','tut','achS','setS','logS'],
+ ids:['menu','chars','lvl','chest','shop','pause','result','metaS','codexS','creditS','tut','achS','setS','logS','rankS'],
  show(id){this.ids.forEach(i=>document.getElementById(i).classList.toggle('on',i===id));if(id==='menu')G.state='menu';},
  hideAll(){this.ids.forEach(i=>document.getElementById(i).classList.remove('on'));},
  rcol(r){return{common:'#9aa',rare:'#3fa0ff',legend:'#ffc400',curse:'#ff2a2a'}[r];},
@@ -1964,6 +1973,14 @@ const UI={
   const seenN={w:C.w.length+'/'+Object.keys(WEAPONS).length,p:C.p.length+'/'+Object.keys(PASSIVES).length,a:C.a.length+'/'+AUGS.length,s:C.s.length+'/'+Object.keys(SYN).length}[t];
   box.innerHTML=`<div class="li cxN" style="grid-column:1/-1;text-align:center">수집 ${seenN}</div>`+h;const sel=document.getElementById('cxT');if(sel&&sel.options.length<3){for(const k in SYN)sel.add(new Option(SYN[k].ic+' '+SYN[k].nm,k));sel.add(new Option('🎖️ 직급','rank'));}this.codexFilter();},
  codexFilter(){const q=(document.getElementById('cxQ')||{}).value||'',t=(document.getElementById('cxT')||{}).value||'';document.querySelectorAll('#codexList .li').forEach(el=>{if(el.classList.contains('cxN'))return;const ok=(!q||el.textContent.includes(q))&&(!t||(' '+(el.dataset.t||'')+' ').includes(' '+t+' '));el.style.display=ok?'':'none';});},
+ rank(cat){this.show('rankS');const nk=document.getElementById('rankNick');nk.innerHTML=(META.nick?'내 닉네임: <b>'+META.nick.replace(/</g,'')+'</b> ':'닉네임이 없어요 ')+'<button class="btn gray sm" onclick="UI.setNick()">✏️ '+(META.nick?'변경':'등록')+'</button>';
+  document.querySelectorAll('.rk').forEach((b,i)=>b.classList.toggle('on',['daily','normal','hell','kills','lv','endless'][i]===cat));const box=document.getElementById('rankList');
+  if(!RANK_URL){box.innerHTML='<div class="li">랭킹 서버가 아직 연결되지 않았어요. (관리자: RANK_URL 설정 필요)</div>';return;}
+  box.innerHTML='<div class="li">불러오는 중...</div>';rankFetch(cat).then(r=>{if(!r||!r.ok){box.innerHTML='<div class="li">랭킹을 불러오지 못했어요</div>';return;}
+   if(!r.rows.length){box.innerHTML='<div class="li">아직 기록이 없어요. 첫 번째 주인공이 되어보세요!</div>';return;}
+   const val=x=>cat==='kills'?x.kills+'명':cat==='lv'?'Lv'+x.lv:cat==='endless'?x.endlessMin+'분':(x.win?'🎉 '+fmtClock(x.clock):'💀 '+fmtClock(x.clock));
+   box.innerHTML=r.rows.map((x,i)=>`<div class="li rkRow${x.nick===META.nick?' me':''}"><b>${['🥇','🥈','🥉'][i]||(i+1)+'위'}</b> ${String(x.nick).replace(/</g,'')} <span style="float:right">${val(x)}</span><br><span style="font-size:12px;color:#aab">${x.char} · ${(DIFFS[x.diff]||{}).nm||x.diff} · ${x.ver}</span></div>`).join('');});},
+ setNick(){const n=prompt('랭킹에 쓸 닉네임 (2~12자)',META.nick||'');if(n==null)return;const e=nickOk(n);if(e){alertToast(e);return;}META.nick=n.trim();saveMeta();this.rank('daily');},
  copyLog(){const t=JSON.stringify(G.lastLog||{},null,1);try{navigator.clipboard.writeText(t);G.toast?0:0;alertToast('📋 기록을 복사했어요. 카톡이나 메신저에 붙여넣어 보내주세요!');}catch(e){alertToast('복사 실패: 판 기록 화면에서 내보내기를 써주세요');}},
  exportLogs(){const b=new Blob([JSON.stringify({logs:META.logs,builds:META.builds},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='jiokcheol_logs_'+new Date().toISOString().slice(0,10)+'.json';a.click();},
  logs(t){this.show('logS');const box=document.getElementById('logList');const fm=c=>fmtClock(c);
