@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v22</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v23</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -175,7 +175,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v22</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v23</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -349,7 +349,7 @@ const AUGS=[
  {nm:'숙취 출근',ic:'🥴',r:'curse',ds:'화면 흔들림, 공격속도 +40%',m:s=>{s.cdMult*=1/1.4},fl:'hangover'},
  {nm:'지갑 분실',ic:'🕳️',r:'curse',ds:'골드 획득 0, 경험치 +60%',m:(s,pf)=>{s.goldMult*=1-pf;s.xpMult+=.6}},
  {nm:'카톡 감옥',ic:'📲',r:'curse',ds:'5초마다 랜덤 방향으로 끌려감, 투사체 +3',m:s=>{s.amt+=3},fl:'kakao'},
- {nm:'무한 회의',ic:'🗓️',r:'curse',ds:'선택지 2장, 대신 증강 등급 1단계 상승',m:s=>{s.extraChoice-=1;s.rarityUp=1}},
+ {nm:'무한 회의',ic:'🗓️',r:'curse',ds:'선택지 2장, 대신 증강 등급 1단계 상승',m:(s,pf)=>{if(pf>0)s.extraChoice-=1;s.rarityUp=1}},
  {nm:'눈치 없음',ic:'🙃',r:'curse',ds:'적이 더 빨리 몰림, 경험치 +50%',m:(s,pf)=>{s.enemySpd+=.15*pf;s.xpMult+=.5}},
  {nm:'영혼 없는 출근',ic:'😶',r:'curse',ds:'회복 불가, 최대 체력 2배',m:(s,pf)=>{s.maxhp*=2;s.healMult*=1-pf}},
  {nm:'지각 확정',ic:'⏰',r:'curse',ds:'09:00 이후에도 계속(무한), 1분마다 적 강화',fl:'endless'}
@@ -478,9 +478,9 @@ AUGS.push(
  {nm:'수면 부족',ic:'😪',r:'curse',ds:'시야가 좁아짐, 경험치 +80%',m:s=>{s.xpMult+=.8},fl:'sleepless'},
  {nm:'무한 야근',ic:'🏭',r:'curse',ds:'적 등장 +50%, 골드 2배',m:(s,pf)=>{s.spawnMult+=.5*pf;s.goldMult*=2}},
  {nm:'노 마스크',ic:'😮‍💨',r:'curse',ds:'받는 피해 +30%, 주는 피해 +40%',m:(s,pf)=>{s.dmgTaken+=.3*pf;s.dmg+=.4}},
- {nm:'꼰대 모드',ic:'🧓',r:'curse',ds:'투사체 -1, 피해 +60%',m:s=>{s.amt-=1;s.dmg+=.6}},
+ {nm:'꼰대 모드',ic:'🧓',r:'curse',ds:'투사체 -1, 피해 +60%',m:(s,pf)=>{if(pf>0)s.amt-=1;s.dmg+=.6}},
  {nm:'번아웃',ic:'🫠',r:'curse',ds:'30초마다 3초간 공격 정지, 쿨타임 -40%',m:s=>{s.cdMult*=.6},fl:'burnout'},
- {nm:'계약직',ic:'📃',r:'curse',ds:'무기 슬롯 4칸 제한, 피해 +60%',m:s=>{s.dmg+=.6;s.contract=1}}
+ {nm:'계약직',ic:'📃',r:'curse',ds:'무기 슬롯 4칸 제한, 피해 +60%',m:(s,pf)=>{s.dmg+=.6;s.contract=pf>0?1:0}}
 );
 AUGS.push(
  {nm:'샷 추가',ic:'🥃',r:'common',tag:'caffeine',ds:'카페인 무기 피해 +15%',fl:'shotAdd'},
@@ -1008,8 +1008,8 @@ const G={state:'menu',
   // 시너지
   const tc=this.tagCounts();P.syn=tc;
   const lv=(k)=>{const t=SYN[k].th;let L=0;for(let i=0;i<t.length;i++)if(tc[k]>=t[i])L=i+1;return L;};
-  const pf=(P.flags.regular||lv('dark')>=4)?0:(lv('dark')>=3?.4:lv('dark')>=1?.7:1);
-  for(const a of P.augs){if(a.m)a.m(s,pf);if(a.fl)P.flags[a.fl]=1;}
+  const pf=(P.flags.regular||P.augs.some(x=>x.fl==='regular')||lv('dark')>=4)?0:(lv('dark')>=3?.4:lv('dark')>=1?.7:1);
+  P.noPen=pf===0;for(const a of P.augs){if(a.m)a.m(s,pf);if(a.fl)P.flags[a.fl]=1;}
   if(lv('caffeine')>=1)s.cdMult*=1/1.1;
   if(lv('office')>=1)s.armor+=3;
   if(lv('runner')>=1)s.spd*=1.1;
@@ -1103,7 +1103,7 @@ const G={state:'menu',
   {if(G.daily&&G.daily.id==='monday')e.hp*=1.3;}{const D=DIFFS[G.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,G.clock/3600),2);e.hp*=D.hp*L;e.dmg*=D.dmg*(1+(L-1)*.6);}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);if(P.extOn&&this.state){P.extOn=0;e.stun=3;}}return e;},
  spawnBoss(b){const a=rnd(0,Math.PI*2);const R=b.id==='b3'?260:380;const e=this.mkEnemy('passenger',P.x+Math.cos(a)*R,P.y+Math.sin(a)*R);
   Object.assign(e,{t:b.id,bd:b,ic:b.ic,sp:b.sp,r:b.r,hp:b.hp*(1+this.clock/3600*1.2),spd:b.spd,dmg:b.dmg,boss:true,elite:true,phase:1,aiT:2});e.mhp=e.hp;e.d={nm:b.nm,xp:80,kbRes:1};
-  {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect){e.hp*=2;e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
+  {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect&&!P.noPen){e.hp*=2;e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
 
  // ---- 이벤트
  updEvent(dt){
@@ -1231,7 +1231,7 @@ const G={state:'menu',
  nearest(x,y,r){let best=null,bd=r*r;for(const e of E){if(e.dead||e.charm>0||e.ally>0||e.d.prop)continue;const d=(e.x-x)**2+(e.y-y)**2;if(d<bd){bd=d;best=e;}}return best;},
  updWeapons(dt){
   this._crowd=P.flags.crowd&&GRID.query(P.x,P.y,120,QBUF).length>=10;
-  if(P.flags.burnout&&!P.flags.regular&&(this.real%30)>27)return;
+  if(P.flags.burnout&&!P.noPen&&(this.real%30)>27)return;
   if(P.flags.rushHour){let c=0;for(const e of E)if(!e.dead&&Math.abs(e.x-P.x)<VW/2&&Math.abs(e.y-P.y)<VH/2)c++;this._onScreen=c;}
   const sp=P.cloneT>0?2:1;
   for(const w of P.weapons){const W=WEAPONS[w.id];
@@ -1411,7 +1411,7 @@ break;}
      else if(g.k==='heal'){this.heal(g.v);if(P.flags.canteen)this.explode(P.x,P.y,110,30*this.dmgMul(),'#fd6');}else if(g.k==='chest'){this.openChest();}}}}
   GEMS=GEMS.filter(g=>!g.got);
   if(GEMS.length>600){let sum=0;const keep=[];for(const g of GEMS){if(g.k==='xp'&&(g.x-P.x)**2+(g.y-P.y)**2>(VW*VW))sum+=g.v;else keep.push(g);}GEMS=keep;if(sum)GEMS.push({x:P.x+rnd(-200,200),y:P.y+rnd(-200,200),v:sum,k:'xp',big:1});}},
- gainGold(v){let g=Math.round(v*P.s.goldMult);if(P.flags.debt)g=Math.floor(g/2);if(g<=0)return;P.gold+=g;P.goldEarned+=g;SFX.play('coin');
+ gainGold(v){let g=Math.round(v*P.s.goldMult);if(P.flags.debt&&!P.noPen)g=Math.floor(g/2);if(g<=0)return;P.gold+=g;P.goldEarned+=g;SFX.play('coin');
   if(P.synLv.salary>=2){for(let i=0;i<(P.synLv.salary>=3?6:3);i++){const a=rnd(0,7);this.proj({vx:Math.cos(a)*200,vy:Math.sin(a)*200,r:8,dmg:10*this.dmgMul(),life:2,pierce:1,ic:'💰',homing:1});}}},
  gainXp(v,raw){P.xp+=raw?v:v*xpCap(P.s.xpRaw+(P.flags.morning&&this.clock<1200?.4:0));while(P.xp>=P.need){P.xp-=P.need;P.lv++;P.need=Math.floor(4+P.lv*2.6+Math.pow(P.lv,1.5));P.pendingLv++;if(P.lv%5===0)P.pendingAug++;if(P.flags.raise)this.gainGold(10);}},
  updAugTimers(dt){const f=P.flags;
@@ -1419,8 +1419,8 @@ break;}
   if(f.doors){P.doorT-=dt;if(P.doorT<=0){P.doorT=5;for(const sd of[-1,1]){const x=P.x+sd*90;FX.push({type:'rect',x:x-18,y:P.y-170,w:36,h:340,life:.3,max:.3,col:'#9cf'});for(const e of E)if(!e.dead&&hbRect(e,x-18,P.y-170,x+18,P.y+170))this.hurt(e,30*this.dmgMul(),null,true);}}}
   if(f.stunPulse){P.stunT-=dt;if(P.stunT<=0){P.stunT=15;for(const e of E)e.stun=.5;this.toast('🔔 띠링! 전체 기절');}}
   if(f.shield){P.shieldT-=dt;if(P.shieldT<=0){P.shieldT=30;P.shieldHp=P.s.maxhp*.1;}}
-  if(f.kakao){P.kakaoT-=dt;if(P.kakaoT<=0){P.kakaoT=5;const a=rnd(0,7);P.kakaoV={x:Math.cos(a)*200,y:Math.sin(a)*200,t:.3};this.num(P.x,P.y-30,'카톡!','#ff0');}}
-  if(f.hangover&&Math.random()<dt*.3)this.shake=.25;
+  if(f.kakao&&!P.noPen){P.kakaoT-=dt;if(P.kakaoT<=0){P.kakaoT=5;const a=rnd(0,7);P.kakaoV={x:Math.cos(a)*200,y:Math.sin(a)*200,t:.3};this.num(P.x,P.y-30,'카톡!','#ff0');}}
+  if(f.hangover&&!P.noPen&&Math.random()<dt*.3)this.shake=.25;
   if(f.driver){P.driverT-=dt;if(P.driverT<=0){P.driverT=15;const y=P.y+rnd(-120,120);FX.push({type:'train',y,life:.6,max:.6});SFX.play('boom');this.shake=.3;for(const e of E)if(!e.dead&&hbRect(e,P.x-VW,y-50,P.x+VW,y+50))this.hurt(e,60*this.dmgMul(),null,true);}}
   if(f.officeMove)for(const e of GRID.query(P.x,P.y,140,QBUF))e.slow=.2;
   const sl=P.synLv;
@@ -1799,7 +1799,7 @@ break;}
   if(META.set.lowHpWarn&&P.hp<P.s.maxhp*.3&&!P.s.quit){const a=.25+.2*Math.sin(this.real*7);const g=ctx.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*.35,VW/2,VH/2,Math.max(VW,VH)*.65);g.addColorStop(0,'rgba(255,0,0,0)');g.addColorStop(1,'rgba(220,0,0,'+a+')');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
   for(const f of FX){if(f.type==='flash'){ctx.globalAlpha=f.life/f.max;ctx.fillStyle=f.col;ctx.fillRect(0,0,VW,VH);ctx.globalAlpha=1;}
    if(f.type==='train'){const k=1-f.life/f.max;const sy=f.y-(P.y-VH/2);const tx=-1600+k*(VW+3200);ctx.fillStyle='rgba(255,255,255,.15)';ctx.fillRect(0,sy-45,VW,90);ctx.fillStyle='#e8ecef';rr(tx,sy-40,1400,80,16);ctx.fill();ctx.fillStyle=LINE[this.stage].col;ctx.fillRect(tx,sy+10,1400,12);ctx.fillStyle='#1d2a3a';for(let i=0;i<10;i++){rr(tx+40+i*135,sy-30,90,30,6);ctx.fill();}}}
-  if(P.flags.sleepless){const g=ctx.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*.2,VW/2,VH/2,Math.max(VW,VH)*.55);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.85)');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
+  if(P.flags.sleepless&&!P.noPen){const g=ctx.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*.2,VW/2,VH/2,Math.max(VW,VH)*.55);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.85)');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
   if(this.event&&this.event.type==='delay'){const a=.25+.15*Math.sin(this.real*6);const g=ctx.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*.3,VW/2,VH/2,Math.max(VW,VH)*.7);g.addColorStop(0,'rgba(255,0,0,0)');g.addColorStop(1,'rgba(255,0,0,'+a+')');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
   this.drawHUD();this.drawOverlays();},
  drawOverlays(){if(this.cutin){const c=this.cutin,b=c.b,t=c.t;const kin=clamp((1.8-t)/.25,0,1),kout=clamp(t/.3,0,1);const al=Math.min(kin,kout);const cy=VH/2;ctx.save();ctx.globalAlpha=al;ctx.fillStyle='rgba(0,0,0,.45)';ctx.fillRect(0,0,VW,VH);
