@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v26</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v27</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -175,7 +175,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v26</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v27</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -713,7 +713,7 @@ function saveResultCard(){const r=G.lastResult||{};const W=760,H=420;const c=doc
 const META_KEY='jiokcheol_meta_v1';
 const META_UPS={reroll:{nm:'업무 노하우',ic:'🎲',ds:'시작 새로고침 +1',max:3,cost:80},hp:{nm:'체력 관리',ic:'❤️',ds:'최대 체력 +10',max:5,cost:50},dmg:{nm:'업무 역량',ic:'⚔️',ds:'피해 +5%',max:5,cost:60},spd:{nm:'출근 속도',ic:'👟',ds:'이동속도 +4%',max:5,cost:50},xp:{nm:'자기계발',ic:'📚',ds:'경험치 +5%',max:5,cost:50},gold:{nm:'재테크',ic:'💹',ds:'골드 +10%',max:5,cost:40},luck:{nm:'인맥',ic:'🍀',ds:'행운 +5',max:5,cost:50}};
 let META={set:{dmgNum:true,shake:true,lowFx:false,lowHpWarn:true},ach:[],daily:{},runs:0,salary:0,ups:{},mz:false,codex:{w:[],p:[],a:[],s:[],e:[]}};
-function alertToast(t){const d=document.createElement('div');d.className='aToast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600);}
+function alertToast(t){if(!document.body)return;const d=document.createElement('div');d.className='aToast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600);}
 function loadMeta(){try{const d=JSON.parse(localStorage.getItem(META_KEY));if(d)META=Object.assign(META,d);META.set=Object.assign({dmgNum:true,shake:true,lowFx:false,lowHpWarn:true},META.set||{});META.codex=Object.assign({w:[],p:[],a:[],s:[],e:[]},META.codex||{});}catch(e){}
  META.unl=META.unl||{};if(!META.unlV){META.unlV=22;if((META.runs||0)>0){META.unl.p1=1;META.unl.p2=1;}}META.logs=META.logs||[];META.builds=META.builds||[];}
 function saveMeta(){try{localStorage.setItem(META_KEY,JSON.stringify(META));}catch(e){}}
@@ -1631,7 +1631,7 @@ break;}
    if(!did){for(const it of this.market){if(it.sold||['jobchg','sever','mag','ext','energy','charm'].includes(it.id))continue;const pr=this.price(it);if(P.gold<pr)continue;this.spend(pr);it.sold=1;it.f();if(this.shopPick){const k=this.shopPick;this.shopChoose(k.l?k.l[0]:0);}did=true;break;}}
    if(!did)break;}},
  fixedItems(){const G2=this;return[
-  {id:'wup',ic:'🔧',nm:'무기 강화권',ds:'고른 무기 1개 +1레벨',c:100,g:1.6,ok:()=>P.weapons.some(w=>w.lv<8),f:()=>{G2.shopPick={t:'wup'};}},
+  {id:'wup',ic:'🔧',nm:'무기 강화권',ds:'무작위 무기 1개 +1레벨 (Lv8 제외)',c:100,g:1.6,ok:()=>P.weapons.some(w=>w.lv<8),f:()=>{const u=P.weapons.filter(w=>w.lv<8);if(u.length){const w=pick(u);w.lv++;G2.recompute();alertToast('🔧 '+wName(w)+' → Lv'+w.lv);}}},
   {id:'perf',ic:'📈',nm:'성과 평가',ds:'영구 피해 +1%',c:80,g:1.6,max:5,f:()=>{P.permDmg+=.01;}},
   {id:'gym',ic:'🏋️',nm:'헬스장 등록',ds:'최대 체력 +5',c:50,g:1.6,max:5,f:()=>{P.bonusHp=(P.bonusHp||0)+5;G2.recompute();G2.heal(5,true);}},
   {id:'banana',ic:'🍌',nm:'바나나 우유',ds:'체력 50% 회복 (역당 2회)',c:30,g:1.3,stMax:2,f:()=>{P.bananaN++;G2.heal(P.s.maxhp*.5);}}];},
