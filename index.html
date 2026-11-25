@@ -161,6 +161,9 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 .bpRow.awk{border-color:#facc15;background:linear-gradient(90deg,#3a2f0a,#1a1608);box-shadow:0 0 10px rgba(250,204,21,.35)}
 .gr{font:10px Bungee,sans-serif;padding:0 4px;border-radius:4px;margin-left:4px;vertical-align:middle}.gB{background:#334155;color:#cbd5e1}.gA{background:#1e3a8a;color:#bfdbfe}.gS{background:#78350f;color:#fde68a}
 .dots i{width:7px;height:7px;margin-left:1px}.dots i.th{margin-right:3px}
+.shopSec{width:100%;text-align:center;font:15px 'Black Han Sans',sans-serif;color:#fde68a;margin:10px 0 6px}.shopSec .btn.sm{font-size:12px;padding:4px 10px;margin-left:10px;vertical-align:middle}
+#shopList{flex-direction:column;align-items:center}.shopi{position:relative;width:170px;padding:10px}.shopi.fx{border-color:#60a5fa;background:linear-gradient(160deg,#1c2536,#111827)}
+.shopi.rr{border-color:#a78bfa}.shopi.rl{border-color:#facc15;box-shadow:0 0 10px rgba(250,204,21,.3)}.sLk{position:absolute;top:6px;right:8px;opacity:.35;font-size:14px}.sLk.on{opacity:1}
 </style>
 </head>
 <body>
@@ -200,7 +203,7 @@ const ASSETS={
   tiles:['sindorim','sadang','gangnam','jamsil','lobby']
 };
 const IMG={};
-const EMOJI_IDX={"🫳":0,"😏":1,"😪":2,"🥡":3,"💡":4,"🔆":5,"🔇":6,"🏧":7,"🙌":8,"❤":9,"🫂":10,"🔋":11,"🌂":12,"🛠️":13,"🏖":14,"⚙️":15,"☠":16,"🎲":17,"📇":18,"🧊":19,"🔒":20,"🏘️":21,"⏳":22,"💼":23,"💻":24,"💹":25,"🧱":26,"👔":27,"🍱":28,"🔱":29,"🪪":30,"🌗":31,"🧬":32,"🤒":33,"🍶":34,"💵":35,"🫸":36,"🦵":37,"🧗":38,"🥷":39,"🏰":40,"🥤":41,"📃":42,"🔔":43,"🕊️":44,"🧋":45,"⚠":46,"🧲":47,"🚌":48,"🗒️":49,"📳":50,"🍲":51,"🗜️":52,"🌃":53,"🍫":54,"👀":55,"🏷️":56,"🧯":57,"🐤":58,"🧶":59,"🦿":60,"✈️":61,"😈":62,"🧳":63,"🏙️":64,"🔦":65,"🚪":66,"🥴":67,"❄️":68,"🧘":69,"❓":70,"🥢":71,"🦸":72,"⌨️":73,"🩴":74,"📔":75,"🔍":76,"🍀":77,"⚔️":78,"👹":79,"🗓️":80,"🐓":81,"🧠":82,"💳":83,"📖":84,"🎯":85,"🔖":86,"🆔":87,"🏦":88,"📊":89,"💸":90,"🃏":91,"🤩":92,"🏠":93,"🗃️":94,"🌈":95,"🏢":96,"🤳":97,"🔧":98,"💫":99,"🎁":100,"⛑️":101,"🧑‍🎓":102,"↗":103,"🔀":104,"📄":105,"👓":106,"📺":107,"🏬":108,"🤝":109,"☠️":110,"♾️":111,"🦄":112,"🍛":113,"👨‍💼":114,"🛂":115,"📲":116,"⭕":117,"⏸️":118,"🎒":119,"🎟️":120,"🏪":121,"🕺":122,"🪜":123,"🎆":124,"🔓":125,"☂️":126,"🏗️":127,"🩸":128,"😤":129,"📱":130,"🌬️":131,"🚦":132,"🚀":133,"🌩️":134,"💬":135,"🎶":136,"🛃":137,"❤️":138,"📝":139,"✅":140,"🛩️":141,"🧑‍🍳":142,"🎊":143,"💘":144,"✍️":145,"⛰️":146,"🍬":147,"🏃‍♀️":148,"🦉":149,"🛒":150,"⚡":151,"🏭":152,"🩹":153,"🛍️":154,"🫧":155,"💂":156,"💣":157,"😩":158,"🕹️":159,"⏩":160,"🎰":161,"👟":162,"📣":163,"😷":164,"☃️":165,"🫖":166,"🕔":167,"🙃":168,"📛":169,"⭐":170,"🍻":171,"👍":172,"🚧":173,"📈":174,"🚒":175,"✊":176,"👣":177,"⚠️":178,"🧥":179,"🤖":180,"🚇":181,"🎵":182,"🌽":183,"🎭":184,"🌱":185,"📶":186,"💤":187,"🏆":188,"🏖️":189,"🕳️":190,"🔌":191,"📜":192,"🧍":193,"🪺":194,"🍞":195,"🤸":196,"🔁":197,"🍗":198,"🔥":199,"🛴":200,"🚆":201,"🎀":202,"🖨️":203,"🍵":204,"☔":205,"🚄":206,"💊":207,"🥶":208,"🫠":209,"➡️":210,"👴":211,"💪":212,"🚫":213,"🗿":214,"📡":215,"💥":216,"🧿":217,"🚨":218,"🖤":219,"👻":220,"🥱":221,"🦏":222,"☕":223,"🌡️":224,"💀":225,"📚":226,"🌄":227,"🔴":228,"📰":229,"🤐":230,"🛵":231,"🧑‍💼":232,"📢":233,"⏸":234,"😶":235,"💨":236,"🗺️":237,"🏸":238,"🎧":239,"🪙":240,"🌅":241,"🍙":242,"😎":243,"🧾":244,"🌋":245,"💰":246,"💮":247,"🏔️":248,"💎":249,"🧑‍💻":250,"🏃":251,"🗝️":252,"🙇":253,"🌀":254,"🧓":255,"🟫":256,"🫴":257,"🌪️":258,"🌧️":259,"♨️":260,"🛡️":261,"✨":262,"🗡️":263,"⏰":264,"🛗":265,"👑":266,"📸":267,"🪡":268,"😮‍💨":269,"⬜":270,"❔":271,"🎉":272,"🧃":273,"🔐":274,"😱":275,"📬":276,"🧪":277,"📑":278,"🎫":279,"🏛️":280,"📦":281,"⬆️":282,"🍾":283,"🌟":284,"🍚":285,"🤴":286,"📋":287,"🍖":288,"📅":289,"💺":290,"🖋️":291,"🤾":292,"👛":293,"🎖️":294,"🤧":295,"🐦":296,"📮":297,"🌙":298,"🟥":299,"📽️":300,"🏁":301,"🗂️":302,"❌":303,"🌾":304,"🥃":305,"🦺":306,"🗣️":307,"⚖️":308,"🐾":309,"🍜":310,"🪹":311,"🚱":312,"🫕":313,"🌶️":314,"🌍":315,"🪟":316,"😵‍💫":317};const ATLAS_COLS=18,ATLAS_S=72;
+const EMOJI_IDX={"🫳":0,"😏":1,"😪":2,"🥡":3,"💡":4,"🔆":5,"🔇":6,"🏧":7,"🙌":8,"❤":9,"🫂":10,"🔋":11,"🌂":12,"🛠️":13,"🏖":14,"⚙️":15,"☠":16,"🎲":17,"📇":18,"🧊":19,"🔒":20,"🏘️":21,"⏳":22,"💼":23,"💻":24,"💹":25,"🧱":26,"👔":27,"🍱":28,"🔱":29,"🪪":30,"🌗":31,"🧬":32,"🤒":33,"🍶":34,"💵":35,"🫸":36,"🦵":37,"🧗":38,"🥷":39,"🏰":40,"🥤":41,"📃":42,"🔔":43,"🕊️":44,"🧋":45,"⚠":46,"🧲":47,"🚌":48,"🗒️":49,"📳":50,"🍲":51,"🗜️":52,"🌃":53,"🍫":54,"👀":55,"🏷️":56,"🧯":57,"🐤":58,"🧶":59,"🦿":60,"✈️":61,"😈":62,"🧳":63,"🏙️":64,"🔦":65,"🚪":66,"🥴":67,"❄️":68,"🧘":69,"❓":70,"🥢":71,"🦸":72,"⌨️":73,"🩴":74,"📔":75,"🔍":76,"🍀":77,"⚔️":78,"👹":79,"🗓️":80,"🐓":81,"🧠":82,"💳":83,"📖":84,"🎯":85,"🔖":86,"🆔":87,"🏦":88,"📊":89,"💸":90,"🃏":91,"🤩":92,"🏠":93,"🗃️":94,"🌈":95,"🏢":96,"🤳":97,"🔧":98,"💫":99,"🎁":100,"⛑️":101,"🧑‍🎓":102,"↗":103,"🔀":104,"📄":105,"👓":106,"📺":107,"🏬":108,"🤝":109,"☠️":110,"♾️":111,"🦄":112,"🍛":113,"👨‍💼":114,"🛂":115,"📲":116,"⭕":117,"⏸️":118,"🎒":119,"🎟️":120,"🏪":121,"🕺":122,"🪜":123,"🎆":124,"🔓":125,"☂️":126,"🏗️":127,"🩸":128,"😤":129,"📱":130,"🌬️":131,"🚦":132,"🚀":133,"🌩️":134,"💬":135,"🎶":136,"🛃":137,"❤️":138,"📝":139,"✅":140,"🛩️":141,"🧑‍🍳":142,"🎊":143,"💘":144,"✍️":145,"⛰️":146,"🍬":147,"🏃‍♀️":148,"🦉":149,"🛒":150,"⚡":151,"🏭":152,"🩹":153,"🛍️":154,"🫧":155,"💂":156,"💣":157,"😩":158,"🕹️":159,"⏩":160,"🎰":161,"👟":162,"📣":163,"😷":164,"☃️":165,"🫖":166,"🕔":167,"🙃":168,"📛":169,"⭐":170,"🍻":171,"👍":172,"🚧":173,"📈":174,"🚒":175,"✊":176,"👣":177,"⚠️":178,"🧥":179,"🤖":180,"🚇":181,"🎵":182,"🌽":183,"🎭":184,"🌱":185,"📶":186,"💤":187,"🏆":188,"🏖️":189,"🕳️":190,"🔌":191,"📜":192,"🧍":193,"🪺":194,"🍞":195,"🤸":196,"🔁":197,"🍗":198,"🔥":199,"🛴":200,"🚆":201,"🎀":202,"🖨️":203,"🍵":204,"☔":205,"🚄":206,"💊":207,"🥶":208,"🫠":209,"➡️":210,"👴":211,"💪":212,"🚫":213,"🗿":214,"📡":215,"💥":216,"🧿":217,"🚨":218,"🖤":219,"👻":220,"🥱":221,"🦏":222,"☕":223,"🌡️":224,"💀":225,"📚":226,"🌄":227,"🔴":228,"📰":229,"🤐":230,"🛵":231,"🧑‍💼":232,"📢":233,"⏸":234,"😶":235,"💨":236,"🗺️":237,"🏸":238,"🎧":239,"🪙":240,"🌅":241,"🍙":242,"😎":243,"🧾":244,"🌋":245,"💰":246,"💮":247,"🏔️":248,"💎":249,"🧑‍💻":250,"🏃":251,"🗝️":252,"🙇":253,"🌀":254,"🧓":255,"🟫":256,"🫴":257,"🌪️":258,"🌧️":259,"♨️":260,"🛡️":261,"✨":262,"🗡️":263,"⏰":264,"🛗":265,"👑":266,"📸":267,"🪡":268,"😮‍💨":269,"⬜":270,"❔":271,"🎉":272,"🧃":273,"🔐":274,"😱":275,"📬":276,"🧪":277,"📑":278,"🎫":279,"🏛️":280,"📦":281,"⬆️":282,"🍾":283,"🌟":284,"🍚":285,"🤴":286,"📋":287,"🍖":288,"📅":289,"💺":290,"🖋️":291,"🤾":292,"👛":293,"🎖️":294,"🤧":295,"🐦":296,"📮":297,"🌙":298,"🟥":299,"📽️":300,"🏁":301,"🗂️":302,"❌":303,"🌾":304,"🥃":305,"🦺":306,"🗣️":307,"⚖️":308,"🐾":309,"🍜":310,"🪹":311,"🚱":312,"🫕":313,"🌶️":314,"🌍":315,"🪟":316,"😵‍💫":317,"🏋️":318,"🍌":319,"🛟":320};const ATLAS_COLS=18,ATLAS_S=72;
 const EIMG={};
 function icHtml(ch,sz){const im=EIMG[ch];if(im&&!im._url){try{im._url=im.toDataURL();}catch(e){im._url='';}}return im&&im._url?'<img src="'+im._url+'" style="width:'+(sz||48)+'px;height:'+(sz||48)+'px;vertical-align:middle">':ch;}
 const CREDITS_TXT=`<b>지옥철 서바이버 v1</b><br><br>기획·개발: 사용자 + Claude<br><br>
@@ -395,7 +398,7 @@ Object.assign(SYN,{
  office:{g:'B',d6:'내 편이 되는 적 3 → 5명',d8:'⚡각성 전사 소집: 처치한 적 10%가 15초간 아군으로 부활'},
  runner:{g:'A',d6:'출근 러시 최대 피해 +30% → +50%',d8:'⚡각성 출근 러시: 이동 경로에 피해 잔상, 이동속도 +30%'},
  pack:{g:'S',d6:'짐 폭탄 확률 15% → 30%',d8:'⚡각성 이삿짐 센터: 근접 무기 범위 +60%, 짐 폭탄 확률 50%·피해 2배'},
- salary:{g:'A',d6:'보너스 유도탄 3 → 6발',d8:'⚡각성 성과급: 보유 골드 100당 피해 +3% (최대 +60%)'},
+ salary:{g:'A',d6:'보너스 유도탄 3 → 6발',d8:'⚡각성 성과급: 이번 판에 쓴 골드 200당 피해 +3% (최대 +60%)'},
  store:{g:'S',d6:'회복 아이템 드롭 3배',d8:'⚡각성 24시 영업: 판당 2회 완전 부활, 초당 체력 재생 +2'},
  dark:{g:'A',d6:'저주 패널티 -30% → -60%',d8:'⚡각성 퇴사 엔딩: 저주 패널티 전부 제거, 저주 하나당 피해 +15%'},
  cold:{g:'S',d6:'빙결 지속 +50% → +150%',d8:'⚡각성 빙하기: 화면 안 적 이동속도 -40%, 빙결 파쇄가 주변을 연쇄 빙결'},
@@ -520,7 +523,7 @@ AUGS.push(
  {nm:'임원 승진 심사',ic:'🏢',r:'legend',char:'bujang',ds:'도장 피해 +40%, 모든 피해 +8%',fl:'bigStamp',m:s=>{s.dmg+=.08}},
  {nm:'폐기 도시락',ic:'🍱',r:'rare',char:'alba',ds:'회복량 +30%, 체력 재생 +0.5',m:s=>{s.healMult+=.3;s.regen+=.5}},
  {nm:'1+1 행사',ic:'🏷️',r:'rare',char:'alba',ds:'김밥 투사체 +1, 피해 +20%',fl:'onePlus'},
- {nm:'점장 대리',ic:'🧾',r:'legend',char:'alba',ds:'보유 골드 200당 피해 +4% (최대 +40%)',fl:'storeMgr'},
+ {nm:'점장 대리',ic:'🧾',r:'legend',char:'alba',ds:'이번 판에 쓴 골드 300당 피해 +4% (최대 +40%)',fl:'storeMgr'},
  {nm:'콜 몰아받기',ic:'📲',r:'rare',char:'rider',ds:'대시 쿨타임 -25%',m:s=>{s.dashCd*=.75}},
  {nm:'헬멧 착용',ic:'⛑️',r:'rare',char:'rider',ds:'최대 체력 +30, 방어력 +1',m:s=>{s.maxhp+=30;s.armor+=1}},
  {nm:'번쩍 배달',ic:'⚡',r:'legend',char:'rider',ds:'배달 피해 +40%, 이동속도 +10%',fl:'fastDel',m:s=>{s.spd*=1.1}},
@@ -659,11 +662,11 @@ function dailyPlan(){const r=seedRng('jiok-'+todayKey());const ci=Math.floor(r()
 const RUN_KEY='jiokcheol_run_v18';
 function saveRun(){try{const w=P.weapons.map(x=>({id:x.id,lv:x.lv,evo:x.evo,u:x.union?x.union.a:null}));
  localStorage.setItem(RUN_KEY,JSON.stringify({v:18,ci:CHARS.indexOf(G.char),diff:G.diff||'normal',mode:G.mode||'normal',stage:G.stage,
-  P:{lv:P.lv,xp:P.xp,need:P.need,gold:P.gold,goldEarned:P.goldEarned,kills:P.kills,weapons:w,passives:P.passives,augs:P.augs.map(a=>a.id),flags:P.flags,revive:P.revive,rerolls:P.rerolls,freeShop:P.freeShop,permDmg:P.permDmg,dmgBy:P.dmgBy,bans:P.bans,banned:[...P.banned],hpR:P.hp/P.s.maxhp,maxChest:P.maxChest,unionFree:P.unionFree}}));}catch(e){}}
+  P:{lv:P.lv,xp:P.xp,need:P.need,gold:P.gold,goldEarned:P.goldEarned,kills:P.kills,weapons:w,passives:P.passives,augs:P.augs.map(a=>a.id),flags:P.flags,revive:P.revive,rerolls:P.rerolls,freeShop:P.freeShop,permDmg:P.permDmg,bonusHp:P.bonusHp,goldSpent:P.goldSpent,shopBuy:P.shopBuy,boughtMed:P.boughtMed,dmgBy:P.dmgBy,bans:P.bans,banned:[...P.banned],hpR:P.hp/P.s.maxhp,maxChest:P.maxChest,unionFree:P.unionFree}}));}catch(e){}}
 function getRun(){try{const d=JSON.parse(localStorage.getItem(RUN_KEY));return d&&d.v===18&&CHARS[d.ci]?d:null;}catch(e){return null;}}
 function clearRun(){try{localStorage.removeItem(RUN_KEY);}catch(e){}}
 function loadRun(){const d=getRun();if(!d)return;G.mode=d.mode;G.diff=d.diff;G._loading=true;const td=META.tutDone;META.tutDone=true;G.start(d.ci);META.tutDone=td;G._loading=false;
- const q=d.P;Object.assign(P,{lv:q.lv,xp:q.xp,need:q.need,gold:q.gold,goldEarned:q.goldEarned,kills:q.kills,revive:q.revive,rerolls:q.rerolls,freeShop:q.freeShop,permDmg:q.permDmg,dmgBy:q.dmgBy||{},bans:q.bans,banned:new Set(q.banned||[]),maxChest:q.maxChest||0,unionFree:q.unionFree||0,flags:q.flags||{}});
+ const q=d.P;Object.assign(P,{lv:q.lv,xp:q.xp,need:q.need,gold:q.gold,goldEarned:q.goldEarned,kills:q.kills,revive:q.revive,rerolls:q.rerolls,freeShop:q.freeShop,permDmg:q.permDmg,bonusHp:q.bonusHp||0,goldSpent:q.goldSpent||0,shopBuy:q.shopBuy||{},boughtMed:q.boughtMed,dmgBy:q.dmgBy||{},bans:q.bans,banned:new Set(q.banned||[]),maxChest:q.maxChest||0,unionFree:q.unionFree||0,flags:q.flags||{}});
  P.weapons=q.weapons.map(x=>{const o={id:x.id,lv:x.lv,cd:0,evo:x.evo};if(x.u){const u=UNIONS.find(z=>z.a===x.u);if(u){o.union=u;o.uw={id:u.b,lv:8,evo:true,cd:0};}}return o;});
  P.passives=q.passives.map(x=>({id:x.id,lv:x.lv}));P.augs=q.augs.map(id=>AUGS[id]).filter(Boolean);
  G.stage=d.stage;G.clock=d.stage*720;G.bossIdx=BOSSES.filter(b=>b.t<G.clock).length;G.evSched=G.makeEvents(d.stage);G.announce={t:4,txt:'▶ 이어하기 — '+STAGES[d.stage].nm+'에서 다시 출발합니다'};
@@ -956,7 +959,7 @@ const G={state:'menu',
   SFX.init();const ch=CHARS[ci];this.char=ch;
   P={x:0,y:0,hp:0,maxhp:ch.hp,face:{x:1,y:0},lv:1,xp:0,need:4,gold:0,goldEarned:0,kills:0,weapons:[],passives:[],augs:[],flags:{},inv:0,revive:0,rerolls:2+((META.ups&&META.ups.reroll)||0),freeShop:0,pendingLv:0,
      dashCd:0,dashT:0,ghostCd:0,ghostT:0,shieldHp:0,shieldT:0,stampT:10,stampReady:false,doorT:5,stunT:15,kakaoT:5,kakaoV:null,syn4cT:5,wifiT:1,officeT:3,
-     spdBuff:0,runBuff:0,slowed:0,stunned:0,moved:false,hurtFlash:0,dmgBy:{},bans:3,banned:new Set(),b4hit:0,pendingAug:0,stageT:0,walk:0,driverT:15,permDmg:0,unionFree:0,maxChest:0,cloneT:0};
+     spdBuff:0,runBuff:0,slowed:0,stunned:0,moved:false,hurtFlash:0,dmgBy:{},bans:3,banned:new Set(),b4hit:0,pendingAug:0,stageT:0,walk:0,driverT:15,permDmg:0,unionFree:0,nx:{},st:{},goldSpent:0,bonusHp:0,maxChest:0,cloneT:0};
   E=[];PROJ.a.length=0;NUMS.a.length=0;ZONES=[];FX=[];GEMS=[];EPROJ=[];HAZ=[];ORBS=[];PETS=[];INST=[];
   this.real=0;this.clock=0;this.stage=0;this.bossIdx=0;this.spawnAcc=0;this.eliteT=45;this.boss=null;this.won=false;this.shake=0;
   this.event=null;this.evSched=this.makeEvents(0);this.announce={t:4,txt:'이번 역은 '+STAGES[0].nm+', '+STAGES[0].nm+'입니다'};this.queue=[];this.endlessMin=0;
@@ -998,7 +1001,7 @@ const G={state:'menu',
   if(lv('dark')>=2)s.dmg+=.4;if(lv('dark')>=4)s.dmg+=.15*P.augs.filter(a=>a.r==='curse').length;
   if(lv('cold')>=1)s.freezeDur*=lv('cold')>=3?2.5:1.5;if(lv('heat')>=1)s.burnDmg*=lv('heat')>=4?3:lv('heat')>=3?2:1.3;if(lv('summon')>=1)s.summons+=lv('summon')>=3?4:1;if(lv('summon')>=2)s.summonDmg+=1;if(lv('summon')>=4)s.summonDmg+=2;if(lv('install')>=1)s.installs+=1;if(lv('install')>=3)s.installDur*=2;if(lv('install')>=4)s.installs+=6;
   if(lv('caffeine')>=4)s.cdMult*=.5;if(lv('runner')>=4)s.spd*=1.3;if(lv('store')>=4)s.regen+=2;if(lv('pack')>=4)s.meleeArea=1.6;
-  s.dmg+=P.permDmg||0;if(P.flags.wifi)s.shockCh+=.03*P.weapons.filter(w=>WEAPONS[w.id].tag.includes('digital')).length;if(P.flags.oneMany)s.cdMult*=1/(1+.03*P.weapons.length);if(s.contract)s.maxW=Math.min(s.maxW,4);
+  s.dmg+=P.permDmg||0;s.maxhp+=P.bonusHp||0;if(P.st){if(P.st.luck)s.luck+=15;if(P.st.cd)s.cdMult*=.9;}if(P.flags.wifi)s.shockCh+=.03*P.weapons.filter(w=>WEAPONS[w.id].tag.includes('digital')).length;if(P.flags.oneMany)s.cdMult*=1/(1+.03*P.weapons.length);if(s.contract)s.maxW=Math.min(s.maxW,4);
   if(this.daily){const d=this.daily.id;if(d==='rain')s.spd*=.9;if(d==='monday')s.xpMult+=.3;if(d==='elite')s.chestMult*=2;if(d==='payday')s.goldMult+=1;}
   s.xpRaw=s.xpMult;s.xpMult=xpCap(s.xpRaw);
   const oldLv=P.synLv||{};P.synLv={};for(const k in SYN){P.synLv[k]=lv(k);if(P.synLv[k])seen('s',k);if(P.synLv[k]===4&&oldLv[k]!==4&&this.state){this.awaken={t:2.2,k};if(k==='store')P.storeRev=2;SFX.play('lvl');}}
@@ -1055,6 +1058,7 @@ const G={state:'menu',
   // 대기 레벨업
   P.stageT+=dt;if(P.cloneT>0)P.cloneT-=dt;if(P.busT>0)P.busT-=dt;if(P.dashBuffT>0)P.dashBuffT-=dt;
   P.stillT=P.moved?0:(P.stillT||0)+dt;if(P.flags.thermos&&P.stillT>1)this.heal(dt,true);
+  if(P.energyT>0)P.energyT-=dt;
   if(P.flags.autopay){P.payT=(P.payT||0)+dt;if(P.payT>=10){P.payT=0;this.gainGold(4);}}
   if(P.flags.punchOut){P.punchT=(P.punchT||0)+dt;if(P.punchT>=60){P.punchT=0;this.heal(P.s.maxhp*.2);}}
   if(P.tempPets)P.tempPets=P.tempPets.filter(t=>t>this.real);
@@ -1074,7 +1078,7 @@ const G={state:'menu',
  spawnAtEdge(t){const a=(Math.random()<.5?0:Math.PI)+rnd(-1,1),R=Math.max(VW,VH)*.6+40;let x=P.x+Math.cos(a)*R,y=P.y+Math.sin(a)*R;if(t==='holder'){x=P.x+Math.cos(a)*250;y=P.y+Math.sin(a)*250;}return this.mkEnemy(t,x,y);},
  hpScale(){const pr=this.clock/3600;let k=1+pr*3+pr*pr*10;if(P.flags.endless&&this.clock>3600)k*=1+this.endlessMin*.25;return k;},
  mkEnemy(t,x,y){y=clamp(y,WY0,WY1);const d=ENEMY[t];const sc=this.hpScale();const e={t,d,x,y,ic:d.ic,sp:t,r:d.r,hp:d.hp*sc*(d.elite?1.5+.12*this.stage+.06*this.stage*this.stage:1),mhp:0,spd:d.spd,dmg:d.dmg*(1+this.clock/3600*2.6)*(1+.04*this.stage+.06*this.stage*this.stage),kbx:0,kby:0,slow:0,poison:0,poisonD:0,stun:0,charm:0,hitT:0,dead:false,elite:!!d.elite,boss:false,ai:0,aiT:rnd(0,2),wx:0,wy:0,ally:d.traitor?20:0,buffed:0};
-  {if(G.daily&&G.daily.id==='monday')e.hp*=1.3;}{const D=DIFFS[G.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,G.clock/3600),2);e.hp*=D.hp*L;e.dmg*=D.dmg*(1+(L-1)*.6);}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);}return e;},
+  {if(G.daily&&G.daily.id==='monday')e.hp*=1.3;}{const D=DIFFS[G.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,G.clock/3600),2);e.hp*=D.hp*L;e.dmg*=D.dmg*(1+(L-1)*.6);}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);if(P.extOn&&this.state){P.extOn=0;e.stun=3;}}return e;},
  spawnBoss(b){const a=rnd(0,Math.PI*2);const R=b.id==='b3'?260:380;const e=this.mkEnemy('passenger',P.x+Math.cos(a)*R,P.y+Math.sin(a)*R);
   Object.assign(e,{t:b.id,bd:b,ic:b.ic,sp:b.sp,r:b.r,hp:b.hp*(1+this.clock/3600*1.2),spd:b.spd,dmg:b.dmg,boss:true,elite:true,phase:1,aiT:2});e.mhp=e.hp;e.d={nm:b.nm,xp:80,kbRes:1};
   {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect){e.hp*=2;e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
@@ -1116,7 +1120,7 @@ const G={state:'menu',
  tryDash(){if(this.state!=='play'||!P||!(P.flags.dash||P.flags.dashBomb)||P.dashCd>0)return;P.dashCd=P.s.dashCd;P.dashT=P.flags.elevator?.4:.2;if(P.flags.dashPower)P.dashBuffT=1.2;P.dashV={x:P.face.x,y:P.face.y};P.inv=Math.max(P.inv,.3);SFX.tone(600,.1,'sine',.08,1200);},
  heal(v,silent){if(P.s.quit)return;v*=P.s.healMult;if(v<=0)return;P.hp=Math.min(P.s.maxhp,P.hp+v);if(!silent&&P.flags.refill)for(const w of P.weapons)w.cd-=.5;
   if(!silent){this.num(P.x,P.y-20,'+'+Math.round(v),'#5f5');if(P.flags.charmHeal){for(const e of GRID.query(P.x,P.y,200,QBUF2))if(!e.boss)e.charm=P.flags.charmBoost?4:2;}}},
- hurtPlayer(d,src,ranged){if(P.inv>0||P.ghostT>0||P.dashT>0)return;const s=P.s;
+ hurtPlayer(d,src,ranged){if(P.inv>0||P.ghostT>0||P.dashT>0)return;if(P.bandHit){P.bandHit=0;P.inv=.5;this.num(P.x,P.y-40,'🩹 막음!','#fff');return;}const s=P.s;
   if(Math.random()<Math.min(.6,s.dodge)){this.num(P.x,P.y-24,'MISS','#9cf');P.inv=.2;if(P.flags.dodgeInv){P.inv=1;P.spdBuff=1;}return;}
   let dmg=Math.max(1,d-s.armor-(P.flags.standArmor&&P.stillT>1?5:0))*s.dmgTaken;if(ranged)dmg*=1-Math.min(.7,s.rangedRed);if(P.flags.wallLean&&Math.abs(P.y)>470)dmg*=.7;
   if(P.flags.umbShake)for(const e of GRID.query(P.x,P.y,130,[]))this.knock(e,P.x,P.y,260);
@@ -1133,15 +1137,15 @@ const G={state:'menu',
   if(P.flags.teamwork)m*=1+.03*P.weapons.length;
   if(P.flags.diligent)m*=1+.01*Math.floor(P.kills/100);
   if(P.flags.salaryNego)m*=1+.02*Math.floor(P.goldEarned/100);
-  if(P.runBuff)m*=1+.3*P.runBuff;
+  if(P.runBuff)m*=1+.3*P.runBuff;if(P.energyT>0)m*=1.2;
   if(P.flags.overwork&&P.hp<P.s.maxhp*.5)m*=1.3;if(P.flags.fullHp&&P.hp>=P.s.maxhp*.99)m*=1.15;if(P.flags.rushHour&&this._onScreen>=20)m*=1.15;if(P.dashBuffT>0)m*=1.3;if(P.flags.freeTime&&this.event&&this.event.type==='delay')m*=2;if(P.flags.firstTrain&&P.stageT<30)m*=1.3;
   if(w&&P.flags.nerd){const wt=WEAPONS[w.id].tag;for(const t of wt){if(P.weapons.filter(x=>WEAPONS[x.id].tag.includes(t)).length>=3){m*=1.25;break;}}}
   if(w&&G.daily&&G.daily.id==='rain'&&w.id==='umbrella')m*=1.5;
   if(w){const F=P.flags,id=w.id;if((F.passionPay&&id==='backpack')||(F.coffeeRun&&id==='coffee')||(F.globalMind&&id==='airpods'))m*=1.25;if((F.proxySign&&id==='umbrella')||(F.bigBrief&&id==='briefcase')||(F.bigStamp&&id==='stampw')||(F.fastDel&&id==='delivery'))m*=1.4;if(F.onePlus&&id==='gimbap')m*=1.2;}
-  if(P.flags.passionPay&&P.hp>=P.s.maxhp*.5)m*=1.1;if(P.flags.storeMgr)m*=1+Math.min(.4,.04*Math.floor(P.gold/200));
+  if(P.flags.passionPay&&P.hp>=P.s.maxhp*.5)m*=1.1;if(P.flags.storeMgr)m*=1+Math.min(.4,.04*Math.floor((P.goldSpent||0)/300));
   if(w&&P.flags.shotAdd&&WEAPONS[w.id]&&WEAPONS[w.id].tag.includes('caffeine'))m*=1.15;
   if(P.flags.remodel)m*=1+Math.min(.3,.04*INST.length);
-  if(P.synLv&&P.synLv.salary>=4)m*=1+Math.min(.6,.03*Math.floor(P.gold/100));
+  if(P.synLv&&P.synLv.salary>=4)m*=1+Math.min(.6,.03*Math.floor((P.goldSpent||0)/200));
   if(w){const W=WEAPONS[w.id];if(W.melee)m*=1+s.meleeDmg;if(W.tag.includes('digital'))m*=1+s.digDmg;}
   return m;},
  wStat(w){const W=WEAPONS[w.id],s=P.s,L=w.lv;let dmg=W.dmg*(1+.25*(L-1)),area=W.area*(1+.08*(L-1))*s.area,amt=W.amt+Math.floor(L/3)+s.amt,cd=W.cd*(1-.035*(L-1))*s.cdMult;
@@ -1402,7 +1406,7 @@ break;}
  },
 
  // ---- 레벨업 카드
- rollRarity(force){const L=P.s.luck+(P.flags.invest?Math.floor(P.gold/100):0);let r=Math.random()*100;const leg=14+L*.1,cur=3,rare=33+L*.1;let t=r<cur?'curse':r<cur+leg?'legend':r<cur+leg+rare?'rare':'common';
+ rollRarity(force){if(P.legendNext&&this.state==='lvl'){P.legendNext=0;return 'legend';}const L=P.s.luck+(P.flags.invest?Math.floor(P.gold/100):0);let r=Math.random()*100;const leg=14+L*.1,cur=3,rare=33+L*.1;let t=r<cur?'curse':r<cur+leg?'legend':r<cur+leg+rare?'rare':'common';
   if(P.s.rarityUp&&t!=='curse')t=t==='common'?'rare':'legend';return t;},
  augOpt(used){const owned=new Set(P.augs.map(a=>a.id));const cid=G.char&&G.char.id;for(let k=0;k<20;k++){const r=this.rollRarity();const pool=AUGS.filter(a=>a.r===r&&!owned.has(a.id)&&!P.banned.has(a.id)&&!used.has('a'+a.id)&&(!a.char||a.char===cid)&&(!a.w||Math.random()<a.w));if(pool.length){const a=pick(pool);return{k:'aug',a};}}return null;},
  buildOptions(augOnly){const s=P.s;const opts=[];const used=new Set();
@@ -1573,23 +1577,71 @@ break;}
    const rk={common:'일반',rare:'희귀',legend:'전설',curse:'저주'}[a.r];return{c:a.r==='curse'?'curse':a.r==='legend'?'jack':'aug',ic:'📋',h:`랜덤 증강 ${a.ic} <b>${a.nm}</b> (${rk})${a.r==='curse'?' — 아뿔싸…':a.r==='legend'?' — 대박!':''}`};}
   const ws=P.weapons.filter(w=>w.lv<8);let t='';if(ws.length){const w=pick(ws);w.lv=Math.min(8,w.lv+2);t=wIcon(w)+' '+wName(w)+' Lv'+w.lv+' · ';}const b=P.gold;this.gainGold(100);P.hp=P.s.quit?1:P.s.maxhp;
   return{c:'jack',ic:'✨',h:'<b>대박!</b> '+t+'골드 +'+(P.gold-b)+' · 체력 완전 회복'};},
- closeChest(){UI.hideAll();this.state='play';},
+ closeChest(){UI.hideAll();this.state='play';if(P.shopChest>0){P.shopChest--;this.openChest();}},
 
  // ---- 상점
- openShop(){this.state='shop';document.documentElement.style.setProperty('--line',LINE[this.stage].col);this.shopItems=[
-  {ic:'❤️',nm:'바나나 우유',ds:'체력 50% 회복',c:30,f:()=>this.heal(P.s.maxhp*.5)},
-  {ic:'⬆️',nm:'삼각김밥 세트',ds:'랜덤 패시브/무기 1레벨업',c:50,f:()=>{const up=[...P.weapons.filter(w=>w.lv<8),...P.passives.filter(p=>p.lv<5)];if(up.length){pick(up).lv++;}this.recompute();}},
-  {ic:'🎲',nm:'즉석 복권',ds:'새로고침 +2',c:20,f:()=>{P.rerolls+=2;}},
-  {ic:'✨',nm:'프리미엄 도시락',ds:'증강 선택 1회',c:80,f:()=>{P.pendingAug++;}},
-  {ic:'🧲',nm:'자석 스티커',ds:'맵의 경험치 전부 흡수',c:25,f:()=>{GEMS.forEach(g=>{if(g.k==='xp')g.vac=1;});}}];
-  if(P.flags.extraShop)this.shopItems.push({ic:'🔧',nm:'무기 강화권',ds:'보유 무기 1개 +1레벨',c:40,f:()=>{const up=P.weapons.filter(w=>w.lv<8);if(up.length)pick(up).lv++;this.recompute();}});
-  this.renderShop();if(this.bot){this.closeShop();}},
- price(it){if(P.freeShop>0)return 0;return Math.round(it.c*(1-Math.min(.8,P.s.shopDisc))*(1+this.stage*.3)*(this.daily&&this.daily.id==='payday'?1.5:1));},
- renderShop(){document.getElementById('shopGold').textContent='보유 골드: '+P.gold+'  '+(P.freeShop>0?'(무료 1회!)':'');const box=document.getElementById('shopList');box.innerHTML='';
-  this.shopItems.forEach(it=>{const pr=this.price(it);const d=document.createElement('div');d.className='shopi'+(P.gold<pr||it.sold?' no':'');d.innerHTML=`<div style="font-size:36px">${icHtml(it.ic,40)}</div><b>${it.nm}</b><div style="font-size:13px;color:#ccd">${it.ds}</div><div class="price">${it.sold?'품절':pr+' G'}</div>`;
-   d.onclick=()=>{if(it.sold||P.gold<pr)return;P.gold-=pr;if(P.freeShop>0)P.freeShop--;it.sold=1;it.f();SFX.play('coin');this.renderShop();};box.appendChild(d);});
+ openShop(){this.state='shop';document.documentElement.style.setProperty('--line',LINE[this.stage].col);P.shopBuy=P.shopBuy||{};P.bananaN=0;this.shopRr=0;this.shopPick=null;this.shopLock=null;this.rollMarket(true);this.renderShop();if(this.bot){this.closeShop();}},
+ fixedItems(){const G2=this;return[
+  {id:'wup',ic:'🔧',nm:'무기 강화권',ds:'고른 무기 1개 +1레벨',c:100,g:1.6,ok:()=>P.weapons.some(w=>w.lv<8),f:()=>{G2.shopPick={t:'wup'};}},
+  {id:'perf',ic:'📈',nm:'성과 평가',ds:'영구 피해 +1%',c:80,g:1.6,max:5,f:()=>{P.permDmg+=.01;}},
+  {id:'gym',ic:'🏋️',nm:'헬스장 등록',ds:'최대 체력 +5',c:50,g:1.6,max:5,f:()=>{P.bonusHp=(P.bonusHp||0)+5;G2.recompute();G2.heal(5,true);}},
+  {id:'banana',ic:'🍌',nm:'바나나 우유',ds:'체력 50% 회복 (역당 2회)',c:30,g:1.3,stMax:2,f:()=>{P.bananaN++;G2.heal(P.s.maxhp*.5);}}];},
+ marketPool(){const G2=this,rw=(n)=>{const own=new Set(P.weapons.map(w=>w.id));return Object.keys(WEAPONS).filter(k=>!own.has(k)&&!WEAPONS[k].noDrop).sort(()=>Math.random()-.5).slice(0,n);},rp=(n)=>Object.keys(PASSIVES).filter(k=>{const o=P.passives.find(p=>p.id===k);return o?o.lv<5:P.passives.length<P.s.maxP;}).sort(()=>Math.random()-.5).slice(0,n);
+  return[
+  {id:'lotto',r:'c',ic:'🎲',nm:'즉석 복권',ds:'증강 새로고침 +2',c:20,f:()=>{P.rerolls+=2;}},
+  {id:'mag',r:'c',ic:'🧲',nm:'자석 스티커',ds:'맵의 경험치 전부 흡수',c:25,f:()=>{GEMS.forEach(g=>{if(g.k==='xp')g.vac=1;});}},
+  {id:'kimbap',r:'c',ic:'🍙',nm:'삼각김밥 세트',ds:'무작위 패시브 1개 +1레벨',c:40,ok:()=>P.passives.some(p=>p.lv<5),f:()=>{const u=P.passives.filter(p=>p.lv<5);if(u.length)pick(u).lv++;G2.recompute();}},
+  {id:'energy',r:'c',ic:'🧃',nm:'에너지 드링크',ds:'다음 역 첫 60초 이동속도 +20%',c:30,f:()=>{P.nx.energy=1;}},
+  {id:'ext',r:'c',ic:'🧯',nm:'소화기',ds:'다음 역 첫 엘리트/보스 3초 기절',c:35,f:()=>{P.nx.ext=1;}},
+  {id:'band',r:'c',ic:'🩹',nm:'밴드',ds:'다음 역에서 처음 받는 피해 1회 무효',c:40,f:()=>{P.nx.band=1;}},
+  {id:'charm',r:'c',ic:'🎟️',nm:'행운 부적',ds:'다음 역 동안 행운 +15',c:45,f:()=>{P.nx.luck=1;}},
+  {id:'gift',r:'r',ic:'🎁',nm:'경품 상자',ds:'보물상자 1개 (상점을 나갈 때 열림)',c:70,f:()=>{P.shopChest=(P.shopChest||0)+1;}},
+  {id:'wgacha',r:'r',ic:'🎰',nm:'무기 뽑기',ds:'무작위 무기 3개 중 1개 선택',c:90,ok:()=>P.weapons.length<P.s.maxW,f:()=>{G2.shopPick={t:'wnew',l:rw(3)};}},
+  {id:'pgacha',r:'r',ic:'💊',nm:'패시브 뽑기',ds:'무작위 패시브 3개 중 1개 +1레벨',c:60,ok:()=>rp(1).length>0,f:()=>{G2.shopPick={t:'pnew',l:rp(3)};}},
+  {id:'bento',r:'r',ic:'✨',nm:'프리미엄 도시락',ds:'증강 선택 1회',c:100,f:()=>{P.pendingAug++;}},
+  {id:'book',r:'r',ic:'📚',nm:'자기계발서',ds:'즉시 1레벨업',c:80,f:()=>{P.pendingLv++;}},
+  {id:'hr',r:'r',ic:'❌',nm:'인사 조정권',ds:'증강 제외 횟수 +1',c:60,f:()=>{P.bans++;}},
+  {id:'coffee2',r:'r',ic:'☕',nm:'출근 커피',ds:'다음 역 동안 쿨타임 -10%',c:75,f:()=>{P.nx.cd=1;}},
+  {id:'jackpot',r:'l',ic:'🍀',nm:'복권 1등',ds:'다음 증강 선택에 전설 1장 보장',c:150,f:()=>{P.legendNext=1;}},
+  {id:'sever',r:'l',ic:'💼',nm:'퇴직금 정산',ds:'저주 증강 1개를 골라 제거',c:160,ok:()=>P.augs.some(a=>a.r==='curse'),f:()=>{G2.shopPick={t:'curse'};}},
+  {id:'medkit',r:'l',ic:'🛟',nm:'비상약',ds:'부활 +1 (판당 1회)',c:180,ok:()=>!P.boughtMed,f:()=>{P.revive++;P.boughtMed=1;}},
+  {id:'jobchg',r:'l',ic:'🔁',nm:'이직 제안서',ds:'보유 무기 1개를 같은 레벨의 무작위 무기로 교체',c:130,f:()=>{G2.shopPick={t:'swap'};}}];},
+ rollMarket(fresh){const pool=this.marketPool().filter(x=>!x.ok||x.ok());const L=P.s.luck;const old=this.market||[];const keep=!fresh&&this.shopLock!=null?old[this.shopLock]:null;const out=[];const used=new Set();if(keep){out.push(keep);used.add(keep.id);}
+  let g=0;while(out.length<4&&g++<60){const r=Math.random()*100,leg=Math.min(20,5+L*.1),rare=30+L*.2;const t=r<leg?'l':r<leg+rare?'r':'c';const c=pool.filter(x=>x.r===t&&!used.has(x.id));if(!c.length)continue;const x=pick(c);used.add(x.id);out.push(x);}
+  this.market=out;this.shopLock=keep?0:null;},
+ price(it){const fixed=!it.r;if(P.freeShop>0&&!fixed)return 0;let c=it.c;if(fixed)c*=Math.pow(it.g,P.shopBuy[it.id]||0);return Math.round(c*(1-Math.min(.8,P.s.shopDisc))*(1+this.stage*.3)*(this.daily&&this.daily.id==='payday'?1.5:1));},
+ rrPrice(){return Math.round(10*(this.shopRr+1)*(1+this.stage*.3));},
+ spend(pr){P.gold-=pr;P.goldSpent=(P.goldSpent||0)+pr;},
+ shopReroll(){const pr=this.rrPrice();if(P.gold<pr)return;this.spend(pr);this.shopRr++;this.rollMarket(false);SFX.play('coin');this.renderShop();},
+ shopChoose(v){const k=this.shopPick;if(!k)return;
+  if(k.t==='wup'){const w=P.weapons[v];if(w&&w.lv<8)w.lv++;}
+  else if(k.t==='wnew'){this.addWeapon(v);}
+  else if(k.t==='pnew'){const o=P.passives.find(p=>p.id===v);if(o)o.lv++;else this.addPassive(v);}
+  else if(k.t==='curse'){const i=P.augs.findIndex(a=>a.id===v);if(i>=0){const a=P.augs[i];P.augs.splice(i,1);if(a.fl)delete P.flags[a.fl];this.toast('💼 '+a.nm+' 제거!');}}
+  else if(k.t==='swap'){const w=P.weapons[v];const own=new Set(P.weapons.map(x=>x.id));const c=Object.keys(WEAPONS).filter(x=>!own.has(x)&&!WEAPONS[x].noDrop);if(w&&c.length){const n=pick(c);this.toast('🔁 '+WEAPONS[w.id].nm+' → '+WEAPONS[n].nm);w.id=n;w.evo=false;w.union=null;w.uw=null;w.cd=0;seen('w',n);}}
+  this.shopPick=null;this.recompute();this.renderShop();},
+ renderShop(){document.getElementById('shopGold').innerHTML='보유 골드: <b>'+P.gold+'</b>'+(P.freeShop>0?'  (오늘의 매대 무료 '+P.freeShop+'회!)':'');const box=document.getElementById('shopList');box.innerHTML='';
+  if(this.shopPick){const k=this.shopPick;let L=[];
+   if(k.t==='wup'||k.t==='swap')L=P.weapons.map((w,i)=>({v:i,ic:wIcon(w),nm:wName(w)+' Lv'+w.lv,no:k.t==='wup'&&w.lv>=8}));
+   else if(k.t==='wnew')L=k.l.map(id=>({v:id,ic:WEAPONS[id].ic,nm:WEAPONS[id].nm,ds:WEAPONS[id].ds}));
+   else if(k.t==='pnew')L=k.l.map(id=>{const o=P.passives.find(p=>p.id===id);return{v:id,ic:PASSIVES[id].ic,nm:PASSIVES[id].nm+(o?' Lv'+o.lv+'→'+(o.lv+1):' (신규)'),ds:PASSIVES[id].ds};});
+   else if(k.t==='curse')L=P.augs.filter(a=>a.r==='curse').map(a=>({v:a.id,ic:a.ic,nm:a.nm,ds:a.ds}));
+   box.innerHTML='<div class="shopSec">'+({wup:'🔧 강화할 무기를 고르세요',wnew:'🎰 받을 무기를 고르세요',pnew:'💊 올릴 패시브를 고르세요',curse:'💼 제거할 저주 증강을 고르세요',swap:'🔁 교체할 무기를 고르세요'})[k.t]+'</div>';
+   const row=document.createElement('div');row.className='row';box.appendChild(row);
+   L.forEach(o=>{const d=document.createElement('div');d.className='shopi'+(o.no?' no':'');d.innerHTML=`<div>${icHtml(o.ic,40)}</div><b>${o.nm}</b><div style="font-size:12px;color:#ccd">${o.ds||''}</div>`;if(!o.no)d.onclick=()=>this.shopChoose(o.v);row.appendChild(d);});
+   UI.show('shop');return;}
+  const mk=(it,i,isM)=>{const pr=this.price(it);const cnt=P.shopBuy[it.id]||0;const soldOut=isM?it.sold:((it.max&&cnt>=it.max)||(it.stMax&&P.bananaN>=it.stMax)||(it.ok&&!it.ok()));const d=document.createElement('div');
+   d.className='shopi'+(isM?' mk r'+it.r:' fx')+(P.gold<pr||soldOut?' no':'');
+   d.innerHTML=`${isM?`<div class="sLk${this.shopLock===i?' on':''}" title="잠금: 매대 새로고침해도 유지 (1칸)">🔒</div>`:''}<div>${icHtml(it.ic,40)}</div><b>${it.nm}</b><div style="font-size:12px;color:#ccd">${it.ds}</div>${!isM&&(it.max||it.stMax)?`<div style="font-size:11px;color:#94a3b8">${it.max?'구매 '+cnt+'/'+it.max:'이번 역 '+P.bananaN+'/'+it.stMax}</div>`:''}<div class="price">${soldOut?'품절':pr+' G'}</div>`;
+   d.onclick=()=>{if(soldOut||P.gold<pr)return;this.spend(pr);if(isM){if(P.freeShop>0&&pr===0)P.freeShop--;it.sold=1;if(this.shopLock===i)this.shopLock=null;}else P.shopBuy[it.id]=cnt+1;it.f();SFX.play('coin');this.renderShop();};
+   const lk=d.querySelector('.sLk');if(lk)lk.onclick=ev=>{ev.stopPropagation();this.shopLock=this.shopLock===i?null:i;this.renderShop();};return d;};
+  const h1=document.createElement('div');h1.className='shopSec';h1.textContent='🏪 고정 판매대 · 살 때마다 가격 상승';box.appendChild(h1);
+  const r1=document.createElement('div');r1.className='row';box.appendChild(r1);this.fixedItems().forEach((it,i)=>r1.appendChild(mk(it,i,false)));
+  const h2=document.createElement('div');h2.className='shopSec';const rp=this.rrPrice();h2.innerHTML=`🛒 오늘의 매대 <button class="btn gray sm" ${P.gold<rp?'disabled':''} onclick="G.shopReroll()">🔄 매대 새로고침 ${rp}G</button>`;box.appendChild(h2);
+  const r2=document.createElement('div');r2.className='row';box.appendChild(r2);this.market.forEach((it,i)=>r2.appendChild(mk(it,i,true)));
   UI.show('shop');},
- closeShop(){UI.hideAll();this.state='play';},
+ closeShop(){if(this.shopPick)return;UI.hideAll();this.state='play';P.st=P.nx||{};P.nx={};if(P.st.energy)P.energyT=60;if(P.st.band)P.bandHit=1;if(P.st.ext)P.extOn=1;this.recompute();if(P.shopChest>0){P.shopChest--;this.openChest();}},
+ closeChest0(){},
 
  pause(){if(this.state!=='play')return;this.state='pause';
   const info=[];P.weapons.forEach(w=>info.push(`<div class="li">${wIcon(w)+' '+wName(w)} Lv${w.lv}</div>`));
@@ -1603,7 +1655,7 @@ break;}
  resume(){UI.hideAll();this.state='play';},
  giveUp(){clearRun();this.finish(false,'조퇴 처리...');},
  finish(win,title){if(this.state==='result')return;this.state='result';
-  const sal=Math.floor((P.kills/8+this.clock/30+(win?150:0)+P.goldEarned*.2+(P.flags.endless?this.endlessMin*10:0))*DIFFS[this.diff||'normal'].sal);META.salary+=sal;saveMeta();
+  const leftSal=Math.floor(P.gold*.1);const sal=leftSal+Math.floor((P.kills/8+this.clock/30+(win?150:0)+P.goldEarned*.2+(P.flags.endless?this.endlessMin*10:0))*DIFFS[this.diff||'normal'].sal);META.salary+=sal;saveMeta();
   clearRun();META.runs=(META.runs||0)+1;
   if(this.mode==='daily'){const k=todayKey();const cur=(META.daily||{})[k];const sc=(win?1e6:0)+this.clock*100+P.kills/100;if(!cur||sc>cur.sc){META.daily=META.daily||{};META.daily[k]={sc,win,clock:this.clock,kills:P.kills,lv:P.lv,mod:this.daily.nm};}}
   const newAch=checkAch({win,diff:this.diff||'normal',kills:P.kills,lv:P.lv,evo:P.weapons.filter(w=>w.evo).length,union:P.weapons.filter(w=>w.union).length,curses:P.augs.filter(a=>a.r==='curse').length,bossNoHit:!!P.b4noHit,codexAug:META.codex.a.length,daily:this.mode==='daily',endless:this.mode==='endless',clock:this.clock,runs:META.runs,salary:META.salary});saveMeta();
