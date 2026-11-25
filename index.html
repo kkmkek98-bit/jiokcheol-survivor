@@ -681,7 +681,7 @@ const ACH=[
 function checkAch(x){META.ach=META.ach||[];const nw=[];for(const a of ACH)if(!META.ach.includes(a.id)&&a.c(x)){META.ach.push(a.id);nw.push(a);}return nw;}
 function isLocked(c){if(c.lock===true)return !META.mz;if(c.unlock)return !(META.ach||[]).includes(c.unlock);return false;}
 // v30: 랭킹 (구글 시트 + Apps Script) — 아래 주소에 배포한 웹 앱 URL을 넣으면 작동
-const RANK_URL='';
+const RANK_URL='https://script.google.com/macros/s/AKfycbyqYOPq4DAqqjQKakfw-0ooQPK_98fu-0wmal4nI5BtFybJFIuhb_EwN82wYvXBmrcFWQ/exec';
 const BAD_WORDS=['시발','씨발','병신','ㅅㅂ','ㅂㅅ','좆','지랄','개새','fuck','shit'];
 function nickOk(n){n=(n||'').trim();if(n.length<2||n.length>12)return '닉네임은 2~12자로 정해주세요';const l=n.toLowerCase().replace(/\s/g,'');if(BAD_WORDS.some(w=>l.includes(w)))return '사용할 수 없는 단어가 들어 있어요';return '';}
 function rankSubmit(lg){if(!RANK_URL||!META.nick||G.bot)return Promise.resolve(null);const body={nick:META.nick,ver:lg.ver,diff:lg.diff,mode:lg.mode,daily:lg.mode==='daily'?todayKey():'',char:lg.char,win:lg.win,clock:lg.clock,kills:lg.kills,lv:lg.lv,dmg:Math.round(Object.values(P.dmgBy||{}).reduce((a,b)=>a+b,0)),endlessMin:G.endlessMin||0};
