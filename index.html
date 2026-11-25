@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v25</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v26</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -175,7 +175,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v25</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v26</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -451,7 +451,7 @@ AUGS.push(
  {nm:'설치의 달인',ic:'🛠️',r:'rare',tag:'install',ds:'설치물 +1',m:s=>{s.installs+=1}},
  {nm:'무기 덕후',ic:'🗡️',r:'rare',ds:'같은 태그 무기 3개 이상이면 그 무기 피해 +25%',fl:'nerd'},
  {nm:'1인 다역',ic:'🎭',r:'rare',ds:'보유 무기 하나마다 공속 +3%',fl:'oneMany'},
- {nm:'환승 마일리지',ic:'🔁',r:'rare',tag:'runner',ds:'역이 바뀔 때 증강 선택 +1회',fl:'mileage'},
+ {nm:'환승 마일리지',ic:'🔁',r:'rare',tag:'runner',ds:'역 2곳에 도착할 때마다 증강 선택 +1회',fl:'mileage'},
  {nm:'출근 도장 깨기',ic:'📮',r:'rare',ds:'보물상자 열 때 체력 30% 회복',fl:'chestHeal'},
  {nm:'퇴근 카운트다운',ic:'⏳',r:'rare',ds:'08:50 이후 공속·이속 +15%',fl:'countdown'},
  {nm:'인맥 관리',ic:'🫂',r:'rare',tag:'office',ds:'매혹 지속 2배, 매혹된 적 피해 2배',fl:'charmBoost'},
@@ -653,8 +653,10 @@ const SPECIAL_BASE=[.03,.08,.12,.16,.2];
 const ELITES=['influencer','door','traitor','holder'];
 const TIPS=['☕ 카페인 4 + 📱 디지털 4 = 무한 연사 빌드','🎒 짐꾼 4 + 🫸 밀치기 장인 = 지옥철 불도저','💰 월급 4 + 💸 연봉 협상 = 돈으로 때리는 부장님 빌드','🍙 편의점 4 + 💘 사내 연애 = 회복할수록 적이 내 편','📝 퇴사 각오 + 👻 무단 결근 = 한 방 맞으면 끝, 대신 3배 딜'];
 
-const DIFFS={easy:{nm:'쉬움',ic:'🌱',ds:'적 체력 -20%, 공격력 -30%, 수 -15%',hp:.8,dmg:.7,spawn:.85,spd:.95,sal:.6,late:.15,special:.7},normal:{nm:'보통',ic:'🚇',ds:'기본 난이도 (후반으로 갈수록 강해짐)',hp:1.3,dmg:1.25,spawn:1.2,spd:1,sal:1,late:.6,special:1.5},hell:{nm:'지옥철',ic:'🔥',ds:'적 체력 +60%, 공격력 +50%, 수 +40%, 후반 급격히 강해짐, 특수 몹 3.5배, 연봉 1.6배',hp:1.6,dmg:1.5,spawn:1.4,spd:1.1,sal:1.6,late:2,special:3.5}};
+const DIFFS={easy:{nm:'쉬움',ic:'🌱',ds:'적 체력 -20%, 공격력 -30%, 수 -15%',hp:.8,dmg:.7,spawn:.85,spd:.95,sal:.6,late:.15,special:.7,xpK:.88},normal:{nm:'보통',ic:'🚇',ds:'기본 난이도 (후반으로 갈수록 강해짐)',hp:1.3,dmg:1.25,spawn:1.2,spd:1,sal:1,late:.6,special:1.5,xpK:.83},hell:{nm:'지옥철',ic:'🔥',ds:'적 체력 +60%, 공격력 +50%, 수 +40%, 후반 급격히 강해짐, 특수 몹 3.5배, 연봉 1.6배',hp:1.6,dmg:1.5,spawn:1.4,spd:1.1,sal:1.6,late:2,special:3.5,xpK:.96}};
 // 경험치 보너스 소프트캡: +100%까지는 그대로, 초과분은 50% 효율
+const AUG_LVS=[5,10,16,23,31,40,50,61,73,86,100,115,130];
+function nextAugLv(l){return AUG_LVS.find(x=>x>l)||(l+15);}
 function xpCap(m){const b=m-1;return b>1?2+(b-1)*.5:m;}
 // ================= v18 공용: 업적·데일리·이어하기·통계·결과카드 =================
 const ACH=[
@@ -1055,7 +1057,7 @@ const G={state:'menu',
   if(this.shake>0)this.shake-=dt;STN.update(dt);
   // 스테이지 전환
   const st=Math.min(4,Math.floor(this.clock/720));
-  if(st>this.stage){this.stage=st;this.evSched=this.evSched.concat(this.makeEvents(st));this.announce={t:4,txt:'이번 역은 '+STAGES[st].nm+(st===4?'입니다. 엘리베이터 앞으로!':', '+STAGES[st].nm+'입니다')};SFX.play('ding');P.pendingAug+=1+(P.flags.mileage?1:0);P.stageT=0;P.rerolls++;P.rrStage=0;if(P.flags.routeMem)GEMS.forEach(g=>{if(g.k==='xp')g.vac=1;});this.arrive={t:2.4,st};return;}
+  if(st>this.stage){this.stage=st;this.evSched=this.evSched.concat(this.makeEvents(st));this.announce={t:4,txt:'이번 역은 '+STAGES[st].nm+(st===4?'입니다. 엘리베이터 앞으로!':', '+STAGES[st].nm+'입니다')};SFX.play('ding');P.mileN=(P.mileN||0)+1;P.pendingAug+=1+(P.flags.mileage&&P.mileN%2===0?1:0);P.stageT=0;P.rerolls++;P.rrStage=0;if(P.flags.routeMem)GEMS.forEach(g=>{if(g.k==='xp')g.vac=1;});this.arrive={t:2.4,st};return;}
   // 클리어
   if(this.clock>=3600&&!P.flags.endless&&!this.won){this.finish(true,'정시 출근!');return;}
   if(P.flags.endless&&this.clock>=3600){const m=Math.floor((this.clock-3600)/60);if(m>this.endlessMin){this.endlessMin=m;this.toast('⏰ 지각 '+m+'분째... 적이 강해집니다');}}
@@ -1215,7 +1217,7 @@ const G={state:'menu',
   if(e.d.prop){if(Math.random()<.08+P.s.luck*.0025){GEMS.push({x:e.x,y:e.y,v:0,k:'chest'});FX.push({type:'ring',x:e.x,y:e.y,r:44,life:.35,max:.35,col:'#fde047'});SFX.play('chest');return;}const k=wpick({magnet:3,ext:2,pause:2,chicken:3,goldbag:3});GEMS.push({x:e.x,y:e.y,v:0,k,item:1});FX.push({type:'ring',x:e.x,y:e.y,r:40,life:.3,max:.3,col:'#fde68a'});SFX.play('chest');return;}
   P.kills++;SFX.play('kill');
   if(FX.length<450&&!META.set.lowFx){FX.push({type:'death',x:e.x,y:e.y,sp:e.sp,ic:e.ic,size:e.r*2.6,flip:e.x>P.x,life:.28,max:.28});const cols=['#ffffff','#9cd3ff','#ffd36b','#ff9a9a','#c8f7c5'];const np=e.boss?40:e.elite?20:5;if((e.boss||e.elite)&&!META.set.lowFx){FX.push({type:'ring',x:e.x,y:e.y,r:e.boss?160:80,life:.4,max:.4,col:e.boss?'#facc15':'#fff'});if(e.boss){this.celebrate(e.x,e.y,'#fb923c');this.hstop=.12;}}for(let i=0;i<np;i++){const a=rnd(0,7),v=rnd(80,e.boss?320:200);FX.push({type:'part',x:e.x,y:e.y-e.r,vx:Math.cos(a)*v,vy:Math.sin(a)*v-140,col:pick(cols),sz:rnd(3,e.boss?8:5),life:.5,max:.5});}}
-  const xp=(e.d.xp||1)*P.s.killXp;GEMS.push({x:e.x,y:e.y,v:xp,k:'xp'});
+  const xp=(e.d.xp||1)*P.s.killXp*(DIFFS[this.diff||'normal'].xpK||1);GEMS.push({x:e.x,y:e.y,v:xp,k:'xp'});
   if(Math.random()<.04)GEMS.push({x:e.x+8,y:e.y,v:ri(3,8),k:'gold'});
   let hc=.006*(P.synLv.store>=3?3:P.synLv.store>=2?2:1);if(Math.random()<hc)GEMS.push({x:e.x-8,y:e.y,v:25,k:'heal'});
   if(e.boss||(e.elite&&Math.random()<Math.min(1,(.35+P.s.luck*.004)*P.s.chestMult))||(e.d.doorer&&Math.random()<.3))GEMS.push({x:e.x,y:e.y+10,v:0,k:'chest'});
@@ -1424,7 +1426,7 @@ break;}
   if(GEMS.length>600){let sum=0;const keep=[];for(const g of GEMS){if(g.k==='xp'&&(g.x-P.x)**2+(g.y-P.y)**2>(VW*VW))sum+=g.v;else keep.push(g);}GEMS=keep;if(sum)GEMS.push({x:P.x+rnd(-200,200),y:P.y+rnd(-200,200),v:sum,k:'xp',big:1});}},
  gainGold(v){let g=Math.round(v*P.s.goldMult);if(P.flags.debt)g=Math.floor(g*(1-.5*(P.pen??1)));if(g<=0)return;P.gold+=g;P.goldEarned+=g;SFX.play('coin');
   if(P.synLv.salary>=2){for(let i=0;i<(P.synLv.salary>=3?6:3);i++){const a=rnd(0,7);this.proj({vx:Math.cos(a)*200,vy:Math.sin(a)*200,r:8,dmg:10*this.dmgMul(),life:2,pierce:1,ic:'💰',homing:1});}}},
- gainXp(v,raw){P.xp+=raw?v:v*xpCap(P.s.xpRaw+(P.flags.morning&&this.clock<1200?.4:0));while(P.xp>=P.need){P.xp-=P.need;P.lv++;P.need=Math.floor(4+P.lv*2.6+Math.pow(P.lv,1.5));P.pendingLv++;if(P.lv%5===0)P.pendingAug++;if(P.flags.raise)this.gainGold(10);}},
+ gainXp(v,raw){P.xp+=raw?v:v*xpCap(P.s.xpRaw+(P.flags.morning&&this.clock<1200?.4:0));while(P.xp>=P.need){P.xp-=P.need;P.lv++;P.need=Math.floor(4+P.lv*2.6+Math.pow(P.lv,1.5));P.pendingLv++;if(AUG_LVS.includes(P.lv)||(P.lv>130&&P.lv%15===0))P.pendingAug++;if(P.flags.raise)this.gainGold(10);}},
  updAugTimers(dt){const f=P.flags;
   if(f.stamp){P.stampT-=dt;if(P.stampT<=0){P.stampT=10;P.stampReady=true;}}
   if(f.doors){P.doorT-=dt;if(P.doorT<=0){P.doorT=5;for(const sd of[-1,1]){const x=P.x+sd*90;FX.push({type:'rect',x:x-18,y:P.y-170,w:36,h:340,life:.3,max:.3,col:'#9cf'});for(const e of E)if(!e.dead&&hbRect(e,x-18,P.y-170,x+18,P.y+170))this.hurt(e,30*this.dmgMul(),null,true);}}}
@@ -1462,7 +1464,7 @@ break;}
   const nW=P.flags.firstClass?4:3;for(let i=0;i<nW;i++){let o=null;for(let k=0;k<15&&!o&&pool.length;k++){const c=pick(pool);const key=c.k+(c.id||(c.w&&c.w.id)||(c.p&&c.p.id));if(!used.has(key)){used.add(key);o=c;}}if(!o)o=fb[i%3];opts.push(o);}
   return opts;},
  levelUp(){this.state='lvl';this._ao=false;this._memo=false;document.documentElement.style.setProperty('--line',LINE[this.stage].col);SFX.play('lvl');this.opts=this.buildOptions(false);
-  document.getElementById('lvl').classList.remove('augmode');document.getElementById('lvlTitle').innerHTML='레벨 '+P.lv+'! <span class="sub2">무기 · 패시브</span>';document.getElementById('skipBtn').textContent='건너뛰기 (+골드)';
+  document.getElementById('lvl').classList.remove('augmode');document.getElementById('lvlTitle').innerHTML='레벨 '+P.lv+'! <span class="sub2">무기 · 패시브 · 다음 증강 Lv'+nextAugLv(P.lv)+'</span>';document.getElementById('skipBtn').textContent='건너뛰기 (+골드)';
   this.renderCards();if(this.bot){this.pickCard(0);}},
  augPick(){this.state='lvl';this._ao=true;this._memo=true;document.documentElement.style.setProperty('--line',LINE[this.stage].col);SFX.play('chest');this.opts=this.buildOptions(true);
   document.getElementById('lvl').classList.add('augmode');document.getElementById('lvlTitle').innerHTML='📋 인사발령 통지서 <span class="sub2">증강을 하나 고르세요</span>';document.getElementById('skipBtn').textContent='보류 (+골드)';
@@ -1559,7 +1561,7 @@ break;}
   return h+'</div>';},
  renderBuild(){const el=document.getElementById('buildPanel');if(!el)return;const tc=P.syn||{},lv=P.synLv||{};
   let h='<div class="bpH">📋 내 빌드</div><div class="bpSec">보유 증강 '+P.augs.length+'개</div><div class="bpAugs">';
-  if(!P.augs.length)h+='<div class="bpEmpty">아직 없음 — 5레벨마다 / 역 도착 / 보스 처치 때 받아요</div>';
+  if(!P.augs.length)h+='<div class="bpEmpty">아직 없음 — 특정 레벨(5·10·16·23…) / 역 도착 / 보스 처치 때 받아요</div>';
   const ord={legend:0,rare:1,common:2,curse:3};for(const a of [...P.augs].sort((x,y)=>ord[x.r]-ord[y.r]))h+=`<div class="bpAug r-${a.r}">${icHtml(a.ic,18)}<span>${a.nm}</span>${a.tag?'<em>'+SYN[a.tag].ic+'</em>':''}<div class="tip"><b>${a.nm}</b><br>${a.ds}</div></div>`;
   h+='</div>';
   const keys=Object.keys(SYN).sort((a,b)=>(tc[b]||0)-(tc[a]||0)||a.localeCompare(b));const own=keys.filter(k=>tc[k]),none=keys.filter(k=>!tc[k]);
@@ -1929,7 +1931,7 @@ const UI={
  tutI:0,
  TUT:[{ic:'🕹️',t:'이동만 하세요',d:'<b>WASD / 방향키</b>(모바일은 왼쪽 화면 드래그)로 움직이면 돼요.<br>공격은 <b>자동</b>으로 나가요. 적에게 닿지 않게 피해 다니세요!'},
   {ic:'💎',t:'보석을 먹으면 레벨업',d:'적을 잡으면 떨어지는 <b>파란 보석</b>을 주우세요.<br>레벨업하면 <b>무기·패시브</b> 카드 중 하나를 골라요.<br>무기 Lv8 + 짝 패시브가 있으면 보물상자에서 <b>진화</b>!'},
-  {ic:'📋',t:'인사발령 통지서 = 증강',d:'5레벨마다, 역에 도착할 때, 보스를 잡을 때<br><b>인사발령 통지서</b>가 와요. 게임 규칙을 바꾸는 <b>증강</b>을 골라요.<br>같은 태그를 모으면 오른쪽에 <b>시너지</b>가 켜져요.'},
+  {ic:'📋',t:'인사발령 통지서 = 증강',d:'특정 레벨(5·10·16·23·31…), 역에 도착할 때, 보스를 잡을 때<br><b>인사발령 통지서</b>가 와요. 게임 규칙을 바꾸는 <b>증강</b>을 골라요.<br>같은 태그를 모으면 오른쪽에 <b>시너지</b>가 켜져요.'},
   {ic:'⚡',t:'시너지 2·4·6·8단계와 각성',d:'같은 태그를 <b>2·4·6·8개</b> 모을 때마다 시너지가 한 단계씩 올라가요.<br><b>8개</b>를 모으면 <b>⚡각성</b>! 강력한 효과가 생겨요.<br>시너지마다 B·A·S 등급이 있고, S일수록 모으기 어렵지만 강해요.'},
   {ic:'🎖️',t:'직급 증강과 승진',d:'캐릭터마다 <b>전용 직급 증강 3종</b>이 있어요.<br>2개를 모으면 <b>특성 강화</b>, 3개를 모으면 <b>🎉 승진</b>!<br>승진하면 <b>시그니처 무기</b>와 왕관을 받아요.'},
   {ic:'🏪',t:'역에서 쇼핑하기',d:'역에 도착하면 편의점이 열려요.<br><b>고정 판매대</b>는 여러 번 살 수 있지만 살수록 비싸지고,<br><b>오늘의 매대</b>는 무작위 4칸이에요. 골드로 매대를 새로고침할 수 있어요.<br>역마다 <b>기믹</b>(인파·급행·정전)도 있으니 조심!'},
