@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>지옥철 서바이버 - 08:59 출근 대작전 v24</title>
+<title>지옥철 서바이버 - 08:59 출근 대작전 v25</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* 오프라인 내장 폰트 (필요한 글자만 서브셋) */
@@ -175,7 +175,7 @@ h2 .sub2{display:block;font:500 15px 'Noto Sans KR';color:#9fb3c8;margin-top:4px
 <div id="loading"><div style="font-size:22px">🚇 지옥철 진입 중...</div><div id="lbar"><div id="lfill"></div></div><div id="lpct" style="margin-top:8px">0%</div></div>
 
 <div class="ov on" id="menu">
-  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v24</span><span>회사 ▶</span></div></div>
+  <div class="signboard"><div class="no">🚇</div><div class="tx"><div class="ko">지옥철 서바이버</div><div class="en">HELL SUBWAY SURVIVOR</div></div><div class="bar"><span>◀ 우리집</span><span>v25</span><span>회사 ▶</span></div></div>
   <div class="led">08:00 출발 · 09:00 전 회사 도착</div>
   <div style="margin-bottom:14px">💰 누적 연봉: <b id="mSal">0</b>만원</div>
   <div class="menuBtns"><button class="btn" id="contBtn" style="display:none" onclick="loadRun()"></button><button class="btn" onclick="G.mode='normal';UI.charSel()">🚇 출근하기</button><button class="btn" style="background:#7c3aed" id="dailyBtn" onclick="UI.dailyStart()">📅 오늘의 출근길</button><div class="small" id="dailyInfo" style="margin:-2px 0 6px"></div>
@@ -345,12 +345,12 @@ const AUGS=[
  {nm:'신의 손 환승',ic:'🫳',r:'legend',tag:'runner',ds:'대시 해금 + 대시 경로 폭발',fl:'dashBomb'},
  {nm:'정시 퇴근의 꿈',ic:'⏩',r:'legend',ds:'시간 20% 빨리 흐름, 경험치 +50%',m:s=>{s.xpMult+=.5;s.timeScale*=1.2}},
  {nm:'사내 복지 끝판왕',ic:'🏢',r:'legend',ds:'모든 패시브 효과 +50%',m:s=>{}},
- {nm:'월요병',ic:'🥱',r:'curse',ds:'피해 +50%, 이동속도 -20%',m:(s,pf)=>{s.dmg+=.5;s.spd*=1-.2*pf}},
- {nm:'숙취 출근',ic:'🥴',r:'curse',ds:'화면 흔들림, 공격속도 +40%',m:s=>{s.cdMult*=1/1.4},fl:'hangover'},
- {nm:'지갑 분실',ic:'🕳️',r:'curse',ds:'골드 획득 0, 경험치 +60%',m:(s,pf)=>{s.goldMult*=1-pf;s.xpMult+=.6}},
- {nm:'카톡 감옥',ic:'📲',r:'curse',ds:'5초마다 랜덤 방향으로 끌려감, 투사체 +3',m:s=>{s.amt+=3},fl:'kakao'},
- {nm:'무한 회의',ic:'🗓️',r:'curse',ds:'선택지 2장, 대신 증강 등급 1단계 상승',m:(s,pf)=>{if(pf>0)s.extraChoice-=1;s.rarityUp=1}},
- {nm:'눈치 없음',ic:'🙃',r:'curse',ds:'적이 더 빨리 몰림, 경험치 +50%',m:(s,pf)=>{s.enemySpd+=.15*pf;s.xpMult+=.5}},
+ {nm:'월요병',ic:'🥱',r:'curse',ds:'피해 +35%, 이동속도 -20%',m:(s,pf)=>{s._cd+=.35;s.spd*=1-.2*pf}},
+ {nm:'숙취 출근',ic:'🥴',r:'curse',ds:'공격속도 +25%, 6초마다 0.6초간 조작 반대',m:s=>{s.cdMult*=1/1.25},fl:'hangover'},
+ {nm:'지갑 분실',ic:'🕳️',r:'curse',ds:'골드 획득 0, 경험치 +60%',m:(s,pf)=>{s.goldMult*=1-pf;s._cx+=.6}},
+ {nm:'카톡 감옥',ic:'📲',r:'curse',ds:'3초마다 랜덤 방향으로 크게 끌려감, 투사체 +2',m:s=>{s.amt+=2},fl:'kakao'},
+ {nm:'무한 회의',ic:'🗓️',r:'curse',ds:'선택지 2장, 대신 증강 등급 1단계 상승',m:(s,pf)=>{s.extraChoice-=1;s.rarityUp=1}},
+ {nm:'눈치 없음',ic:'🙃',r:'curse',ds:'적이 더 빨리 몰림, 경험치 +50%',m:(s,pf)=>{s.enemySpd+=.15*pf;s._cx+=.5}},
  {nm:'영혼 없는 출근',ic:'😶',r:'curse',ds:'회복 불가, 최대 체력 2배',m:(s,pf)=>{s.maxhp*=2;s.healMult*=1-pf}},
  {nm:'지각 확정',ic:'⏰',r:'curse',ds:'09:00 이후에도 계속(무한), 1분마다 적 강화',fl:'endless'}
 ];
@@ -404,7 +404,7 @@ Object.assign(SYN,{
  pack:{g:'S',d6:'짐 폭탄 확률 15% → 30%',d8:'⚡각성 이삿짐 센터: 근접 무기 범위 +60%, 짐 폭탄 확률 50%'},
  salary:{g:'A',d6:'보너스 유도탄 3 → 6발',d8:'⚡각성 성과급: 이번 판에 쓴 골드 200당 피해 +3% (최대 +30%)'},
  store:{g:'S',d6:'회복 아이템 드롭 3배',d8:'⚡각성 24시 영업: 판당 2회 완전 부활, 초당 체력 재생 +2'},
- dark:{g:'A',d6:'저주 패널티 -30% → -60%',d8:'⚡각성 퇴사 엔딩: 저주 패널티 전부 제거, 저주 하나당 피해 +5% (최대 +30%)'},
+ dark:{g:'A',d6:'저주 패널티 -30% → -40%',d8:'⚡각성 퇴사 엔딩: 저주 패널티 -60%, 저주 하나당 피해 +5% (최대 +25%)'},
  cold:{g:'S',d6:'빙결 지속 +50% → +150%',d8:'⚡각성 빙하기: 화면 안 적 이동속도 -40%, 빙결 파쇄가 주변을 연쇄 빙결'},
  heat:{g:'S',d6:'화상 피해 +30% → +60%',d8:'⚡각성 대화재: 화상 피해 1.8배, 화상 적이 주변에 화상 전파, 처치 시 폭발'},
  summon:{g:'S',d6:'소환수 +1 → +4',d8:'⚡각성 비둘기 대군: 소환수 1.6배, 소환수 피해 +50%'},
@@ -442,7 +442,7 @@ AUGS.push(
  {nm:'회의실 예약',ic:'🗝️',r:'common',tag:'install',ds:'설치물 지속 +25%',m:s=>{s.installDur+=.25}},
  {nm:'첫차 탑승',ic:'🌅',r:'common',tag:'runner',ds:'역 진입 후 30초간 피해 +30%',fl:'firstTrain'},
  {nm:'크리티컬 결재',ic:'✍️',r:'rare',tag:'office',ds:'치명타 확률 +5%, 치명 피해 +100%',m:s=>{s.crit+=.05;s.critDmg+=1}},
- {nm:'회식 2차',ic:'🍖',r:'rare',tag:'store',ds:'처치할 때마다 체력 1 회복',fl:'killHeal'},
+ {nm:'회식 2차',ic:'🍖',r:'rare',tag:'store',ds:'처치할 때마다 체력 1 회복 (내부 쿨 0.25초, 홍삼 스틱과 공유)',fl:'killHeal'},
  {nm:'무빙 장인',ic:'🕺',r:'rare',tag:'runner',ds:'회피 +5%, 회피 시 1초 무적+가속',m:s=>{s.dodge+=.05},fl:'dodgeInv'},
  {nm:'냉방병',ic:'🤒',r:'rare',tag:'cold',ds:'빙결된 적 처치 시 냉기 폭발',fl:'shatter'},
  {nm:'불타는 금요일',ic:'🎆',r:'rare',tag:'heat',ds:'화상 피해 2배, 처치 시 번짐',fl:'burnBoost'},
@@ -475,12 +475,12 @@ AUGS.push(
  {nm:'시간 외 근무',ic:'🌃',r:'legend',ds:'지속시간 +50%, 관통 +2',m:s=>{s.dur+=.5;s.pierce+=2}},
  {nm:'상사 직속',ic:'👹',r:'curse',ds:'보스 체력 2배, 보스 보물상자 3배',fl:'bossDirect'},
  {nm:'빚투',ic:'💀',r:'curse',ds:'즉시 골드 +300, 이후 골드 획득 절반',fl:'debt',on:()=>{P.gold+=300}},
- {nm:'수면 부족',ic:'😪',r:'curse',ds:'시야가 좁아짐, 경험치 +80%',m:s=>{s.xpMult+=.8},fl:'sleepless'},
+ {nm:'수면 부족',ic:'😪',r:'curse',ds:'시야가 크게 좁아짐, 경험치 +50%',m:s=>{s._cx+=.5},fl:'sleepless'},
  {nm:'무한 야근',ic:'🏭',r:'curse',ds:'적 등장 +50%, 골드 2배',m:(s,pf)=>{s.spawnMult+=.5*pf;s.goldMult*=2}},
- {nm:'노 마스크',ic:'😮‍💨',r:'curse',ds:'받는 피해 +30%, 주는 피해 +40%',m:(s,pf)=>{s.dmgTaken+=.3*pf;s.dmg+=.4}},
- {nm:'꼰대 모드',ic:'🧓',r:'curse',ds:'투사체 -1, 피해 +60%',m:(s,pf)=>{if(pf>0)s.amt-=1;s.dmg+=.6}},
+ {nm:'노 마스크',ic:'😮‍💨',r:'curse',ds:'받는 피해 +30%, 주는 피해 +40%',m:(s,pf)=>{s.dmgTaken+=.3*pf;s._cd+=.4}},
+ {nm:'꼰대 모드',ic:'🧓',r:'curse',ds:'투사체 -1, 범위 -15%, 피해 +40%',m:(s,pf)=>{s.amt-=1;s.area*=1-.15*pf;s._cd+=.4}},
  {nm:'번아웃',ic:'🫠',r:'curse',ds:'30초마다 3초간 공격 정지, 쿨타임 -40%',m:s=>{s.cdMult*=.6},fl:'burnout'},
- {nm:'계약직',ic:'📃',r:'curse',ds:'무기 슬롯 4칸 제한, 피해 +60%',m:(s,pf)=>{s.dmg+=.6;s.contract=pf>0?1:0}}
+ {nm:'계약직',ic:'📃',r:'curse',ds:'무기 슬롯 4칸 제한, 피해 +40%',m:(s,pf)=>{s._cd+=.4;s.contract=1}}
 );
 AUGS.push(
  {nm:'샷 추가',ic:'🥃',r:'common',tag:'caffeine',ds:'카페인 무기 피해 +15%',fl:'shotAdd'},
@@ -561,7 +561,7 @@ function wName(w){if(w.sig&&G.char&&SIG[G.char.id])return '★'+SIG[G.char.id].n
 // ===== v6: 단순 스탯 증강 → 패시브 이관 =====
 {const RM=new Set(['출근 의지', '빠른 환승', '아침 루틴', '단단한 무릎', '손잡이 꽉', '모닝커피', '넓은 어깨', '짠돌이', '정기권', '줄 서기 달인', '출근길 스트레칭', '눈치 백단', '자리 스캔', '마스크 착용', '이중 우산', '아침밥 든든', '환승 할인', '칼각 다림질', '혈색 좋음', '몸 사리기', '손목 스냅', '출근길 플레이리스트', '쿠폰 모으기', '얼음 아메리카노', '뜨끈한 국밥', '정전기', '짐 정리', '사원증 재발급', '칭찬 스티커', '보고 체계', '매너 모드', '반차 쓰기', '사내 동호회', '회의실 예약']);for(let i=AUGS.length-1;i>=0;i--)if(RM.has(AUGS[i].nm))AUGS.splice(i,1);}
 PASSIVES.wallet.ds='골드 +15%, 상점 -5%/Lv';PASSIVES.wallet.f=(s,L,m)=>{s.goldMult+=.15*L*m;s.shopDisc+=.05*L*m;s.chestGold+=.1*L*m};
-PASSIVES.ginseng.ds='흡혈 +0.6%, 회복 효과 +6%/Lv';PASSIVES.ginseng.f=(s,L,m)=>{s.lifesteal+=.006*L*m;s.healMult+=.06*L*m};
+PASSIVES.ginseng.ds='타격 시 4%/Lv 확률로 체력 +1 (내부 쿨 0.25초), 회복 효과 +6%/Lv';PASSIVES.ginseng.f=(s,L,m)=>{s.lifesteal+=.04*L*m;s.healMult+=.06*L*m};
 PASSIVES.mask.ds='회피 +3%, 원거리 피해 -4%/Lv';PASSIVES.mask.f=(s,L,m)=>{s.dodge+=.03*L*m;s.rangedRed+=.04*L*m;s.eprojSlow+=.03*L*m};
 PASSIVES.mailbox.ds='설치물 +1(Lv2,4), 설치 지속 +10%/Lv';PASSIVES.mailbox.f=(s,L,m)=>{s.installs+=Math.floor(L*m/2);s.installDur+=.1*L*m};
 PASSIVES.lanyard.ds='획득 범위 +20%, 이속 +1%/Lv';PASSIVES.lanyard.f=(s,L,m)=>{s.magnet*=1+.2*L*m;s.spd*=1+.01*L*m};
@@ -596,7 +596,7 @@ AUGS.push(
  {nm:'환승 통로 달인',ic:'💨',r:'common',tag:'runner',ds:'대시 해금, 대시 후 1초간 피해 +30%',fl:'dashPower',on:()=>{P.flags.dash=1}},
  {nm:'새치기 성공',ic:'🏁',r:'common',ds:'엘리트 처치 시 레벨업 경험치 30% 획득',fl:'eliteXp'},
  {nm:'지하철 와이파이',ic:'📶',r:'common',tag:'digital',ds:'디지털 무기 1개당 감전 확률 +3%',fl:'wifi'},
- {nm:'보온 텀블러',ic:'🍶',r:'common',tag:'caffeine',ds:'1초 이상 멈춰 있으면 초당 체력 1 회복',fl:'thermos'},
+ {nm:'보온 텀블러',ic:'🍶',r:'common',tag:'caffeine',ds:'이동 중 초당 체력 0.5 회복',fl:'thermos'},
  {nm:'역세권',ic:'🏘️',r:'rare',tag:'install',ds:'설치물이 나를 따라다님',fl:'instFollow'},
  {nm:'비둘기 대장',ic:'🐤',r:'rare',tag:'summon',ds:'소환수가 처치하면 10초간 소환수 +1 (최대 +5)',fl:'pigeonBoss'},
  {nm:'퍼스트 클래스',ic:'💺',r:'rare',ds:'레벨업 카드 4장',fl:'firstClass'},
@@ -606,7 +606,7 @@ AUGS.push(
  {nm:'사내 벤처',ic:'🦄',r:'legend',ds:'무기 슬롯 +2, 패시브 슬롯 -1',m:s=>{s.maxW+=2;s.maxP-=1}},
  {nm:'자율 출퇴근',ic:'⏸️',r:'legend',ds:'운행 지연 중 피해 2배, 역마다 지연 발생',fl:'freeTime'},
  {nm:'복사 붙여넣기',ic:'🖨️',r:'legend',ds:'가장 높은 레벨 패시브 효과 2배',fl:'copyPaste'},
- {nm:'정규직 전환',ic:'📜',r:'legend',ds:'모든 저주 증강의 패널티 제거',fl:'regular'}
+ {nm:'정규직 전환',ic:'📜',r:'legend',ds:'모든 저주 증강의 패널티 절반 (흑화와 중복 시 큰 쪽만)',fl:'regular'}
 );
 
 AUGS.forEach((a,i)=>{a.id=i;a.tag=a.r==='curse'?'dark':a.tag;});
@@ -1011,8 +1011,8 @@ const G={state:'menu',
   // 시너지
   const tc=this.tagCounts();P.syn=tc;
   const lv=(k)=>{const t=SYN[k].th;let L=0;for(let i=0;i<t.length;i++)if(tc[k]>=t[i])L=i+1;return L;};
-  const pf=(P.flags.regular||P.augs.some(x=>x.fl==='regular')||lv('dark')>=4)?0:(lv('dark')>=3?.4:lv('dark')>=1?.7:1);
-  P.noPen=pf===0;for(const a of P.augs){if(a.m)a.m(s,pf);if(a.fl)P.flags[a.fl]=1;}
+  const pfD=lv('dark')>=4?.4:lv('dark')>=3?.6:lv('dark')>=1?.7:1,pfR=(P.flags.regular||P.augs.some(x=>x.fl==='regular'))?.5:1;const pf=Math.min(pfD,pfR);
+  P.pen=pf;P.noPen=false;s._cd=0;s._cx=0;for(const a of P.augs){if(a.m)a.m(s,pf);if(a.fl)P.flags[a.fl]=1;}s.dmg+=Math.min(.8,s._cd);s.xpMult+=Math.min(1,s._cx);
   if(lv('caffeine')>=1)s.cdMult*=1/1.1;
   if(lv('office')>=1)s.armor+=3;
   if(lv('runner')>=1)s.spd*=1.1;
@@ -1020,7 +1020,7 @@ const G={state:'menu',
   if(lv('salary')>=1)s.goldMult+=.2;
   if(lv('store')>=1)s.healMult+=.25;
   if(lv('digital')>=1)s.digDmg+=.15;
-  if(lv('dark')>=2)s.dmg+=.4;if(lv('dark')>=4)s.dmg+=Math.min(.3,.05*P.augs.filter(a=>a.r==='curse').length);
+  if(lv('dark')>=2)s.dmg+=.4;if(lv('dark')>=4)s.dmg+=Math.min(.25,.05*P.augs.filter(a=>a.r==='curse').length);
   if(lv('cold')>=1)s.freezeDur*=lv('cold')>=3?2.5:1.5;if(lv('heat')>=1)s.burnDmg*=lv('heat')>=4?1.8:lv('heat')>=3?1.6:1.3;if(lv('summon')>=1)s.summons+=lv('summon')>=3?4:1;if(lv('summon')>=2)s.summonDmg+=1;if(lv('summon')>=4)s.summonDmg+=.5;if(lv('install')>=1)s.installs+=1;if(lv('install')>=3)s.installDur*=2;if(lv('install')>=4)s.installs+=3;
   if(lv('caffeine')>=4)s.cdMult*=.75;if(lv('runner')>=4)s.spd*=1.3;if(lv('store')>=4)s.regen+=2;if(lv('pack')>=4)s.meleeArea=1.6;
   s.dmg+=P.permDmg||0;s.maxhp+=P.bonusHp||0;if(P.st){if(P.st.luck)s.luck+=15;if(P.st.cd)s.cdMult*=.9;}if(P.flags.wifi)s.shockCh+=.03*P.weapons.filter(w=>WEAPONS[w.id].tag.includes('digital')).length;if(P.flags.oneMany)s.cdMult*=1/(1+.03*P.weapons.length);if(s.contract)s.maxW=Math.min(s.maxW,4);
@@ -1082,7 +1082,7 @@ const G={state:'menu',
   this.gimmick(dt);
   if(P.auditT>0){P.auditT-=dt;P.auditS-=dt;if(P.auditS<=0){P.auditS=6;const el=Object.keys(ENEMY).filter(k=>ENEMY[k].elite&&!ENEMY[k].prop);for(let i=0;i<2;i++){const a=rnd(0,7);this.mkEnemy(pick(el),P.x+Math.cos(a)*480,P.y+Math.sin(a)*480);}}}
   P.stageT+=dt;if(P.cloneT>0)P.cloneT-=dt;if(P.busT>0)P.busT-=dt;if(P.dashBuffT>0)P.dashBuffT-=dt;
-  P.stillT=P.moved?0:(P.stillT||0)+dt;if(P.flags.thermos&&P.stillT>1)this.heal(dt,true);
+  P.stillT=P.moved?0:(P.stillT||0)+dt;if(P.flags.thermos&&P.moved)this.heal(dt*.5,true);
   if(P.energyT>0)P.energyT-=dt;
   P.tlT=(P.tlT||0)+dt;if(P.tlT>=60){P.tlT=0;const tot=Object.values(P.dmgBy).reduce((a,b)=>a+b,0);P.tl=P.tl||[];P.tl.push({t:Math.round(this.clock),g:P.goldEarned,sp:P.goldSpent||0,dps:Math.round((tot-(P.tlD||0))/60),lv:P.lv,hp:Math.round(P.hp)});P.tlD=tot;}
   if(P.flags.autopay){P.payT=(P.payT||0)+dt;if(P.payT>=10){P.payT=0;this.gainGold(4);}}
@@ -1107,7 +1107,7 @@ const G={state:'menu',
   {if(G.daily&&G.daily.id==='monday')e.hp*=1.3;}{const D=DIFFS[G.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,G.clock/3600),2);e.hp*=D.hp*L*(1+Math.max(0,G.stage-1)*.2)*(1+.03*(P.rrStage||0));e.dmg*=D.dmg*(1+(L-1)*.6);}e.ph=Math.random();if(t==='hiker')e.sp='hiker'+ri(0,2);e.hb=makeHB(e.sp,e.r);e.hr=e.hb.hw+e.hb.cr;e.mhp=e.hp;E.push(e);if(d.elite){seen('e',t);if(P.extOn&&this.state){P.extOn=0;e.stun=3;}}return e;},
  spawnBoss(b){const a=rnd(0,Math.PI*2);const R=b.id==='b3'?260:380;const e=this.mkEnemy('passenger',P.x+Math.cos(a)*R,P.y+Math.sin(a)*R);
   Object.assign(e,{t:b.id,bd:b,ic:b.ic,sp:b.sp,r:b.r,hp:b.hp*(1+this.clock/3600*1.2),spd:b.spd,dmg:b.dmg,boss:true,elite:true,phase:1,aiT:2});e.mhp=e.hp;e.d={nm:b.nm,xp:80,kbRes:1};
-  {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect&&!P.noPen){e.hp*=2;e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
+  {const D=DIFFS[this.diff||'normal'];const L=1+D.late*Math.pow(Math.min(1,this.clock/3600),2);e.hp=b.hp*(1+this.clock/3600*2.5)*D.hp*L;e.dmg=b.dmg*D.dmg*(1+(L-1)*.6);e.mhp=e.hp;}e.hb=makeHB(b.sp,e.r);e.hr=e.hb.hw+e.hb.cr;if(P.flags.bossDirect){e.hp*=1+(P.pen??1);e.mhp=e.hp;}if(P.flags.bossCut){e.hp*=.8;}this.boss=e;SFX.play('boss');this.cutin={t:1.8,b};this.shake=.5;this.announce={t:3.5,txt:'⚠ '+b.nm+' : "'+b.line+'"'};},
 
  // ---- 이벤트
  updEvent(dt){
@@ -1127,6 +1127,7 @@ const G={state:'menu',
   if(KEYS.w||KEYS.arrowup)my--;if(KEYS.s||KEYS.arrowdown)my++;if(KEYS.a||KEYS.arrowleft)mx--;if(KEYS.d||KEYS.arrowright)mx++;
   if(JOY.on){mx=JOY.dx;my=JOY.dy;}
   if(this.bot){mx=this.bot.x;my=this.bot.y;}
+  if(P.revT>0){mx=-mx;my=-my;}
   const l=Math.hypot(mx,my);if(l>1){mx/=l;my/=l;}
   P.moved=l>.1;if(P.moved){P.face={x:mx/(l>1?1:l||1),y:my/(l>1?1:l||1)};const fl=Math.hypot(P.face.x,P.face.y)||1;P.face.x/=fl;P.face.y/=fl;}
   let spd=s.spd;if(P.flags.lowHpSpd&&P.hp<P.s.maxhp*.3)spd*=1.2;if(P.spdBuff>0){spd*=1.3;P.spdBuff-=dt;}
@@ -1187,7 +1188,7 @@ const G={state:'menu',
   if(w)this._lastW=w;
   let crit=false;if(!noProc&&Math.random()<s.crit){dmg*=s.critDmg;crit=true;}
   e.hp-=dmg;e.hitT=(e.boss||e.elite)?.12:.09;if((e.boss||e.elite)&&(crit||dmg>e.mhp*.06)&&!META.set.lowFx)this.hstop=Math.max(this.hstop||0,.03);if(!e.d.prop){const dk=w?w.id:'_etc';P.dmgBy[dk]=(P.dmgBy[dk]||0)+dmg;}if(META.set.dmgNum)this.num(e.x,e.y-e.r*1.8,Math.round(dmg)+(crit?'!':''),crit?'#ffe14a':e.boss?'#ffb347':'#fff',crit);
-  if(s.lifesteal>0&&!noProc)this.heal(dmg*s.lifesteal,true);
+  if(s.lifesteal>0&&!noProc&&Math.random()<s.lifesteal)this.procHeal();
   if(!noProc){if(P.flags.poison){e.poison=3;e.poisonD=Math.max(e.poisonD,dmg*.2);}
    const W=w&&WEAPONS[w.id];const bc=s.burnCh+(W&&W.burn?W.burn:0),fc=s.freezeCh+(W&&W.freeze?W.freeze:0);
    if(bc>0&&Math.random()<bc){e.burn=P.flags.soup?5:3;e.burnD=Math.max(e.burnD||0,dmg*.25*s.burnDmg*(P.flags.burnBoost?2:1));}
@@ -1208,6 +1209,7 @@ const G={state:'menu',
   else if(gt===3){this.dark=6;this.toast('🔦 정전! 시야가 좁아져요');}},
  celebrate(x,y,col){if(META.set.lowFx)return;const cs=[col,'#ffffff','#fde68a','#93c5fd','#f9a8d4'];for(let i=0;i<46;i++){const a=rnd(0,7),v=rnd(160,520);FX.push({type:'part',x,y:y-20,vx:Math.cos(a)*v,vy:Math.sin(a)*v-260,col:pick(cs),sz:rnd(4,9),life:.9,max:.9});}
   for(let i=0;i<3;i++)FX.push({type:'ring',x,y,r:90+i*70,life:.45+i*.12,max:.45+i*.12,col:col});FX.push({type:'flash',life:.25,max:.25,col:'rgba(255,255,255,.35)'});if(META.set.shake)this.shake=Math.max(this.shake||0,.45);},
+ procHeal(){if(this.real<(P.phT||0))return;P.phT=this.real+.25;const b=P.hp;this.heal(1,true);if(P.hp>b&&this.real>(P.phNum||0)){P.phNum=this.real+1;this.num(P.x+14,P.y-46,'+1','#4ade80');}},
  shock(e,d,n){let cur=e;const hit=new Set([e]);for(let i=0;i<n;i++){let nb=null,bd=1e9;for(const o of GRID.query(cur.x,cur.y,140,[]))if(!hit.has(o)&&!o.dead){const dd=(o.x-cur.x)**2+(o.y-cur.y)**2;if(dd<bd){bd=dd;nb=o;}}if(!nb)break;hit.add(nb);FX.push({type:'line',x1:cur.x,y1:cur.y,x2:nb.x,y2:nb.y,life:.12,max:.12,col:'#ff6'});this.hurt(nb,d,null,true);cur=nb;}},
  kill(e){if(e.dead)return;e.dead=true;
   if(e.d.prop){if(Math.random()<.08+P.s.luck*.0025){GEMS.push({x:e.x,y:e.y,v:0,k:'chest'});FX.push({type:'ring',x:e.x,y:e.y,r:44,life:.35,max:.35,col:'#fde047'});SFX.play('chest');return;}const k=wpick({magnet:3,ext:2,pause:2,chicken:3,goldbag:3});GEMS.push({x:e.x,y:e.y,v:0,k,item:1});FX.push({type:'ring',x:e.x,y:e.y,r:40,life:.3,max:.3,col:'#fde68a'});SFX.play('chest');return;}
@@ -1223,7 +1225,7 @@ const G={state:'menu',
   if(e.d.cart)for(let i=0;i<3;i++)GEMS.push({x:e.x+rnd(-20,20),y:e.y+rnd(-20,20),v:ri(2,4),k:'gold'});
   if(e.d.burstDeath){for(let i=0;i<6;i++){const a=i*Math.PI/3+rnd(0,.5);EPROJ.push({x:e.x,y:e.y,vx:Math.cos(a)*170,vy:Math.sin(a)*170,r:8,dmg:e.dmg*.6,life:1.6,ic:'📄',src:null});}}
   if(P.flags.killBoom&&Math.random()<.03)this.explode(e.x,e.y,70,25*this.dmgMul(),'#f84',true);
-  if(P.flags.killHeal)this.heal(1,true);
+  if(P.flags.killHeal)this.procHeal();
   if(P.synLv.office>=4&&!e.elite&&!e.boss&&Math.random()<.1&&E.length<400){const a=this.mkEnemy('passenger',e.x,e.y);a.charm=15;a.hp=a.mhp=a.mhp*2;}
   if(P.flags.shush&&e.d.ranged)GEMS.push({x:e.x+5,y:e.y,v:(e.d.xp||1)*P.s.killXp,k:'xp'});
   if(P.flags.eliteXp&&e.elite&&!e.boss)this.gainXp(P.need*.3,true);
@@ -1240,7 +1242,7 @@ const G={state:'menu',
  nearest(x,y,r){let best=null,bd=r*r;for(const e of E){if(e.dead||e.charm>0||e.ally>0||e.d.prop)continue;const d=(e.x-x)**2+(e.y-y)**2;if(d<bd){bd=d;best=e;}}return best;},
  updWeapons(dt){
   this._crowd=P.flags.crowd&&GRID.query(P.x,P.y,120,QBUF).length>=10;
-  if(P.flags.burnout&&!P.noPen&&(this.real%30)>27)return;
+  if(P.flags.burnout&&(this.real%30)>30-3*(P.pen??1))return;
   if(P.flags.rushHour){let c=0;for(const e of E)if(!e.dead&&Math.abs(e.x-P.x)<VW/2&&Math.abs(e.y-P.y)<VH/2)c++;this._onScreen=c;}
   const sp=P.cloneT>0?2:1;
   for(const w of P.weapons){const W=WEAPONS[w.id];
@@ -1420,7 +1422,7 @@ break;}
      else if(g.k==='heal'){this.heal(g.v);if(P.flags.canteen)this.explode(P.x,P.y,110,30*this.dmgMul(),'#fd6');}else if(g.k==='chest'){this.openChest();}}}}
   GEMS=GEMS.filter(g=>!g.got);
   if(GEMS.length>600){let sum=0;const keep=[];for(const g of GEMS){if(g.k==='xp'&&(g.x-P.x)**2+(g.y-P.y)**2>(VW*VW))sum+=g.v;else keep.push(g);}GEMS=keep;if(sum)GEMS.push({x:P.x+rnd(-200,200),y:P.y+rnd(-200,200),v:sum,k:'xp',big:1});}},
- gainGold(v){let g=Math.round(v*P.s.goldMult);if(P.flags.debt&&!P.noPen)g=Math.floor(g/2);if(g<=0)return;P.gold+=g;P.goldEarned+=g;SFX.play('coin');
+ gainGold(v){let g=Math.round(v*P.s.goldMult);if(P.flags.debt)g=Math.floor(g*(1-.5*(P.pen??1)));if(g<=0)return;P.gold+=g;P.goldEarned+=g;SFX.play('coin');
   if(P.synLv.salary>=2){for(let i=0;i<(P.synLv.salary>=3?6:3);i++){const a=rnd(0,7);this.proj({vx:Math.cos(a)*200,vy:Math.sin(a)*200,r:8,dmg:10*this.dmgMul(),life:2,pierce:1,ic:'💰',homing:1});}}},
  gainXp(v,raw){P.xp+=raw?v:v*xpCap(P.s.xpRaw+(P.flags.morning&&this.clock<1200?.4:0));while(P.xp>=P.need){P.xp-=P.need;P.lv++;P.need=Math.floor(4+P.lv*2.6+Math.pow(P.lv,1.5));P.pendingLv++;if(P.lv%5===0)P.pendingAug++;if(P.flags.raise)this.gainGold(10);}},
  updAugTimers(dt){const f=P.flags;
@@ -1428,8 +1430,8 @@ break;}
   if(f.doors){P.doorT-=dt;if(P.doorT<=0){P.doorT=5;for(const sd of[-1,1]){const x=P.x+sd*90;FX.push({type:'rect',x:x-18,y:P.y-170,w:36,h:340,life:.3,max:.3,col:'#9cf'});for(const e of E)if(!e.dead&&hbRect(e,x-18,P.y-170,x+18,P.y+170))this.hurt(e,30*this.dmgMul(),null,true);}}}
   if(f.stunPulse){P.stunT-=dt;if(P.stunT<=0){P.stunT=15;for(const e of E)e.stun=.5;this.toast('🔔 띠링! 전체 기절');}}
   if(f.shield){P.shieldT-=dt;if(P.shieldT<=0){P.shieldT=30;P.shieldHp=P.s.maxhp*.1;}}
-  if(f.kakao&&!P.noPen){P.kakaoT-=dt;if(P.kakaoT<=0){P.kakaoT=5;const a=rnd(0,7);P.kakaoV={x:Math.cos(a)*200,y:Math.sin(a)*200,t:.3};this.num(P.x,P.y-30,'카톡!','#ff0');}}
-  if(f.hangover&&!P.noPen&&Math.random()<dt*.3)this.shake=.25;
+  if(f.kakao){P.kakaoT-=dt;if(P.kakaoT<=0){P.kakaoT=3;const a=rnd(0,7),kv=400*(P.pen??1);P.kakaoV={x:Math.cos(a)*kv,y:Math.sin(a)*kv,t:.3};this.num(P.x,P.y-30,'카톡!','#ff0');}}
+  if(f.hangover){P.hangT=(P.hangT||6)-dt;if(P.hangT<=0){P.hangT=6;P.revT=.6*(P.pen??1);this.num(P.x,P.y-40,'🥴 어질...','#fde047');}if(P.revT>0)P.revT-=dt;}
   if(f.driver){P.driverT-=dt;if(P.driverT<=0){P.driverT=15;const y=P.y+rnd(-120,120);FX.push({type:'train',y,life:.6,max:.6});SFX.play('boom');this.shake=.3;for(const e of E)if(!e.dead&&hbRect(e,P.x-VW,y-50,P.x+VW,y+50))this.hurt(e,60*this.dmgMul(),null,true);}}
   if(f.officeMove)for(const e of GRID.query(P.x,P.y,140,QBUF))e.slow=.2;
   const sl=P.synLv;
@@ -1810,7 +1812,7 @@ break;}
   if(META.set.lowHpWarn&&P.hp<P.s.maxhp*.3&&!P.s.quit){const a=.25+.2*Math.sin(this.real*7);const g=ctx.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*.35,VW/2,VH/2,Math.max(VW,VH)*.65);g.addColorStop(0,'rgba(255,0,0,0)');g.addColorStop(1,'rgba(220,0,0,'+a+')');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
   for(const f of FX){if(f.type==='flash'){ctx.globalAlpha=f.life/f.max;ctx.fillStyle=f.col;ctx.fillRect(0,0,VW,VH);ctx.globalAlpha=1;}
    if(f.type==='train'){const k=1-f.life/f.max;const sy=f.y-(P.y-VH/2);const tx=-1600+k*(VW+3200);ctx.fillStyle='rgba(255,255,255,.15)';ctx.fillRect(0,sy-45,VW,90);ctx.fillStyle='#e8ecef';rr(tx,sy-40,1400,80,16);ctx.fill();ctx.fillStyle=LINE[this.stage].col;ctx.fillRect(tx,sy+10,1400,12);ctx.fillStyle='#1d2a3a';for(let i=0;i<10;i++){rr(tx+40+i*135,sy-30,90,30,6);ctx.fill();}}}
-  if(P.flags.sleepless&&!P.noPen){const g=ctx.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*.2,VW/2,VH/2,Math.max(VW,VH)*.55);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.85)');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
+  if(P.flags.sleepless){const pk=P.pen??1;const g=ctx.createRadialGradient(VW/2,VH/2,100,VW/2,VH/2,330+(1-pk)*300);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,'+(.95*Math.max(.5,pk))+')');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
   if(this.event&&this.event.type==='delay'){const a=.25+.15*Math.sin(this.real*6);const g=ctx.createRadialGradient(VW/2,VH/2,Math.min(VW,VH)*.3,VW/2,VH/2,Math.max(VW,VH)*.7);g.addColorStop(0,'rgba(255,0,0,0)');g.addColorStop(1,'rgba(255,0,0,'+a+')');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);}
   this.drawHUD();this.drawOverlays();},
  drawOverlays(){if(this.cutin){const c=this.cutin,b=c.b,t=c.t;const kin=clamp((1.8-t)/.25,0,1),kout=clamp(t/.3,0,1);const al=Math.min(kin,kout);const cy=VH/2;ctx.save();ctx.globalAlpha=al;ctx.fillStyle='rgba(0,0,0,.45)';ctx.fillRect(0,0,VW,VH);
